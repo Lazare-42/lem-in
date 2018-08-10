@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 15:27:37 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/07/07 15:36:45 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/10 23:39:47 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,14 @@ typedef struct		s_color_compound
 	int				rgb;
 }					t_color_compound;
 
+typedef	struct		s_gnl
+{
+	char			*rest;
+	int				fd;
+	struct s_gnl	*next;
+}					t_gnl;
+
+int					get_next_line(const int fd, char **line, char tofind);
 int					get_char_len(va_list ap, t_printf *argument);
 int					get_number_len(va_list ap, t_printf *argument);
 void				update_str(t_str *argument, void *to_cpy, int mem_op_size);

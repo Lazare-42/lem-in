@@ -6,11 +6,12 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/08 13:30:36 by lazrossi          #+#    #+#             */
-/*   Updated: 2017/12/27 14:12:53 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/10 23:41:01 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/libft.h"
+# include <unistd.h>
 
 char	*ft_str_join_free(char **s1, char **s2)
 {

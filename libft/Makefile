@@ -142,6 +142,7 @@ SRCS =			ft_advance_for_quotes.c \
 				width.c \
 				bonus_colors_formatting.c \
 				ft_decompose_color.c \
+				get_next_line.c \
 
 # CC = gcc -Wall -Wextra -Werror -c -g
 
