@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   lem-in.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/06/08 14:01:32 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/10 23:05:25 by lazrossi         ###   ########.fr       */
+/*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
+/*   Updated: 2018/08/10 23:03:04 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
+#ifndef LEM-IN_H
+# define LEM-IN_H
 
-# define GET_NEXT_LINE_H
-# include <unistd.h>
+typedef	struct		s_node t_node;
 
-int					get_next_line(const int fd, char **line, char tofind);
-typedef	struct		s_gnl
+typedef	struct		s_node
 {
-	char			*rest;
-	int				fd;
-	struct s_gnl	*next;
-}					t_gnl;
+	int				**path_marker;
+	t_node			**links; 	
+}					t_node;
+
 #endif
