@@ -1,6 +1,7 @@
 NAME = lem-in
 
 SOURCES =	main.c \
+			error_func.c \
 
 LIBDIR = libft
 
@@ -8,7 +9,7 @@ SDIR = srcs
 
 ODIR = bin
 
-CFLAGS = -Werror -Wall -Wextra -Ofast -O3
+CFLAGS = -Werror -Wall -Wextra -Ofast -O3 -fsanitize=address
 
 INCDIR = includes
 
@@ -32,8 +33,8 @@ mkbin:
 
 
 $(NAME): $(OBJS)
-	@ echo "[35mEntering lem-in Makefile...[0m"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I$(INCDIR) $(LDFLAGS)
+	@echo "\x1B[33;4mCompiled with the rule\x1B[0m :" ${CC} $(CFLAGS)
 	@$(OK)
 
 $(ODIR)/%.o : $(SDIR)/%.c

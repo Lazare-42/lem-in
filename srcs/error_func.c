@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maintest.c                                         :+:      :+:    :+:   */
+/*   error_func.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/10 23:31:45 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/10 23:45:25 by lazrossi         ###   ########.fr       */
+/*   Created: 2018/08/11 14:03:10 by lazrossi          #+#    #+#             */
+/*   Updated: 2018/08/11 14:04:44 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
 
-int		main(int ac, char **argv)
+void	lemin_error(char *error)
 {
-	char	*buf;
-
-	buf = NULL;
-	ft_printf("%d is ac\n, %s is argv\n", ac, argv[1]);
-	get_next_line(1, &buf, '\n');
-	ft_printf("%s is argv\n", buf);
-	return (0);
+	ft_printf("[[~/Documents/42/lem-in/error_trace.txt]]%s\n", error);
+	ft_myexit("ERROR");
 }
