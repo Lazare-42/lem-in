@@ -1,0 +1,14 @@
+     start is room name, 23 x 3 y
+         2 is room name, 16 x 7 y
+         3 is room name, 16 x 3 y
+     start is room name, 0 x 1 y
+     start is room name, 0 x 1 y
+     start is room name, 23 x 3 y
+         2 is room name, 16 x 7 y
+         3 is room name, 16 x 3 y
+       end is room name, 9 x 5 y
+         4 is room name, 16 x 5 y
+         5 is room name, 9 x 3 y
+     error is room name, 22 x 11 y
+         6 is room name, 1 x 5 y
+         7 is room name, 4 x 8 y

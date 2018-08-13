@@ -3,6 +3,8 @@ NAME = lem-in
 SOURCES =	main.c \
 			error_func.c \
 			hashtable.c \
+			data_structure_operations.c \
+			store_node.c \
 
 
 LIBDIR = libft
