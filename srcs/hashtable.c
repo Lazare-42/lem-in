@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 15:54:19 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/13 01:38:58 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/13 19:19:21 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,24 @@ int		hashtable_key(const char *name)
 t_node		*hash_insert(t_info info, t_node new_node)
 {
 	int			hash_key;
-	t_node		tmp;
+	t_node		*tmp;
+	t_node		*new;
 
 	hash_key = hashtable_key(new_node.name) % info.size;
 	if (info.hash_table[hash_key].name)
 	{
-		tmp = info.hash_table[hash_key];
-		while (info.hash_table[hash_key].next)
-			tmp = *((t_node*)info.hash_table[hash_key].next);
-		info.hash_table[hash_key].next = &new_node;
+		new = NULL;
+		if (!(new = malloc(sizeof(t_node))))
+			lemin_error("malloc error in hash_insert");
+		new->next = NULL;
+		tmp = &info.hash_table[hash_key];
+		while (tmp->next)
+		{
+			ft_printf("[[~/Documents/42/lem-in/find_loop.txt]]% 20d is collisioned node name % 20s is new_node name\n", tmp->name, new_node.name);
+			tmp = tmp->next;
+		}
+		new = &new_node;
+		tmp->next = new;
 		return (info.hash_table);
 	}
 	info.hash_table[hash_key] = new_node;

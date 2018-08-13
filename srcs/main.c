@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/13 02:11:35 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/13 19:01:28 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,7 @@ char	*get_rooms(t_info info, char *buf)
 		else if (!ft_memcmp(buf, "##end", 5))
 			continue ;
 		else
-			ft_printf("[[~/Documents/42/lem-in/error_trace.txt]]end %s\n", buf);
-		info  = store_node_handler(info, node_create(buf, node_number++));
-		// need to store the last nodes number
+			info  = store_node_handler(info, node_create(buf, node_number++));
 	}
 	lemin_error("no tubes after room declaration or GNL return was < 1");
 	return (NULL);

@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/13 00:52:53 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/13 19:01:01 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define DATA_MULTIPLIER 37
 # define END 230982
 # define BEGINNING 34303
-# define DATA_INITIAL_SIZE 1024
+# define DATA_INITIAL_SIZE 52
 # define GROWTH_FACTOR 2
 
 typedef	struct		s_node t_node;
@@ -28,14 +28,8 @@ typedef	struct		s_node
 	int				x;
 	int				y;
 	int				**path_marker;
-	void			*next;
+	t_node			*next;
 }					t_node;
-
-typedef	struct		s_hash_table
-{
-	int				n;
-	t_node			*hash_table;
-}					t_hash_table;
 
 typedef struct		s_info
 {
