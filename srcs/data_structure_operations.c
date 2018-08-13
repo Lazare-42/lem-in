@@ -7,7 +7,7 @@ t_node		*resize_hashtable(t_info info)
 	int		i;
 	int		new_size;
 	t_node	void_node;
-	t_node	collisioned_node;
+	t_node	*collisioned_node;
 	t_node	*new_hashtable;
 
 	i = -1;
@@ -19,10 +19,12 @@ t_node		*resize_hashtable(t_info info)
 	while (++i < info.size)
 	{
 		new_hashtable = hash_insert(info, info.hash_table[i]); 
-		while (info.hash_table[i].name)
+		collisioned_node = NULL;
+		collisioned_node = info.hash_table[i].next;
+		while (collisioned_node)
 		{
-			collisioned_node = *((t_node*)info.hash_table[i].next);
-			new_hashtable = hash_insert(info, collisioned_node); 
+			new_hashtable = hash_insert(info, *collisioned_node); 
+			collisioned_node = collisioned_node->next;
 		}
 	}
 	while (++i < new_size)
@@ -41,6 +43,7 @@ t_node		*create_hashtable(t_info info)
 	i = -1;
 	new_hashtable = NULL;
 	void_node.name = NULL;
+	void_node.next = NULL;
 	size = (info.nodelist) ? info.size * 2 : info.size;
 	if (!(new_hashtable = malloc(sizeof(t_node) * size)))
 		lemin_error("malloc error in create_resize_table");

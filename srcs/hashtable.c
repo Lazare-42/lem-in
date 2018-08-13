@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 15:54:19 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/13 19:19:21 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/13 19:31:24 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_node		*hash_insert(t_info info, t_node new_node)
 		tmp = &info.hash_table[hash_key];
 		while (tmp->next)
 		{
-			ft_printf("[[~/Documents/42/lem-in/find_loop.txt]]% 20d is collisioned node name % 20s is new_node name\n", tmp->name, new_node.name);
+			ft_printf("[[~/Documents/42/lem-in/find_loop.txt]]% 20s is collisioned node name % 20s is new_node name\n", tmp->name, new_node.name);
 			tmp = tmp->next;
 		}
 		new = &new_node;

@@ -1,6 +1,5 @@
-                 656 is collisioned node name                  40 is new_node name
-                 784 is collisioned node name                  41 is new_node name
-                 912 is collisioned node name                  42 is new_node name
-                1168 is collisioned node name                   4 is new_node name
-           228885659 is collisioned node name                   4 is new_node name
-                  50 is collisioned node name                   4 is new_node name
+                  0 is collisioned node name                  40 is new_node name
+                  1 is collisioned node name                  41 is new_node name
+                  2 is collisioned node name                  42 is new_node name
+                  4 is collisioned node name                   4 is new_node name
+   HƒÄ L‰ùHÁéL	á€9 is collisioned node name                   4 is new_node name
