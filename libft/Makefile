@@ -168,21 +168,21 @@ mkbin:
 	@mkdir -p $(ODIR)
 
 $(NAME): $(LIBFT_OBJECT)
-	@echo "\x1B[33;4mCompiled with the rule\x1B[0m :" ${CC}
+	@echo "\x1B[33;4mCompiled with the rule\x1B[0m  \x1B[33;1m:\x1B[0m " ${CC}
 	@ echo "[35mLibft archived.[0m"
 	@$(ARCH) $(NAME) $(LIBFT_OBJECT)
 	@$(OK)
 
 $(ODIR)/%.o : $(S_LIB_DIR)/%.c
-	@ echo "[34m Assembling  libft object: [0m" $@
+	@ echo "[34mAssembling libft object : [0m" $@
 	@ $(CC) -o $@ $<
 
 clean: 
-	@ echo "[31m Deleted bin_lift. [0m"
+	@ echo "[31mDeleted bin_lift. [0m"
 	@-$(CLEAN)
 
 fclean: clean
 	@-$(CLEAN) $(NAME)
-	@ echo "[31m Also deleted libft.a[0m"
+	@ echo "[31mAlso deleted libft.a[0m"
 
 re: fclean all
