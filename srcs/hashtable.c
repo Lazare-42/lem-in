@@ -38,12 +38,12 @@ t_node		*hash_insert(t_info info, t_node new_node)
 	int			hash_key;
 	t_node		*tmp;
 	t_node		*new;
-//	int			strlen_cmp;
+	int			strlen_cmp;
 
 	hash_key = hashtable_key(new_node.name) % info.size;
-//	strlen_cmp = ft_strlen(new_node.name);
-//	if ((int)ft_strlen(info.hash_table[hash_key].name) > strlen_cmp)
-//		strlen_cmp = ft_strlen(info.hash_table[hash_key].name);
+	strlen_cmp = ft_strlen(new_node.name);
+	if ((int)ft_strlen(info.hash_table[hash_key].name) > strlen_cmp)
+		strlen_cmp = ft_strlen(info.hash_table[hash_key].name);
 	if (info.hash_table[hash_key].name && new_node.name && ft_strcmp(new_node.name, info.hash_table[hash_key].name))
 	{
 		new = NULL;
@@ -51,7 +51,6 @@ t_node		*hash_insert(t_info info, t_node new_node)
 			lemin_error("malloc error in hash_insert");
 		new->next = NULL;
 		tmp = &info.hash_table[hash_key];
-		ft_printf("[[~/Documents/42/lem-in/find_loop.txt]]% 20s is collisioned node name % 20s is new_node name\n", tmp->name, new_node.name);
 		while (tmp->next)
 		{
 			tmp = tmp->next;

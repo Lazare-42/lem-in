@@ -28,9 +28,9 @@ t_info	store_node_handler(t_info info, t_node new_node)
 {
 	if (new_node.number >= info.size)
 	{
+		info.size *= 2;
 		info.nodelist = resize_nodelist(info);
 		info.hash_table = resize_hashtable(info);
-		info.size *= 2;
 	}
 	info.nodelist = store_node_list(info, new_node);
 	info.hash_table = hash_insert(info, new_node); 
