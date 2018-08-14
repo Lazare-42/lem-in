@@ -9,6 +9,7 @@ t_node		*resize_hashtable(t_info info)
 	t_node	void_node;
 	t_node	*collisioned_node;
 	t_node	*new_hashtable;
+	t_node	*old_hashtable;
 
 	i = -1;
 	new_size = info.size * 2;
@@ -16,20 +17,22 @@ t_node		*resize_hashtable(t_info info)
 	new_hashtable = NULL;
 	if (!(new_hashtable = malloc(sizeof(t_node) * new_size)))
 		lemin_error("malloc error in resize_hashtable");
+	old_hashtable = info.hash_table;
+	info.hash_table = new_hashtable;
+	while (++i < new_size)
+		info.hash_table[i] = void_node;
+	i = -1;
 	while (++i < info.size)
 	{
-		new_hashtable = hash_insert(info, info.hash_table[i]); 
-		collisioned_node = NULL;
-		collisioned_node = info.hash_table[i].next;
+		new_hashtable = hash_insert(info, old_hashtable[i]); 
+		collisioned_node = old_hashtable[i].next;
 		while (collisioned_node)
 		{
 			new_hashtable = hash_insert(info, *collisioned_node); 
 			collisioned_node = collisioned_node->next;
 		}
 	}
-	while (++i < new_size)
-		info.hash_table[i] = void_node;
-	ft_memdel((void**)&(info.hash_table));
+	ft_memdel((void**)&(old_hashtable));
 	return (new_hashtable);
 }
 

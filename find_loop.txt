@@ -1,5 +1,30 @@
+                  0 is collisioned node name                  17 is new_node name
+                  1 is collisioned node name                  18 is new_node name
+                  2 is collisioned node name                  19 is new_node name
+                end is collisioned node name                  30 is new_node name
+              start is collisioned node name                  37 is new_node name
                   0 is collisioned node name                  40 is new_node name
                   1 is collisioned node name                  41 is new_node name
                   2 is collisioned node name                  42 is new_node name
-                  4 is collisioned node name                   4 is new_node name
-   HƒÄ L‰ùHÁéL	á€9 is collisioned node name                   4 is new_node name
+                  3 is collisioned node name                  43 is new_node name
+                  4 is collisioned node name                  44 is new_node name
+                  5 is collisioned node name                  45 is new_node name
+                  6 is collisioned node name                  46 is new_node name
+                  7 is collisioned node name                  47 is new_node name
+                  8 is collisioned node name                  48 is new_node name
+                  9 is collisioned node name                  49 is new_node name
+                  0 is collisioned node name                  17 is new_node name
+                  1 is collisioned node name                  18 is new_node name
+                  2 is collisioned node name                  19 is new_node name
+                end is collisioned node name                  30 is new_node name
+              start is collisioned node name                  37 is new_node name
+                  0 is collisioned node name                  40 is new_node name
+                  1 is collisioned node name                  41 is new_node name
+                  2 is collisioned node name                  42 is new_node name
+                  3 is collisioned node name                  43 is new_node name
+                  4 is collisioned node name                  44 is new_node name
+                  5 is collisioned node name                  45 is new_node name
+                  6 is collisioned node name                  46 is new_node name
+                  7 is collisioned node name                  47 is new_node name
+                  8 is collisioned node name                  48 is new_node name
+                  9 is collisioned node name                  49 is new_node name

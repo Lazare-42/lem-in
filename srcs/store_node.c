@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 18:27:56 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/13 19:04:31 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/14 13:33:49 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,8 @@ t_node	node_create(char *buf, int node_number)
 	new_node.name = name_and_pos[0];
 	new_node.x = ft_atoi(name_and_pos[1]);
 	new_node.y = ft_atoi(name_and_pos[2]);
+	ft_memdel((void**)&name_and_pos[1]);
+	ft_memdel((void**)&name_and_pos[2]);
+	// does buf leak here ?
 	return (new_node);
 }
