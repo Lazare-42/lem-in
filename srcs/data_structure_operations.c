@@ -17,18 +17,17 @@ t_node		*resize_hashtable(t_info info)
 	{
 		if (old_hashtable[i].name)
 		{
-			new_hashtable = hash_insert(info, old_hashtable[i]); 
 			collisioned_node = old_hashtable[i].next;
-			/*
+			new_hashtable = hash_insert(info, old_hashtable[i]); 
 			while (collisioned_node)
 			{
 				new_hashtable = hash_insert(info, *collisioned_node); 
 				collisioned_node = collisioned_node->next;
 			}
-			*/
 		}
 	}
 	ft_memdel((void**)&(old_hashtable));
+	// not freeing collisioned nodes
 	return (new_hashtable);
 }
 

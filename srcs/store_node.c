@@ -45,7 +45,6 @@ t_node	node_create(char *buf, int node_number)
 
 
 	name_and_pos = NULL;
-	new_node.next = NULL;
 	new_node.number = node_number;
 	if (!(name_and_pos = ft_split_whitespaces(buf)))
 		lemin_error("error in split whitespaces in node_create");

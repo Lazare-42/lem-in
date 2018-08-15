@@ -39,8 +39,9 @@ t_node	*hash_insert(t_info info, t_node new_node)
 	t_node	*tmp;
 	t_node	*new;
 
+	new_node.next = NULL;
 	key = hashtable_key(new_node.name) % info.size;
-	if (info.hash_table[key].name)
+	if (info.hash_table[key].name && ft_strcmp(new_node.name, info.hash_table[key].name))
 	{
 		tmp = &info.hash_table[key];
 		while (tmp->next)
@@ -48,7 +49,6 @@ t_node	*hash_insert(t_info info, t_node new_node)
 		if (!(new = malloc(sizeof(t_node))))
 			lemin_error("malloc error in hash_insert");
 		*new = new_node;
-		new->next = NULL;
 		tmp->next = new;
 	}
 	else
