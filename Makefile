@@ -5,6 +5,7 @@ SOURCES =	main.c \
 			hashtable.c \
 			data_structure_operations.c \
 			store_node.c \
+			print_map.c \
 
 
 LIBDIR = libft

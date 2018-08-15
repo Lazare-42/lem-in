@@ -60,8 +60,8 @@ t_info	parse_map()
 	info.n = 0;
 	buf = NULL;
 	info.size = DATA_INITIAL_SIZE;
-	info.hash_table = create_hashtable(info);
-	info.nodelist = create_nodelist(info);
+	info.hash_table = create_table(info);
+	info.nodelist = create_table(info);
 	while (ret > 0)
 	{
 		get_next_line(0, &buf, '\n');
@@ -71,13 +71,7 @@ t_info	parse_map()
 		{
 			ft_memdel((void**)&buf);
 			info = get_rooms(info);
-			int i;
-			i = 0;
-			while (info.nodelist[i].name)
-			{
-				ft_printf("[[~/Documents/42/lem-in/map.txt]]%10s is room name, %d x %d y\n", info.nodelist[i].name, info.nodelist[i].x, info.nodelist[i].y);
-				i++;
-			}
+			print_map(info);
 			ret = 0;
 		}
 		ft_memdel((void**)&buf);
