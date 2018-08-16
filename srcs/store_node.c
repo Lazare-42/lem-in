@@ -12,17 +12,7 @@
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
-
-t_node	*store_node_list(t_info info, t_node new_node)
-{
-	int		i;
-
-	i = 0;
-	while (info.nodelist[i].name != NULL)
-		i++;
-	info.nodelist[i] = new_node;
-	return (info.nodelist);
-}
+#include <stdlib.h>
 
 t_info	store_node_handler(t_info info, t_node new_node)
 {
@@ -46,6 +36,7 @@ t_node	node_create(char *buf, int node_number)
 
 	name_and_pos = NULL;
 	new_node.number = node_number;
+	new_node.name = NULL;
 	if (!(name_and_pos = ft_split_whitespaces(buf)))
 		lemin_error("error in split whitespaces in node_create");
 	new_node.name = name_and_pos[0];
@@ -53,6 +44,8 @@ t_node	node_create(char *buf, int node_number)
 	new_node.y = ft_atoi(name_and_pos[2]);
 	ft_memdel((void**)&name_and_pos[1]);
 	ft_memdel((void**)&name_and_pos[2]);
-	// does buf leak here ?
+	ft_memdel((void**)&name_and_pos[3]);
+	free(name_and_pos);
+	name_and_pos = NULL;
 	return (new_node);
 }

@@ -14,37 +14,45 @@
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
 
+
+
+
+
+
+
+#include <unistd.h>
+
 void	comment_mannagement(char *buf)
 {
-	(void)buf;
+	if (ft_strlen(buf) >= 2)
+		(void)buf;
+	else
+		lemin_error(buf);
 }
 
-t_info	get_rooms(t_info info)
+t_info	get_rooms(t_info info, char *buf)
 {
 	int		ret;
 	int		node_number;
-	char	*buf;
 
 	ret = 1;
 	node_number = 0;
 	buf = NULL;
 	while (ret > 0)
 	{
+		ft_memdel((void**)&buf);
 		ret = get_next_line(0, &buf, '\n');
 		if (ft_strchr(buf, '-'))
-			return (info);
-		if (buf[0] == '#' && ft_strcmp(buf, "##end"))
 		{
-			if (ft_strlen(buf) >= 2)
-				comment_mannagement(buf);
-			else
-				lemin_error(buf);
+			ft_memdel((void**)&buf);
+			return (info);
 		}
+		if (buf[0] == '#' && ft_strcmp(buf, "##end"))
+			comment_mannagement(buf);
 		else if (!ft_memcmp(buf, "##end", 5))
 			continue ;
 		else
 			info  = store_node_handler(info, node_create(buf, node_number++));
-		ft_memdel((void**)&buf);
 	}
 	lemin_error("no tubes after room declaration or GNL return was < 1");
 	return (info);
@@ -70,8 +78,8 @@ t_info	parse_map()
 		if (buf && ft_strstr(buf, "##start"))
 		{
 			ft_memdel((void**)&buf);
-			info = get_rooms(info);
-			print_map(info);
+			info = get_rooms(info, buf);
+			//	print_map(info);
 			ret = 0;
 		}
 		ft_memdel((void**)&buf);
@@ -84,5 +92,6 @@ int		main()
 	t_info	info;
 
 	info = parse_map();
+	sleep(30);
 	return (1);
 }

@@ -1,0 +1,1 @@
+no tubes after room declaration or GNL return was < 1

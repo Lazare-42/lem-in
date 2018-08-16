@@ -2,6 +2,26 @@
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
 
+static void	old_hashtable_memdel(t_info info, t_node **old_hashtable)
+{
+	int		i;
+	t_node	*tmp;
+	t_node	*to_del;
+
+	i = -1;
+	while (++i < info.size / 2)
+	{
+		tmp = (*old_hashtable)[i].next;
+		while (tmp)
+		{
+			to_del = tmp;
+			tmp = tmp->next;
+			ft_memdel((void**)&to_del);
+		}
+	}
+	ft_memdel((void**)old_hashtable);
+}
+
 t_node		*resize_hashtable(t_info info)
 {
 	int		i;
@@ -26,8 +46,7 @@ t_node		*resize_hashtable(t_info info)
 			}
 		}
 	}
-	ft_memdel((void**)&(old_hashtable));
-	// not freeing collisioned nodes
+	old_hashtable_memdel(info, &old_hashtable);
 	return (new_hashtable);
 }
 
@@ -61,9 +80,6 @@ t_node	*create_table(t_info info)
 		lemin_error("malloc error in resize_nodelist");
 	i = -1;
 	while (++i < info.size)
-	{
-		ft_printf("[[~/Documents/42/lem-in/debug.txt]]%d\n", i);
 		new_nodelist[i] = void_node;
-	}
 	return (new_nodelist);
 }
