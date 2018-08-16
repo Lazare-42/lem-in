@@ -1,7 +1,7 @@
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
 
-void	print_map(t_info info)
+void	print_rooms(t_info info)
 {
 	int i;
 	i = 0;
@@ -27,6 +27,33 @@ void	print_map(t_info info)
 		}
 		i++;
 	}
-	ft_printf("[[~/Documents/42/lem-in/map_hash.txt]]%d is list size\n", info.size);
-	ft_printf("[[~/Documents/42/lem-in/map.txt]]%d is list size\n", info.size);
+	ft_printf("[[~/Documents/42/lem-in/map_hash.txt]]%d is list size %d is list node numbers\n", info.size, info.n);
+	ft_printf("[[~/Documents/42/lem-in/map.txt]]%d is list size %d is list node numbers\n", info.size, info.n);
+
+}
+
+void	print_tubes(t_info info)
+{
+	int		i;
+	int		n;
+
+	i = -1;
+	ft_printf("This is the adjacence matrix :\n");
+	ft_printf("%-12s\n", "Room Name :");
+	while (++i < info.n)
+	{
+		n = -1;
+		ft_printf("%-12s", info.nodelist[i].name);
+		while (++n < info.n)
+			ft_printf("%d ", info.nodelist[i].tubes[n]);
+		ft_printf("\n");
+	}
+}
+
+void	print_map(t_info info, int to_print)
+{
+	if (to_print == 1)
+		print_rooms(info);
+	else
+		print_tubes(info);
 }

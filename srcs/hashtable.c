@@ -57,17 +57,21 @@ t_node	*hash_insert(t_info info, t_node new_node)
 }
 
 
-t_node		hash_retrieve(t_node *table, const char *name, int size)
+t_node		hash_retrieve(t_info info, const char *to_find)
 {
 	int		hash_key;
 	t_node	tmp;
 
-	hash_key = hashtable_key(name) % size;
-	tmp = table[hash_key];
-	if (ft_strcmp(name, table[hash_key].name))
+	hash_key = hashtable_key(to_find) % info.size;
+	tmp = info.hash_table[hash_key];
+	if (!tmp.name)
+		lemin_error("incorrect room name passed in tubes");
+	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
 	{
-		while (ft_strcmp(name, tmp.name))
-			tmp = *((t_node*)table[hash_key].next);
+		while (ft_strcmp(to_find, tmp.name))
+			tmp = *((t_node*)info.hash_table[hash_key].next);
 	}
+	if (!tmp.name)
+		lemin_error("incorrect room name passed in tubes");
 	return (tmp);
 }

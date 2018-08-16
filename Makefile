@@ -6,6 +6,7 @@ SOURCES =	main.c \
 			data_structure_operations.c \
 			store_node.c \
 			print_map.c \
+			parsing.c \
 
 
 LIBDIR = libft
@@ -14,7 +15,7 @@ SDIR = srcs
 
 ODIR = bin
 
-CFLAGS = -Werror -Wall -Wextra -Ofast
+CFLAGS = -Werror -Wall -Wextra -Ofast -fsanitize=address
 
 INCDIR = includes
 

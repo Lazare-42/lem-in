@@ -27,6 +27,7 @@ typedef	struct		s_node
 	int				number;
 	int				x;
 	int				y;
+	int				*tubes;
 	int				**path_marker;
 	t_node			*next;
 }					t_node;
@@ -35,19 +36,26 @@ typedef struct		s_info
 {
 	t_node			*hash_table;
 	t_node			*nodelist;
+	int				ant_nbr;
 	int				size;
 	int				n;
 }					t_info;
 
-void				print_map(t_info info);
+void				print_map(t_info info, int where);
 void				lemin_error(char *error);
 t_node				*hash_insert(t_info info, t_node new_node);
-t_node				hash_retrieve(t_node *table, const char *name, int size);
+t_node				hash_retrieve(t_info info, const char *to_find);
 t_node				*create_resize_hashtable(t_info info);
 t_info				store_node_handler(t_info info, t_node new_node);
 t_node				node_create(char *buf, int node_number);
 t_node				*resize_hashtable(t_info info);
 t_node				*create_table(t_info info);
 t_node				*resize_nodelist(t_info info);
+t_info				create_tubes(t_info info);
+void				comment_mannagement(char *buf);
+t_info				parse_map(t_info info);
+t_info				tube_assign(char *buf, t_info info);
+t_info				swap_end_room(t_info info);
+int					hashtable_key(const char *name);
 
 #endif
