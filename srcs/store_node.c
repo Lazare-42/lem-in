@@ -12,11 +12,12 @@
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
+#include "../libft/includes/libft.h"
 #include <stdlib.h>
 
-const char	*store_start_name(const char *name)
+const char	*set_get_end_name(const char *name)
 {
-	static const char *storage = NULL;
+	static const char	*storage = NULL;
 
 	if (name)
 		storage = name;
@@ -25,8 +26,6 @@ const char	*store_start_name(const char *name)
 
 t_info	store_node_handler(t_info info, t_node new_node)
 {
-	if (new_node.number == 0)
-		store_start_name(new_node.name);
 	if (new_node.number >= info.size)
 	{
 		info.size *= 2;
@@ -35,6 +34,8 @@ t_info	store_node_handler(t_info info, t_node new_node)
 	}
 	info.nodelist[info.n] = new_node;
 	info.hash_table = hash_insert(info, new_node); 
+	if (info.end_room)
+		set_get_end_name(new_node.name);
 	info.n++;
 	return (info);
 }
@@ -99,39 +100,36 @@ t_info	tube_assign(char *buf, t_info info)
 	return (info);
 }
 
+t_info	swap_nodelist_endroom(t_info info)
+{
+	t_node	end_room;
+	t_node	swap;
+
+	end_room = hash_retrieve(info, set_get_end_name(NULL));
+	swap = info.nodelist[info.n - 1];
+	info.nodelist[info.n - 1] = end_room;
+	info.nodelist[end_room.number] = swap;
+	return (info);
+}
+
 t_info	swap_end_room(t_info info)
 {
 	t_node	end_room;
-	int		hash_key;
 	t_node	swap;
-	t_node	tmp;
-
-	end_room = hash_retrieve(info, "end");
-	swap = hash_retrieve(info, swap.name);
+	int		tmp_nbr;
 
 
-	info.nodelist[info.n - 1] = end_room;
-	info.nodelist[end_room.number] = swap;
-
-
-	hash_key = hashtable_key("end") % info.size;
-	end_room = info.hash_table[hash_key];
-
-	if (ft_strcmp("end", info.hash_table[hash_key].name))
-	{
-		while (ft_strcmp("end", end_room.name))
-			end_room = *((t_node*)info.hash_table[hash_key].next);
-	}
-
-	hash_key = hashtable_key(swap.name) % info.size;
-	swap = info.hash_table[hash_key];
-	if (ft_strcmp(swap.name, swap.name))
-	{
-		while (ft_strcmp(swap.name, swap.name))
-			swap = *((t_node*)swap.next);
-	}
-	tmp = swap;
-	swap = end_room;
-	end_room = tmp;
+	swap = info.nodelist[info.n - 1];
+	info = swap_nodelist_endroom(info);
+	end_room = hash_retrieve(info, set_get_end_name(NULL));
+	if (swap.name == end_room.name)
+		return (info);
+	info = hash_delete_elem(info, end_room.name);
+	info = hash_delete_elem(info, swap.name);
+	tmp_nbr = swap.number;
+	swap.number = end_room.number;
+	end_room.number = tmp_nbr;
+	info.hash_table = hash_insert(info, end_room);
+	info.hash_table = hash_insert(info, swap);
 	return (info);
 }

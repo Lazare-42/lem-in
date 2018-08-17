@@ -41,9 +41,12 @@ static t_info	get_rooms(t_info info, char *buf)
 		{
 			if (ft_memcmp(buf, "##end", 5))
 				comment_mannagement(buf);
+			else
+				info.end_room = 1;
 			continue ;
 		}
 		info  = store_node_handler(info, node_create(buf, node_number++));
+		info.end_room = 0;
 	}
 	lemin_error("no tubes after room declaration or GNL return was < 1");
 	return (info);
@@ -53,20 +56,25 @@ t_info			parse_map(t_info info)
 {
 	char	*buf;
 	int		ret;
+	int		started;
 
 	ret = 1;
 	buf = NULL;
+	started = 0;
 	while (ret > 0)
 	{
-		get_next_line(0, &buf, '\n');
+		ret = get_next_line(0, &buf, '\n');
 		if (ret == -1)
 			lemin_error("get_next_line returned -1 in parse_map");
 		if (buf && ft_strstr(buf, "##start"))
 		{
 			info = get_rooms(info, buf);
+			started = 1;
 			ret = 0;
 		}
 		ft_memdel((void**)&buf);
 	}
+	if (!(started))
+		lemin_error("no rooms to start");
 	return (info);
 }

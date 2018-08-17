@@ -56,7 +56,6 @@ t_node	*hash_insert(t_info info, t_node new_node)
 	return (info.hash_table);
 }
 
-
 t_node		hash_retrieve(t_info info, const char *to_find)
 {
 	int		hash_key;
@@ -74,4 +73,26 @@ t_node		hash_retrieve(t_info info, const char *to_find)
 	if (!tmp.name)
 		lemin_error("incorrect room name passed in tubes");
 	return (tmp);
+}
+
+t_info		hash_delete_elem(t_info info, const char *to_find)
+{
+	int		hash_key;
+	t_node	simple_node;
+	t_node	*malloced_node;
+
+	hash_key = hashtable_key(to_find) % info.size;
+	simple_node = info.hash_table[hash_key];
+	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
+	{
+		while (ft_strcmp(to_find, simple_node.name))
+		{
+			simple_node = *((t_node*)info.hash_table[hash_key].next);
+			malloced_node = (t_node*)(info.hash_table[hash_key].next);
+		}
+		ft_memdel((void**)&malloced_node);
+	}
+	else
+		info.hash_table[hash_key].name = NULL;
+	return (info);
 }

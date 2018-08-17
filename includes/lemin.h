@@ -36,6 +36,7 @@ typedef struct		s_info
 {
 	t_node			*hash_table;
 	t_node			*nodelist;
+	int				end_room;
 	int				ant_nbr;
 	int				size;
 	int				n;
@@ -57,5 +58,7 @@ t_info				parse_map(t_info info);
 t_info				tube_assign(char *buf, t_info info);
 t_info				swap_end_room(t_info info);
 int					hashtable_key(const char *name);
+t_info				hash_delete_elem(t_info info, const char *to_find);
+const char			*set_get_end_name(const char *end_name);
 
 #endif

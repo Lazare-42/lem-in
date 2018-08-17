@@ -32,6 +32,7 @@ int		main()
 	t_info	info;
 
 	info.n = 0;
+	info.end_room = 0;
 	info.size = DATA_INITIAL_SIZE;
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);
