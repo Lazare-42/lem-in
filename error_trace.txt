@@ -1,0 +1,19 @@
+incorrect room name passed in tubes
+get_next_line returned -1 in parse_map
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+hash_retrieve error
+hash_retrieve error
+hash_retrieve error
+hash_retrieve error
+hash_retrieve error
+hash_retrieve error
+hash_retrieve error
+hash_retrieve error
+hash_retrieve error

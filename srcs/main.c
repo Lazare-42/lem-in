@@ -38,6 +38,5 @@ int		main()
 	info.nodelist = create_table(info);
 	info = parse_map(info);
 	print_map(info, 0);
-	sleep(30);
 	return (1);
 }

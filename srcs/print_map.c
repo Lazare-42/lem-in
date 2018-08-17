@@ -32,20 +32,51 @@ void	print_rooms(t_info info)
 
 }
 
+void	print_hash_map(t_info info)
+{
+	int i;
+	t_node *tmp;
+
+	i = -1;
+	ft_printf("[[yellow]][[underline]][[bold]]HASHMAP:\n[[end]]");
+	while (++i < info.n)
+	{
+		if (info.hash_table[i].name)
+		{
+			ft_printf("[[green]]%s[[end]]", info.hash_table[i].name);
+			tmp = info.hash_table[i].next;
+			while (tmp)
+			{
+				ft_printf("[[blue]]->[[end]][[green]]%s[[end]]", tmp->name);
+				tmp = tmp->next;
+			}
+			ft_printf("\n");
+		}
+	}
+}
+
 void	print_tubes(t_info info)
 {
 	int		i;
 	int		n;
+	int		square;
 
 	i = -1;
-	ft_printf("This is the adjacence matrix :\n");
+	ft_printf("[[underline]][[cyan]]This is the adjacence matrix :[[end]]\n");
 	ft_printf("%-12s\n", "Room Name :");
 	while (++i < info.n)
 	{
 		n = -1;
 		ft_printf("%-12s", info.nodelist[i].name);
 		while (++n < info.n)
-			ft_printf("%d ", info.nodelist[i].tubes[n]);
+		{
+			if ((square = info.nodelist[i].tubes[n]) && n != i)
+				ft_printf("[[green]][[bold]]%d [[end]]", square);
+			else if (n != i)
+				ft_printf("[[blue]]%d [[end]]", square);
+			else
+				ft_printf("[[magenta]]%d [[end]]", square);
+		}
 		ft_printf("\n");
 	}
 }

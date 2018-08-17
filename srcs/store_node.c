@@ -92,6 +92,7 @@ t_info	tube_assign(char *buf, t_info info)
 	tubes	= NULL;
 	if (!(tubes = ft_strsplit(buf, '-')))
 		lemin_error("error in ft_strsplit called from tube_assign");
+//	ft_printf("tubes : %s %s\n", tubes[0], tubes[1]);
 	tube_1 = hash_retrieve(info, tubes[0]);
 	tube_2 = hash_retrieve(info, tubes[1]);
 	info.nodelist[tube_1.number].tubes[tube_2.number] = 1;
@@ -119,17 +120,19 @@ t_info	swap_end_room(t_info info)
 	int		tmp_nbr;
 
 
+//	print_hash_map(info);
 	swap = info.nodelist[info.n - 1];
 	info = swap_nodelist_endroom(info);
 	end_room = hash_retrieve(info, set_get_end_name(NULL));
 	if (swap.name == end_room.name)
 		return (info);
-	info = hash_delete_elem(info, end_room.name);
-	info = hash_delete_elem(info, swap.name);
+	info.hash_table = hash_delete_elem(info, end_room.name);
+	info.hash_table = hash_delete_elem(info, swap.name);
 	tmp_nbr = swap.number;
 	swap.number = end_room.number;
 	end_room.number = tmp_nbr;
 	info.hash_table = hash_insert(info, end_room);
 	info.hash_table = hash_insert(info, swap);
+	print_hash_map(info);
 	return (info);
 }

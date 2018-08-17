@@ -58,7 +58,8 @@ t_info				parse_map(t_info info);
 t_info				tube_assign(char *buf, t_info info);
 t_info				swap_end_room(t_info info);
 int					hashtable_key(const char *name);
-t_info				hash_delete_elem(t_info info, const char *to_find);
+t_node				*hash_delete_elem(t_info info, const char *to_find);
 const char			*set_get_end_name(const char *end_name);
+void				print_hash_map(t_info info);
 
 #endif

@@ -55,6 +55,42 @@ t_node	*hash_insert(t_info info, t_node new_node)
 		info.hash_table[key] = new_node;
 	return (info.hash_table);
 }
+/*
+t_node		hash_retrieve(t_info info, const char *to_find)
+{
+	int		hash_key;
+	t_node	tmp;
+	t_node	*malloced_node;
+
+	hash_key = hashtable_key(to_find) % info.size;
+	tmp = info.hash_table[hash_key];
+	if (!tmp.name)
+		lemin_error("incorrect room name passed in tubes");
+	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
+	{
+		malloced_node = info.hash_table[hash_key].next;
+		ft_printf("are being found...");
+		while (ft_strcmp(to_find, malloced_node->name) && malloced_node->next)
+		{
+			ft_printf("after a collision with : %s", malloced_node->name);
+//			if (tmp.name)
+//				ft_printf("\n%s : is tmp.name", tmp.name);
+			malloced_node = malloced_node->next;
+//			if (tmp.name)
+//				ft_printf(", %s is tmp.name next\n", tmp.name);
+		}
+		if (ft_strcmp(malloced_node->name, to_find))
+		{
+			ft_printf("ERROR !!Names differ : %s %s\n\n\n\n\n\n", malloced_node->name, to_find);
+		}
+		return (*malloced_node);
+	}
+	if (!tmp.name)
+		lemin_error("incorrect room name passed in tubes");
+	return (tmp);
+}
+*/
+
 
 t_node		hash_retrieve(t_info info, const char *to_find)
 {
@@ -67,32 +103,53 @@ t_node		hash_retrieve(t_info info, const char *to_find)
 		lemin_error("incorrect room name passed in tubes");
 	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
 	{
-		while (ft_strcmp(to_find, tmp.name))
-			tmp = *((t_node*)info.hash_table[hash_key].next);
+		while (ft_strcmp(to_find, tmp.name) && tmp.next)
+			tmp = *tmp.next;
+		if (ft_strcmp(to_find, tmp.name))
+		{
+			ft_printf("%s\n%s\n", to_find, tmp.name);
+			lemin_error("hash_retrieve error");
+		}
 	}
 	if (!tmp.name)
 		lemin_error("incorrect room name passed in tubes");
 	return (tmp);
 }
 
-t_info		hash_delete_elem(t_info info, const char *to_find)
+t_node	*hash_delete_elem(t_info info, const char *to_find)
 {
 	int		hash_key;
 	t_node	simple_node;
 	t_node	*malloced_node;
+	t_node	*tmp;
 
 	hash_key = hashtable_key(to_find) % info.size;
 	simple_node = info.hash_table[hash_key];
+	tmp = NULL;
 	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
 	{
-		while (ft_strcmp(to_find, simple_node.name))
+		malloced_node = info.hash_table[hash_key].next;
+		if (!ft_strcmp(malloced_node->name, to_find))
+			info.hash_table[hash_key].next = NULL;
+		else while (ft_strcmp(malloced_node->name, to_find))
 		{
-			simple_node = *((t_node*)info.hash_table[hash_key].next);
-			malloced_node = (t_node*)(info.hash_table[hash_key].next);
+			tmp = malloced_node;
+			malloced_node = malloced_node->next;
 		}
+		if (tmp)
+			tmp->next = malloced_node->next;
 		ft_memdel((void**)&malloced_node);
 	}
 	else
-		info.hash_table[hash_key].name = NULL;
-	return (info);
+	{
+		if (info.hash_table[hash_key].next)
+		{
+			tmp = info.hash_table[hash_key].next;
+			info.hash_table[hash_key] = *tmp;
+			ft_memdel((void**)&tmp);
+		}
+		else
+			info.hash_table[hash_key].name = NULL;
+	}
+	return (info.hash_table);
 }
