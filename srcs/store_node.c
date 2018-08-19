@@ -14,8 +14,19 @@
 #include "../libft/includes/libft.h"
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
+#include <unistd.h>
+//unistd is for sleep / chechking leaks ; take it away when done
 
 const char	*set_get_end_name(const char *name)
+{
+	static const char	*storage = NULL;
+
+	if (name)
+		storage = name;
+	return (storage);
+}
+
+const char	*set_get_start_name(const char *name)
 {
 	static const char	*storage = NULL;
 
@@ -34,8 +45,13 @@ t_info	store_node_handler(t_info info, t_node new_node)
 	}
 	info.nodelist[info.n] = new_node;
 	info.hash_table = hash_insert(info, new_node); 
-	if (info.end_room)
-		set_get_end_name(new_node.name);
+	if (info.end_begin_room)
+	{
+		if (info.end_begin_room == END)
+			set_get_end_name(new_node.name);
+		else
+			set_get_start_name(new_node.name);
+	}
 	info.n++;
 	return (info);
 }
@@ -92,7 +108,7 @@ t_info	tube_assign(char *buf, t_info info)
 	tubes	= NULL;
 	if (!(tubes = ft_strsplit(buf, '-')))
 		lemin_error("error in ft_strsplit called from tube_assign");
-//	ft_printf("tubes : %s %s\n", tubes[0], tubes[1]);
+	//	ft_printf("tubes : %s %s\n", tubes[0], tubes[1]);
 	tube_1 = hash_retrieve(info, tubes[0]);
 	tube_2 = hash_retrieve(info, tubes[1]);
 	info.nodelist[tube_1.number].tubes[tube_2.number] = 1;
@@ -101,38 +117,54 @@ t_info	tube_assign(char *buf, t_info info)
 	return (info);
 }
 
-t_info	swap_nodelist_endroom(t_info info)
+t_info	swap_nodelist_endroom(t_info info, int start_or_end)
 {
-	t_node	end_room;
+	t_node	end_begin;
 	t_node	swap;
 
-	end_room = hash_retrieve(info, set_get_end_name(NULL));
-	swap = info.nodelist[info.n - 1];
-	info.nodelist[info.n - 1] = end_room;
-	info.nodelist[end_room.number] = swap;
+	if (start_or_end == END)
+	{
+		end_begin = hash_retrieve(info, set_get_end_name(NULL));
+		swap = info.nodelist[info.n - 1];
+		info.nodelist[info.n - 1] = end_begin;
+		info.nodelist[end_begin.number] = swap;
+	}
+	else if (start_or_end == START)
+	{
+		end_begin = hash_retrieve(info, set_get_start_name(NULL));
+		swap = info.nodelist[0];
+		info.nodelist[0] = end_begin;
+		info.nodelist[end_begin.number] = swap;
+	}
 	return (info);
 }
 
-t_info	swap_end_room(t_info info)
+t_info	swap_end_begin_room(t_info info, int start_or_end)
 {
-	t_node	end_room;
-	t_node	swap;
-	int		tmp_nbr;
+	t_node		end_begin;
+	t_node		swap;
+	const char	*name;
+	int			tmp_nbr;
+	int			where;
 
+	where = (start_or_end == START) ? 0 : info.n - 1;
+	name = (start_or_end == START) ? set_get_start_name(NULL) : set_get_end_name(NULL);
 
-//	print_hash_map(info);
-	swap = info.nodelist[info.n - 1];
-	info = swap_nodelist_endroom(info);
-	end_room = hash_retrieve(info, set_get_end_name(NULL));
-	if (swap.name == end_room.name)
-		return (info);
-	info.hash_table = hash_delete_elem(info, end_room.name);
-	info.hash_table = hash_delete_elem(info, swap.name);
-	tmp_nbr = swap.number;
-	swap.number = end_room.number;
-	end_room.number = tmp_nbr;
-	info.hash_table = hash_insert(info, end_room);
-	info.hash_table = hash_insert(info, swap);
-	print_hash_map(info);
+	swap = info.nodelist[where];
+	info = swap_nodelist_endroom(info, start_or_end);
+	end_begin = hash_retrieve(info, name);
+
+	if (swap.name != end_begin.name)
+	{
+		info.hash_table = hash_delete_elem(info, end_begin.name);
+		info.hash_table = hash_delete_elem(info, swap.name);
+		tmp_nbr = swap.number;
+		swap.number = end_begin.number;
+		end_begin.number = tmp_nbr;
+		info.hash_table = hash_insert(info, end_begin);
+		info.hash_table = hash_insert(info, swap);
+	}
+	if (start_or_end == START)
+		return (swap_end_begin_room(info, END));
 	return (info);
 }

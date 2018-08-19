@@ -14,9 +14,10 @@
 # define LEMIN_H
 
 # define DATA_MULTIPLIER 37
-# define END 230982
+# define END -1
+# define START 1
 # define BEGINNING 34303
-# define DATA_INITIAL_SIZE 1024
+# define DATA_INITIAL_SIZE 256
 # define GROWTH_FACTOR 2
 
 typedef	struct		s_node t_node;
@@ -36,7 +37,7 @@ typedef struct		s_info
 {
 	t_node			*hash_table;
 	t_node			*nodelist;
-	int				end_room;
+	int				end_begin_room;
 	int				ant_nbr;
 	int				size;
 	int				n;
@@ -61,5 +62,8 @@ int					hashtable_key(const char *name);
 t_node				*hash_delete_elem(t_info info, const char *to_find);
 const char			*set_get_end_name(const char *end_name);
 void				print_hash_map(t_info info);
+t_info				swap_end_begin_room(t_info info, int start_or_end);
+const char			*set_get_end_name(const char *name);
+const char			*set_get_start_name(const char *name);
 
 #endif

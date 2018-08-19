@@ -17,3 +17,49 @@ hash_retrieve error
 hash_retrieve error
 hash_retrieve error
 hash_retrieve error
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+no rooms to start
+hash_retrieve error
+hash_retrieve error
+hash_retrieve error
+incorrect room name passed in tubes
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+incorrect room name passed in tubes
+First line must be ant number.You cannot pass 0 ants

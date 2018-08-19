@@ -32,11 +32,13 @@ int		main()
 	t_info	info;
 
 	info.n = 0;
-	info.end_room = 0;
+	info.end_begin_room = 0;
 	info.size = DATA_INITIAL_SIZE;
+	info.ant_nbr = 0;
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);
 	info = parse_map(info);
+	print_hash_map(info);
 	print_map(info, 0);
 	return (1);
 }

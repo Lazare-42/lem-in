@@ -1,0 +1,26 @@
+Mmain	main.c	/^int		main()$/
+comment_mannagement	main.c	/^void	comment_mannagement(char *buf)$/
+create_table	data_structure_operations.c	/^t_node	*create_table(t_info info)$/
+create_tubes	store_node.c	/^t_info	create_tubes(t_info info)$/
+get_rooms	parsing.c	/^static t_info	get_rooms(t_info info, char *buf)$/
+get_tubes	parsing.c	/^static t_node	*get_tubes(t_info info, char *buf)$/
+hash_delete_elem	hashtable.c	/^t_node	*hash_delete_elem(t_info info, const char */
+hash_insert	hashtable.c	/^t_node	*hash_insert(t_info info, t_node new_node)$/
+hash_retrieve	hashtable.c	/^t_node		hash_retrieve(t_info info, const char *to_/
+hashtable_key	hashtable.c	/^int		hashtable_key(const char *name)$/
+lemin_error	error_func.c	/^void	lemin_error(char *error)$/
+node_create	store_node.c	/^t_node	node_create(char *buf, int node_number)$/
+old_hashtable_memdel	data_structure_operations.c	/^static void	old_hashtable_memdel(t_info info, t_no/
+parse_map	parsing.c	/^t_info			parse_map(t_info info)$/
+print_hash_map	print_map.c	/^void	print_hash_map(t_info info)$/
+print_map	print_map.c	/^void	print_map(t_info info, int to_print)$/
+print_rooms	print_map.c	/^void	print_rooms(t_info info)$/
+print_tubes	print_map.c	/^void	print_tubes(t_info info)$/
+resize_hashtable	data_structure_operations.c	/^t_node		*resize_hashtable(t_info info)$/
+resize_nodelist	data_structure_operations.c	/^t_node	*resize_nodelist(t_info info)$/
+set_get_end_name	store_node.c	/^const char	*set_get_end_name(const char *name)$/
+set_get_start_name	store_node.c	/^const char	*set_get_start_name(const char *name)$/
+store_node_handler	store_node.c	/^t_info	store_node_handler(t_info info, t_node new_/
+swap_end_begin_room	store_node.c	/^t_info	swap_end_begin_room(t_info info, int start_/
+swap_nodelist_endroom	store_node.c	/^t_info	swap_nodelist_endroom(t_info info)$/
+tube_assign	store_node.c	/^t_info	tube_assign(char *buf, t_info info)$/

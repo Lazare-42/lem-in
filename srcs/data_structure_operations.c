@@ -26,6 +26,7 @@ t_node		*resize_hashtable(t_info info)
 {
 	int		i;
 	t_node	*collisioned_node;
+	t_node	*tmp;
 	t_node	*new_hashtable;
 	t_node	*old_hashtable;
 
@@ -38,11 +39,14 @@ t_node		*resize_hashtable(t_info info)
 		if (old_hashtable[i].name)
 		{
 			collisioned_node = old_hashtable[i].next;
+			old_hashtable[i].next = NULL;
 			new_hashtable = hash_insert(info, old_hashtable[i]); 
 			while (collisioned_node)
 			{
+				tmp = collisioned_node->next;
+				collisioned_node->next = NULL;
 				new_hashtable = hash_insert(info, *collisioned_node); 
-				collisioned_node = collisioned_node->next;
+				collisioned_node = tmp;
 			}
 		}
 	}
