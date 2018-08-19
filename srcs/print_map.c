@@ -64,7 +64,7 @@ void	print_hash_map(t_info info)
 					ft_printf("[[blue]]->   [[end]][[green]]%s", tmp->name);
 				else
 					ft_printf("[[blue]]->   [[end]][[yellow]]%s", tmp->name);
-				ft_printf("[[end]][[italic]]°%-6d[[end]]", info.nodelist[tmp->number].number);
+				ft_printf("[[end]][[italic]]°%-6d[[end]]", tmp->number);
 				tmp = tmp->next;
 			}
 			ft_printf("\n");

@@ -3,7 +3,7 @@
 #include <unistd.h>
 //unistd is for sleep / chechking leaks ; take it away when done
 
-static t_node	*get_tubes(t_info info, char *buf)
+static t_info	get_tubes(t_info info, char *buf)
 {
 	int		ret;
 
@@ -13,13 +13,13 @@ static t_node	*get_tubes(t_info info, char *buf)
 	while (ret > 0)
 	{
 		if (buf[0] == '#')
-			comment_mannagement(buf);
+			info = comment_mannagement(buf, info);
 		else
 			info = tube_assign(buf, info);
 		ft_memdel((void**)&buf);
 		ret = get_next_line(0, &buf, '\n');
 	}
-	return (info.nodelist);
+	return (info);
 }
 
 static t_info	get_rooms(t_info info, char *buf)
@@ -32,19 +32,9 @@ static t_info	get_rooms(t_info info, char *buf)
 	while (ret > 0)
 	{
 		if (ret > 0 && ft_strchr(buf, '-'))
-		{
-			info.nodelist = (get_tubes(info, buf));
-			return (info);
-		}
+			return ((get_tubes(info, buf)));
 		else if (ret > 0 && buf[0] == '#')
-		{
-			if (ft_memcmp(buf, "##end", 5) && ft_memcmp(buf, "##start", 7))
-				comment_mannagement(buf);
-			if (ft_strequ(buf, "##end"))
-				info.end_begin_room = END;
-			else
-				info.end_begin_room = START;
-		}
+			info = comment_mannagement(buf, info);
 		else
 		{
 			info  = store_node_handler(info, node_create(buf, node_number++));
@@ -69,9 +59,9 @@ t_info			parse_map(t_info info)
 		ret = get_next_line(0, &buf, '\n');
 		if (ret <= 0)
 			lemin_error("get_next_line returned -1 in parse_map or void_map");
-		if (buf[0] == '#' && ft_strcmp(buf, "##start") && ft_strcmp(buf, "##end"))
-			comment_mannagement(buf);
-		else if (!info.ant_nbr)
+		if (buf[0] == '#')
+			info = comment_mannagement(buf, info);
+		if (!info.ant_nbr)
 		{
 			if (!(info.ant_nbr = ft_atoi(buf)))
 				lemin_error("First line must be ant number > 0");

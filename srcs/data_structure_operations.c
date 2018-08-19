@@ -22,11 +22,26 @@ static void	old_hashtable_memdel(t_info info, t_node **old_hashtable)
 	ft_memdel((void**)old_hashtable);
 }
 
+t_node		*collisioned_node_reinsertion(t_node *collisioned_node,
+		t_node *new_hashtable, t_info info)
+{
+	t_node	*tmp;
+
+	while (collisioned_node)
+	{
+		tmp = collisioned_node->next;
+		collisioned_node->next = NULL;
+		new_hashtable = hash_insert(info, *collisioned_node); 
+		ft_memdel((void**)&collisioned_node);
+		collisioned_node = tmp;
+	}
+	return (new_hashtable);
+}
+
 t_node		*resize_hashtable(t_info info)
 {
 	int		i;
 	t_node	*collisioned_node;
-	t_node	*tmp;
 	t_node	*new_hashtable;
 	t_node	*old_hashtable;
 
@@ -41,14 +56,9 @@ t_node		*resize_hashtable(t_info info)
 			collisioned_node = old_hashtable[i].next;
 			old_hashtable[i].next = NULL;
 			new_hashtable = hash_insert(info, old_hashtable[i]); 
-			while (collisioned_node)
-			{
-				tmp = collisioned_node->next;
-				collisioned_node->next = NULL;
-				new_hashtable = hash_insert(info, *collisioned_node); 
-				ft_memdel((void**)&collisioned_node);
-				collisioned_node = tmp;
-			}
+			if (collisioned_node)
+				collisioned_node_reinsertion
+				(collisioned_node, new_hashtable, info);
 		}
 	}
 	old_hashtable_memdel(info, &old_hashtable);

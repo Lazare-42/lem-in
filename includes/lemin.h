@@ -55,7 +55,7 @@ t_node				*resize_hashtable(t_info info);
 t_node				*create_table(t_info info);
 t_node				*resize_nodelist(t_info info);
 t_info				create_tubes(t_info info);
-void				comment_mannagement(char *buf);
+t_info				comment_mannagement(char *buf, t_info info);
 t_info				parse_map(t_info info);
 t_info				tube_assign(char *buf, t_info info);
 t_info				swap_end_room(t_info info);

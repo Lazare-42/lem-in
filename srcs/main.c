@@ -16,13 +16,19 @@
 #include <unistd.h>
 //unistd is for sleep / chechking leaks ; take it away when done
 
-void	comment_mannagement(char *buf)
+t_info	comment_mannagement(char *buf, t_info info)
 {
-	// Attention : you need to strdup buf if you want to use the commentary
-	if (ft_strlen(buf) >= 2)
+	if (ft_memcmp(buf, "##end", 5) && ft_memcmp(buf, "##start", 7))
+	{
 		(void)buf;
-	else
-		lemin_error(buf);
+	// Attention : you need to strdup buf if you want to use the commentary
+
+	}
+	if (ft_strequ(buf, "##end"))
+		info.end_begin_room = END;
+	else if (ft_strequ(buf, "##start"))
+		info.end_begin_room = START;
+	return (info);
 }
 
 
@@ -39,7 +45,7 @@ int		main()
 	info.nodelist = create_table(info);
 	info = parse_map(info);
 	print_hash_map(info);
-sleep(130);
-//	print_map(info, 0);
+	print_map(info, 0);
+	sleep(130);
 	return (1);
 }
