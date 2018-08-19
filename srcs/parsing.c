@@ -1,7 +1,5 @@
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
-#include <unistd.h>
-//unistd is for sleep / chechking leaks ; take it away when done
 
 static t_info	get_tubes(t_info info, char *buf)
 {

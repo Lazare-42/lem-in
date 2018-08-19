@@ -14,7 +14,7 @@
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
 
-int		hashtable_key(const char *name)
+int				hashtable_key(const char *name)
 {
 	unsigned const char *string;
 	int					pos;
@@ -33,7 +33,7 @@ int		hashtable_key(const char *name)
 	return (pos);
 }
 
-t_node	*hash_insert(t_info info, t_node new_node)
+t_node			*hash_insert(t_info info, t_node new_node)
 {
 	int		key;
 	t_node	*tmp;
@@ -41,7 +41,8 @@ t_node	*hash_insert(t_info info, t_node new_node)
 
 	new_node.next = NULL;
 	key = hashtable_key(new_node.name) % info.size;
-	if (info.hash_table[key].name && ft_strcmp(new_node.name, info.hash_table[key].name))
+	if (info.hash_table[key].name
+			&& ft_strcmp(new_node.name, info.hash_table[key].name))
 	{
 		tmp = &info.hash_table[key];
 		while (tmp->next)
@@ -56,7 +57,7 @@ t_node	*hash_insert(t_info info, t_node new_node)
 	return (info.hash_table);
 }
 
-t_node		hash_retrieve(t_info info, const char *to_find)
+t_node			hash_retrieve(t_info info, const char *to_find)
 {
 	int		hash_key;
 	t_node	tmp;
@@ -80,30 +81,38 @@ t_node		hash_retrieve(t_info info, const char *to_find)
 	return (tmp);
 }
 
-t_node	*hash_delete_elem(t_info info, const char *to_find)
+static t_node	*list_search_to_del(t_info info, const char *to_find,
+		int hash_key)
+{
+	t_node *tmp;
+	t_node	*malloced_node;
+
+	tmp = NULL;
+	malloced_node = info.hash_table[hash_key].next;
+	if (!ft_strcmp(malloced_node->name, to_find))
+		info.hash_table[hash_key].next = NULL;
+	else while (ft_strcmp(malloced_node->name, to_find))
+	{
+		tmp = malloced_node;
+		malloced_node = malloced_node->next;
+	}
+	if (tmp)
+		tmp->next = malloced_node->next;
+	ft_memdel((void**)&malloced_node);
+	return (info.hash_table);
+}
+
+t_node			*hash_delete_elem(t_info info, const char *to_find)
 {
 	int		hash_key;
 	t_node	simple_node;
-	t_node	*malloced_node;
 	t_node	*tmp;
 
 	hash_key = hashtable_key(to_find) % info.size;
 	simple_node = info.hash_table[hash_key];
 	tmp = NULL;
 	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
-	{
-		malloced_node = info.hash_table[hash_key].next;
-		if (!ft_strcmp(malloced_node->name, to_find))
-			info.hash_table[hash_key].next = NULL;
-		else while (ft_strcmp(malloced_node->name, to_find))
-		{
-			tmp = malloced_node;
-			malloced_node = malloced_node->next;
-		}
-		if (tmp)
-			tmp->next = malloced_node->next;
-		ft_memdel((void**)&malloced_node);
-	}
+		info.hash_table = list_search_to_del(info, to_find, hash_key);
 	else
 	{
 		if (info.hash_table[hash_key].next)

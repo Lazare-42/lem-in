@@ -16,8 +16,7 @@
 # define DATA_MULTIPLIER 37
 # define END -1
 # define START 1
-# define BEGINNING 34303
-# define DATA_INITIAL_SIZE 2
+# define DATA_INITIAL_SIZE 256
 # define GROWTH_FACTOR 2
 
 typedef	struct		s_node t_node;

@@ -31,8 +31,6 @@ t_info	comment_mannagement(char *buf, t_info info)
 	return (info);
 }
 
-
-
 int		main()
 {
 	t_info	info;
@@ -44,8 +42,10 @@ int		main()
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);
 	info = parse_map(info);
+	/* !! */
 	print_hash_map(info);
 	print_map(info, 0);
 	sleep(130);
+	/* !! */
 	return (1);
 }
