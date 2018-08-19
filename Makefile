@@ -7,6 +7,7 @@ SOURCES =	main.c \
 			store_node.c \
 			print_map.c \
 			parsing.c \
+			swap_end_begin_rooms.c \
 
 
 LIBDIR = libft

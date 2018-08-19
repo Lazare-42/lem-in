@@ -46,6 +46,7 @@ t_node		*resize_hashtable(t_info info)
 				tmp = collisioned_node->next;
 				collisioned_node->next = NULL;
 				new_hashtable = hash_insert(info, *collisioned_node); 
+				ft_memdel((void**)&collisioned_node);
 				collisioned_node = tmp;
 			}
 		}

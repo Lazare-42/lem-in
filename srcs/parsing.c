@@ -8,7 +8,6 @@ static t_node	*get_tubes(t_info info, char *buf)
 	int		ret;
 
 	info = swap_end_begin_room(info, START);
-	//	sleep(30);
 	info = create_tubes(info);
 	ret = 1;
 	while (ret > 0)
