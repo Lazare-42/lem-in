@@ -63,10 +63,10 @@ t_node	node_create(char *buf, int node_number)
 
 
 	new_node.number = node_number;
-	new_node.weight = NULL;
 	new_node.name = NULL;
-	new_node.path_marker = NULL;
 	name_and_pos = NULL;
+	new_node.path_marker = NULL;
+	new_node.weight = NULL;
 	if (!(name_and_pos = ft_split_whitespaces(buf)))
 		lemin_error("error in split whitespaces in node_create");
 	new_node.name = name_and_pos[0];
