@@ -39,7 +39,7 @@ typedef struct		s_info
 	t_node			*nodelist;
 	int				end_begin_room;
 	int				ant_nbr;
-	int				size;
+	int				tab_size;
 	int				n;
 }					t_info;
 

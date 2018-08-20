@@ -37,9 +37,9 @@ const char	*set_get_start_name(const char *name)
 
 t_info	store_node_handler(t_info info, t_node new_node)
 {
-	if (new_node.number >= info.size)
+	if (new_node.number >= info.tab_size)
 	{
-		info.size *= 2;
+		info.tab_size *= 2;
 		info.nodelist = resize_nodelist(info);
 		info.hash_table = resize_hashtable(info);
 	}

@@ -14,7 +14,7 @@ void	print_rooms(t_info info)
 	}
 	i = 0;
 	t_node *tmp;
-	while (i < info.size)
+	while (i < info.tab_size)
 	{
 		if (info.hash_table[i].name)
 			ft_printf("[[~/Documents/42/lem-in/map_hash.txt]]%10s is room name, %d x %d y\n",
@@ -27,29 +27,29 @@ void	print_rooms(t_info info)
 		}
 		i++;
 	}
-	ft_printf("[[~/Documents/42/lem-in/map_hash.txt]]%d is list size %d is list node numbers\n", info.size, info.n);
-	ft_printf("[[~/Documents/42/lem-in/map.txt]]%d is list size %d is list node numbers\n", info.size, info.n);
+	ft_printf("[[~/Documents/42/lem-in/map_hash.txt]]%d is list tab_size %d is list node numbers\n", info.tab_size, info.n);
+	ft_printf("[[~/Documents/42/lem-in/map.txt]]%d is list tab_size %d is list node numbers\n", info.tab_size, info.n);
 
 }
 
 void	print_hash_map(t_info info)
 {
 	int i;
-	int	null_size;
+	int	null_tab_size;
 	int	elem_number;
 	t_node *tmp;
 
 	i = -1;
-	null_size = 0;
+	null_tab_size = 0;
 	elem_number = 0;
 	ft_printf("[[yellow]][[underline]][[bold]]HASHMAP:\n[[end]]");
-	while (++i < info.size)
+	while (++i < info.tab_size)
 	{
 		if (info.hash_table[i].name)
 		{
-			if (null_size)
-				ft_printf("[[magenta]][null] * % -d\n[[end]]", null_size);
-			null_size = 0;
+			if (null_tab_size)
+				ft_printf("[[magenta]][null] * % -d\n[[end]]", null_tab_size);
+			null_tab_size = 0;
 			if ((ft_strcmp(info.hash_table[i].name, (set_get_end_name(NULL))) && ft_strcmp(info.hash_table[i].name, set_get_start_name(NULL))))
 				ft_printf("[[green]]%s[[end]]", info.hash_table[i].name);
 			else
@@ -70,7 +70,7 @@ void	print_hash_map(t_info info)
 			ft_printf("\n");
 		}
 		else
-			null_size++;
+			null_tab_size++;
 	}
 	ft_printf("[[bold]][[underline]]Total elements[[end]] : [[red]][[italic]]%d\n[[end]]", elem_number);
 }

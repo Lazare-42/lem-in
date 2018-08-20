@@ -37,7 +37,7 @@ int		main()
 
 	info.n = 0;
 	info.end_begin_room = 0;
-	info.size = DATA_INITIAL_SIZE;
+	info.tab_size = DATA_INITIAL_SIZE;
 	info.ant_nbr = 0;
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);

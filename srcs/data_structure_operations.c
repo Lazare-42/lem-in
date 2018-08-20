@@ -9,7 +9,7 @@ static void	old_hashtable_memdel(t_info info, t_node **old_hashtable)
 	t_node	*to_del;
 
 	i = -1;
-	while (++i < info.size / 2)
+	while (++i < info.tab_size / 2)
 	{
 		tmp = (*old_hashtable)[i].next;
 		while (tmp)
@@ -49,7 +49,7 @@ t_node		*resize_hashtable(t_info info)
 	old_hashtable = info.hash_table;
 	new_hashtable = create_table(info);
 	info.hash_table = new_hashtable;
-	while (++i < info.size / 2)
+	while (++i < info.tab_size / 2)
 	{
 		if (old_hashtable[i].name)
 		{
@@ -74,9 +74,9 @@ t_node	*resize_nodelist(t_info info)
 	i = -1;
 	void_node.name = NULL;
 	new_nodelist = create_table(info);
-	while (++i < info.size / 2)
+	while (++i < info.tab_size / 2)
 		new_nodelist[i] = info.nodelist[i];
-	while (++i < info.size)
+	while (++i < info.tab_size)
 		new_nodelist[i] = void_node;
 	ft_memdel((void**)&info.nodelist);
 	return (new_nodelist);
@@ -91,10 +91,10 @@ t_node	*create_table(t_info info)
 	new_nodelist = NULL;
 	void_node.name = NULL;
 	void_node.next = NULL;
-	if (!(new_nodelist = malloc(sizeof(t_node) * info.size)))
-		lemin_error("malloc error in resize_nodelist");
+	if (!(new_nodelist = malloc(sizeof(t_node) * info.tab_size)))
+		lemin_error("malloc error in retab_size_nodelist");
 	i = -1;
-	while (++i < info.size)
+	while (++i < info.tab_size)
 		new_nodelist[i] = void_node;
 	return (new_nodelist);
 }

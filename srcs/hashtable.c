@@ -40,7 +40,7 @@ t_node			*hash_insert(t_info info, t_node new_node)
 	t_node	*new;
 
 	new_node.next = NULL;
-	key = hashtable_key(new_node.name) % info.size;
+	key = hashtable_key(new_node.name) % info.tab_size;
 	if (info.hash_table[key].name
 			&& ft_strcmp(new_node.name, info.hash_table[key].name))
 	{
@@ -62,10 +62,10 @@ t_node			hash_retrieve(t_info info, const char *to_find)
 	int		hash_key;
 	t_node	tmp;
 
-	hash_key = hashtable_key(to_find) % info.size;
+	hash_key = hashtable_key(to_find) % info.tab_size;
 	tmp = info.hash_table[hash_key];
 	if (!tmp.name)
-		lemin_error("incorrect room name passed in tubes");
+		lemin_error("incoreect room name passed in tubes");
 	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
 	{
 		while (ft_strcmp(to_find, tmp.name) && tmp.next)
@@ -108,7 +108,7 @@ t_node			*hash_delete_elem(t_info info, const char *to_find)
 	t_node	simple_node;
 	t_node	*tmp;
 
-	hash_key = hashtable_key(to_find) % info.size;
+	hash_key = hashtable_key(to_find) % info.tab_size;
 	simple_node = info.hash_table[hash_key];
 	tmp = NULL;
 	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
