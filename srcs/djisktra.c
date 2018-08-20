@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:13:28 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/20 17:50:50 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/20 18:04:40 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,18 @@ t_info	djisktra(t_info info)
 		ft_printf("NO_PATH");
 	else
 	{
+		info.shortest_path = 2;
+		ft_printf("[%s]->", info.nodelist[info.n - 1].name); 
 		path = info.nodelist[info.n - 1].path_marker[0][0][0];
 		while (path != 0)
 		{
-			ft_printf("[%d]", path); 
+			ft_printf("[%s]", info.nodelist[path].name); 
 			path = info.nodelist[path].path_marker[0][0][0];
 			ft_printf("->"); 
+			info.shortest_path++;
 		}
-		ft_printf("[%d]\n", 0); 
+		ft_printf("[%s]\n", info.nodelist[0].name); 
+		ft_printf("The shortest path length is : %d. This makes up for a travel time of %d\n", info.shortest_path, info.shortest_path - 1 + info.ant_nbr - 1);
 	}
 	return (info);
 }

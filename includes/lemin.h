@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/20 17:41:10 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/20 17:58:48 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct		s_info
 	int				end_begin_room;
 	int				ant_nbr;
 	int				tab_size;
+	int				shortest_path;
 	int				n;
 }					t_info;
 
