@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/13 19:01:01 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/20 17:41:10 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,10 @@
 # define LEMIN_H
 
 # define DATA_MULTIPLIER 37
+#define NO_PATH 1231501
 # define END -1
 # define START 1
-# define DATA_INITIAL_SIZE 256
+# define DATA_INITIAL_SIZE 2
 # define GROWTH_FACTOR 2
 
 typedef	struct		s_node t_node;
@@ -64,6 +65,7 @@ const char			*set_get_end_name(const char *end_name);
 void				print_hash_map(t_info info);
 t_info				swap_end_begin_room(t_info info, int start_or_end);
 const char			*set_get_end_name(const char *name);
+t_info				djisktra(t_info info);
 const char			*set_get_start_name(const char *name);
 
 #endif

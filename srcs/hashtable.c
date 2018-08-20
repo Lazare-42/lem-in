@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 15:54:19 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/14 14:35:59 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/20 14:03:54 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,15 +66,10 @@ t_node			hash_retrieve(t_info info, const char *to_find)
 	tmp = info.hash_table[hash_key];
 	if (!tmp.name)
 		lemin_error("incoreect room name passed in tubes");
-	if (ft_strcmp(to_find, info.hash_table[hash_key].name))
+	if (to_find[0] != tmp.name[0] && ft_strcmp(to_find, tmp.name))
 	{
-		while (ft_strcmp(to_find, tmp.name) && tmp.next)
+		while (ft_strcmp(to_find, tmp.name))
 			tmp = *tmp.next;
-		if (ft_strcmp(to_find, tmp.name))
-		{
-			ft_printf("%s\n%s\n", to_find, tmp.name);
-			lemin_error("hash_retrieve error");
-		}
 	}
 	if (!tmp.name)
 		lemin_error("incorrect room name passed in tubes");

@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/13 19:01:28 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/20 17:53:05 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,11 @@ int		main()
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);
 	info = parse_map(info);
+	info = djisktra(info);
 	/* !! */
-	print_hash_map(info);
-	print_map(info, 0);
-	sleep(130);
+//	print_hash_map(info);
+//	print_map(info, 0);
+//	sleep(130);
 	/* !! */
 	return (1);
 }
