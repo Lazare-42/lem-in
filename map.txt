@@ -1,5 +1,5 @@
      start is room name, 0 x 1 y
-       end is room name, 1 x 0 y
+       999 is room name, 999 x 999 y
          0 is room name, 0 x 0 y
          1 is room name, 1 x 1 y
          2 is room name, 2 x 2 y
@@ -999,5 +999,5 @@
        996 is room name, 996 x 996 y
        997 is room name, 997 x 997 y
        998 is room name, 998 x 998 y
-       999 is room name, 999 x 999 y
-1024 is list size 1002 is list node numbers
+       end is room name, 1 x 0 y
+1024 is list tab_size 1002 is list node numbers

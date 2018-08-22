@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:05:33 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/20 17:15:53 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/21 14:30:05 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static t_info	get_rooms(t_info info, char *buf)
 	node_number = 0;
 	while (ret > 0)
 	{
+		debug();
+		ft_printf("%s\n", buf);
 		if (ret > 0 && ft_strchr(buf, '-'))
 			return ((get_tubes(info, buf)));
 		else if (ret > 0 && buf[0] == '#')

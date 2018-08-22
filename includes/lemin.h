@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/20 17:58:48 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/21 13:46:32 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #define NO_PATH 1231501
 # define END -1
 # define START 1
-# define DATA_INITIAL_SIZE 2
+# define DATA_INITIAL_SIZE 1024
 # define GROWTH_FACTOR 2
 
 typedef	struct		s_node t_node;
@@ -33,6 +33,13 @@ typedef	struct		s_node
 	int				***path_marker;
 	t_node			*next;
 }					t_node;
+
+typedef struct		s_path
+{
+	int				node;
+	int				node_from;
+	int				weight_number;
+}					t_path;
 
 typedef struct		s_info
 {
