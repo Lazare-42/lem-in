@@ -125,6 +125,7 @@ SRCS =			ft_advance_for_quotes.c \
 				store_nbr_data.c \
 				store_char_data.c \
 				ft_printf.c \
+				ft_dprintf.c \
 				get_modifiers.c \
 				parsing.c \
 				precision_width.c \

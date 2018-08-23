@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 09:08:31 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/07/25 15:45:11 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/23 12:39:06 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 #include "../includes/libft.h"
 #include <unistd.h>
 
-static void	find_arg_len(va_list ap, t_printf *argument_specs)
+void		find_arg_len(va_list ap, t_printf *argument_specs)
 {
 	va_list copy;
 
@@ -37,7 +37,7 @@ static void	find_arg_len(va_list ap, t_printf *argument_specs)
 		argument_specs->arg_len = get_char_len(copy, argument_specs);
 }
 
-static void	parsing_handler(const char *format, va_list ap, t_str *argument_str)
+void		parsing_handler(const char *format, va_list ap, t_str *argument_str)
 {
 	t_printf	argument_specs;
 

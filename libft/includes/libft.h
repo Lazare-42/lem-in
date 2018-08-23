@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 15:27:37 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/10 23:39:47 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/23 12:37:33 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,4 +240,8 @@ void				*ft_symetric_byte_swap(void	*ptr, int size);
 int					ft_check_endianness(void);
 char				*print_bits(void *ptr, int size);
 t_color_compound	ft_decompose_color(int color);
+void				find_arg_len(va_list ap, t_printf *argument_specs);
+void				parsing_handler(const char *format,
+		va_list ap, t_str *argument_str);
+int					ft_dprintf(int fd, const char *restrict format, ...);
 #endif
