@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/21 13:46:32 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/25 19:53:57 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,5 +75,6 @@ t_info				swap_end_begin_room(t_info info, int start_or_end);
 const char			*set_get_end_name(const char *name);
 t_info				djisktra(t_info info);
 const char			*set_get_start_name(const char *name);
+void				print_map_visualizer(t_info info);
 
 #endif

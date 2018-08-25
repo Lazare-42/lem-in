@@ -1,27 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_func.c                                       :+:      :+:    :+:   */
+/*   print_map_visualizer.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/08/11 14:03:10 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/25 20:30:07 by lazrossi         ###   ########.fr       */
+/*   Created: 2018/08/25 19:44:21 by lazrossi          #+#    #+#             */
+/*   Updated: 2018/08/25 20:28:38 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
-#include <unistd.h>
 #include <fcntl.h>
+#include <unistd.h>
 
-void	lemin_error(char *error)
+#include <stdio.h>
+void	print_map_visualizer(t_info info)
 {
-	int fd;
+	int i;
+	int	j;
+	int	fd;
 
-	fd = open("/Users/lazrossi/Documents/42/lem-in/error_trace.txt",
+	i = 0;
+	fd = open("/Users/lazrossi/Documents/42/lem-in/output.map",
 			O_CREAT | O_RDWR | O_TRUNC, S_IRWXU);
-	ft_dprintf(fd, "%s\n", error);
+	ft_dprintf(fd, "%d\n", info.n);
+	while (i < info.n)
+	{
+		ft_dprintf(fd, "%s %d %d", info.nodelist[i].name, info.nodelist[i].x, info.nodelist[i].y);
+		j = 0;
+		while (j < info.n)
+		{
+			ft_dprintf(fd, " %d ", info.nodelist[i].tubes[j]);
+			j++;
+		}
+		ft_dprintf(fd, "\n");
+		i++;
+	}
 	close(fd);
-	ft_myexit("ERROR");
 }

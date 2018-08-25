@@ -9,6 +9,7 @@ SOURCES =	main.c \
 			parsing.c \
 			swap_end_begin_rooms.c \
 			djisktra.c \
+			print_map_visualizer.c \
 
 
 LIBDIR = libft

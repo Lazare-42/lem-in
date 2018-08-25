@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:13:28 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/21 14:22:26 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/25 19:27:13 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ t_info	djisktra(t_info info)
 	j = 0;
 	path = NO_PATH;
 //	print_map(info, 2);
+//	print_hash_map(info);
 	while (i < info.n)
 	{
 		if (info.nodelist[0].tubes[i])

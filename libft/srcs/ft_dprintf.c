@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/25 09:08:31 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/23 12:37:43 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/25 20:08:51 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,5 @@ int			ft_dprintf(int fd, const char *restrict format, ...)
 	va_start(ap, format);
 	return_val = launch_string_print(format, ap, &argument_str, 0);
 	va_end(ap);
-	if (set_get_fd(0) != 1)
-		close(set_get_fd(0));
 	return (return_val);
 }

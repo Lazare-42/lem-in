@@ -1,26 +1,40 @@
-Mmain	main.c	/^int		main()$/
-comment_mannagement	main.c	/^void	comment_mannagement(char *buf)$/
-create_table	data_structure_operations.c	/^t_node	*create_table(t_info info)$/
-create_tubes	store_node.c	/^t_info	create_tubes(t_info info)$/
-get_rooms	parsing.c	/^static t_info	get_rooms(t_info info, char *buf)$/
-get_tubes	parsing.c	/^static t_node	*get_tubes(t_info info, char *buf)$/
-hash_delete_elem	hashtable.c	/^t_node	*hash_delete_elem(t_info info, const char */
-hash_insert	hashtable.c	/^t_node	*hash_insert(t_info info, t_node new_node)$/
-hash_retrieve	hashtable.c	/^t_node		hash_retrieve(t_info info, const char *to_/
-hashtable_key	hashtable.c	/^int		hashtable_key(const char *name)$/
-lemin_error	error_func.c	/^void	lemin_error(char *error)$/
-node_create	store_node.c	/^t_node	node_create(char *buf, int node_number)$/
-old_hashtable_memdel	data_structure_operations.c	/^static void	old_hashtable_memdel(t_info info, t_no/
-parse_map	parsing.c	/^t_info			parse_map(t_info info)$/
-print_hash_map	print_map.c	/^void	print_hash_map(t_info info)$/
-print_map	print_map.c	/^void	print_map(t_info info, int to_print)$/
-print_rooms	print_map.c	/^void	print_rooms(t_info info)$/
-print_tubes	print_map.c	/^void	print_tubes(t_info info)$/
-resize_hashtable	data_structure_operations.c	/^t_node		*resize_hashtable(t_info info)$/
-resize_nodelist	data_structure_operations.c	/^t_node	*resize_nodelist(t_info info)$/
-set_get_end_name	store_node.c	/^const char	*set_get_end_name(const char *name)$/
-set_get_start_name	store_node.c	/^const char	*set_get_start_name(const char *name)$/
-store_node_handler	store_node.c	/^t_info	store_node_handler(t_info info, t_node new_/
-swap_end_begin_room	store_node.c	/^t_info	swap_end_begin_room(t_info info, int start_/
-swap_nodelist_endroom	store_node.c	/^t_info	swap_nodelist_endroom(t_info info)$/
-tube_assign	store_node.c	/^t_info	tube_assign(char *buf, t_info info)$/
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+collisioned_node_reinsertion	data_structure_operations.c	/^t_node		*collisioned_node_reinsertion(t_node *collisioned_node,$/;"	f
+comment_mannagement	main.c	/^t_info	comment_mannagement(char *buf, t_info info)$/;"	f
+create_table	data_structure_operations.c	/^t_node	*create_table(t_info info)$/;"	f
+create_tubes	store_node.c	/^t_info	create_tubes(t_info info)$/;"	f
+djisktra	djisktra.c	/^t_info	djisktra(t_info info)$/;"	f
+djisktra	new_djisktra.c	/^t_info	djisktra(t_info info)$/;"	f
+get_rooms	parsing.c	/^static t_info	get_rooms(t_info info, char *buf)$/;"	f	file:
+get_tubes	parsing.c	/^static t_info	get_tubes(t_info info, char *buf)$/;"	f	file:
+hash_delete_elem	hashtable.c	/^t_node			*hash_delete_elem(t_info info, const char *to_find)$/;"	f
+hash_insert	hashtable.c	/^t_node			*hash_insert(t_info info, t_node new_node)$/;"	f
+hash_retrieve	hashtable.c	/^t_node			hash_retrieve(t_info info, const char *to_find)$/;"	f
+hashtable_key	hashtable.c	/^int				hashtable_key(const char *name)$/;"	f
+lemin_error	error_func.c	/^void	lemin_error(char *error)$/;"	f
+list_search_to_del	hashtable.c	/^static t_node	*list_search_to_del(t_info info, const char *to_find,$/;"	f	file:
+main	main.c	/^int		main()$/;"	f
+malloc_path_marker	djisktra.c	/^int		***malloc_path_marker(t_info info)$/;"	f
+malloc_path_marker	new_djisktra.c	/^int		***malloc_path_marker(t_info info)$/;"	f
+mark_next_elem	djisktra.c	/^t_info	mark_next_elem(t_info info, int i, int weight_number, int node_from)$/;"	f
+mark_next_elem	new_djisktra.c	/^t_info	mark_next_elem(t_info info, t_path path)$/;"	f
+node_create	store_node.c	/^t_node	node_create(char *buf, int node_number)$/;"	f
+old_hashtable_memdel	data_structure_operations.c	/^static void	old_hashtable_memdel(t_info info, t_node **old_hashtable)$/;"	f	file:
+parse_map	parsing.c	/^t_info			parse_map(t_info info)$/;"	f
+print_hash_map	print_map.c	/^void	print_hash_map(t_info info)$/;"	f
+print_map	print_map.c	/^void	print_map(t_info info, int to_print)$/;"	f
+print_rooms	print_map.c	/^void	print_rooms(t_info info)$/;"	f
+print_tubes	print_map.c	/^void	print_tubes(t_info info)$/;"	f
+resize_hashtable	data_structure_operations.c	/^t_node		*resize_hashtable(t_info info)$/;"	f
+resize_nodelist	data_structure_operations.c	/^t_node	*resize_nodelist(t_info info)$/;"	f
+set_get_end_name	store_node.c	/^const char	*set_get_end_name(const char *name)$/;"	f
+set_get_start_name	store_node.c	/^const char	*set_get_start_name(const char *name)$/;"	f
+store_node_handler	store_node.c	/^t_info	store_node_handler(t_info info, t_node new_node)$/;"	f
+swap_end_begin_room	swap_end_begin_rooms.c	/^t_info	swap_end_begin_room(t_info info, int start_or_end)$/;"	f
+swap_nodelist_endroom	swap_end_begin_rooms.c	/^static t_info	swap_nodelist_endroom(t_info info, int start_or_end)$/;"	f	file:
+tube_assign	store_node.c	/^t_info	tube_assign(char *buf, t_info info)$/;"	f
