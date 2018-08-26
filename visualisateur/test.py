@@ -2,14 +2,16 @@
 import pygame
 from pygame.locals import *
 
+X_SIZE = 2560
+Y_SIZE = 1440
 pygame.init()
 
 #Ouverture de la screen Pygame
-screen = pygame.display.set_mode((2560, 1440), RESIZABLE)
+screen = pygame.display.set_mode((X_SIZE, Y_SIZE), RESIZABLE)
 
 #Chargement et collage du fond
 fond = pygame.image.load("background.png").convert()
-#fond = pygame.transform.scale(fond, (2560, 1440), screen)
+#fond = pygame.transform.scale(fond, (X_SIZE, Y_SIZE), screen)
 #red = [244, 164, 96]
 #screen.fill(red)
 
@@ -62,41 +64,74 @@ with open("../output.map", 'r') as lem_in_map:
             matrix_array.append(int(n))
         array.append(NewNode(name, x, y, matrix_array))
 
+if max_x == 0:
+    max_x = 1
+if max_y == 0:
+    max_y = 1
+
 # this puts the map to scale
 for n in array:
-    n.x *= 2500 / max_x
-    n.y *=  1400 / max_y
+    n.x *= X_SIZE / max_x
+    if n.x <= 50:
+        n.x += 50
+    elif n.x >= X_SIZE - 50:
+        n.x -= 50
+    n.y *= Y_SIZE / max_y
+    if n.y >= Y_SIZE - 50:
+        n.y -= 50
+    elif n.y <= 50:
+        n.y += 50
 
-def add_new_node(max_x, x, y):
+# this puts the map on the screen
+array_len = len(array)
+for a in array:
+    if a == array[0]:
+        pygame.draw.circle(screen, [0,245,0], (a.x, a.y), 20, 0)
+    elif a == array[-1]:
+        pygame.draw.circle(screen, [245, 0, 0], (a.x, a.y), 20, 0)
+    else:
+        pygame.draw.circle(screen, [245,245,220], (a.x - a.x % array_len, a.y - a.y % array_len), 20, 0)
+    for n in a.tubes:
+        if n:
+            pygame.draw.line(screen, [245, 245, 245], (a.x, a.y), (array[n].x, array[n].y), 5)
+
+def create_link(down, up):
+    draw_line = 0
     for n in array:
-       n.tubes.append(int(0))
+        if n.x - down[0] <= 20 & n.y - down[1] <= 20:
+            draw_line += 1
+            first = n
+        if n.x - up[0] <= 20 & n.y - up[1] <= 20:
+            draw_line += 1
+            second = n
+        if draw_line == 2:
+            pygame.draw.line(screen, [245,245,220], (first.x, first.y), (second.x, second.y), 5)
+            print ("coucou")
+
+# this function adds a new node upon user click and updates the adjacence matrix connection
+def add_new_node(max_x, x, y):
+    create = 1
+    for n in array:
+        if abs(n.x - x) <= 20 & abs(n.y - y) <= 20:
+            create = 0
+            print ("I shall not create a new node !")
+    if create == 0:
+        return
+    print ("I shall create")
+    for n in array:
+        n.tubes.append(int(0))
     array.append(NewNode(str(max_x), x, y, [0 for i in range(len(array) + 1)]))
+    pygame.draw.circle(screen, [245,245,220], (x - x % array_len, y - y % array_len), 20, 0)
     tmp = array[-2]
     array[-2] = array[-1]
     array[-1] = tmp
-
-
-
-
-
-
- 
-
 
 pygame.key.set_repeat(400, 30)
 loop = 1
 while loop:
 
-    for a in array:
-        if a == array[0]:
-            pygame.draw.circle(screen, [0,245,0], (a.x, a.y), 20, 0)
-        elif a == array[-1]:
-            pygame.draw.circle(screen, [245, 0, 0], (a.x, a.y), 20, 0)
-        else:
-            pygame.draw.circle(screen, [245,245,220], (a.x, a.y), 20, 0)
-        for n in a.tubes:
-            if n:
-                pygame.draw.line(screen, [245, 245, 245], (a.x, a.y), (array[n].x, array[n].y), 5)
+    modulo_scale_x = array_len / X_SIZE
+    modulo_scale_y = array_len / Y_SIZE
 
     for event in pygame.event.get():    #Attente des events
         if event.type == QUIT:
@@ -110,8 +145,8 @@ while loop:
             add_new_node(max_x, event.pos[0], event.pos[1])
             down = event.pos
         if event.type == MOUSEBUTTONUP:
-            pygame.draw.line(screen, [245,245,220], down, event.pos, 5)
-            pygame.draw.circle(screen, [245,245,220], event.pos, 10, 0)
+            up = event.pos
+            create_link(down, up)
     #Re-collage
     screen.blit(screen, (0,0))   
 #    screen.blit(perso, position_perso)
