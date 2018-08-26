@@ -1,4 +1,1 @@
 First line must be ant number > 0
-no tubes after room declaration or GNL return was < 1
-incoreect room name passed in tubes
-incoreect room name passed in tubes
