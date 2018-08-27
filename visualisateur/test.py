@@ -8,13 +8,13 @@ pygame.init()
 
 #Ouverture de la screen Pygame
 screen = pygame.display.set_mode((X_SIZE, Y_SIZE), RESIZABLE)
+pygame.key.set_repeat(400, 30)
 
 #Chargement et collage du fond
-fond = pygame.image.load("background.png").convert()
+#fond = pygame.image.load("background.png").convert()
 #fond = pygame.transform.scale(fond, (X_SIZE, Y_SIZE), screen)
 #red = [244, 164, 96]
 #screen.fill(red)
-
 #screen.blit(fond, (0,0))
 
 
@@ -22,11 +22,6 @@ fond = pygame.image.load("background.png").convert()
 #perso = pygame.image.load("perso.png").convert_alpha()
 #position_perso = perso.get_rect()
 #screen.blit(perso, position_perso)
-
-# on utilise en parametre de la methode append l'objet que l'on don souhaite ajouter a la fin
-# de la liste   
-# pour concatener on utilise append
-# i = 0 ; while i < len (maliste)jj
 
 class NewNode:
 	"""This is the node structure. It contain the name, number, orthogonal position
@@ -37,7 +32,6 @@ class NewNode:
 		self.x = x
 		self.y = y
 		self.tubes = tubes
-		self.next = None
 		return
 	def __str__(self):
 		return  self.name +  " " + str(self.x) + " " + str (self.y)
@@ -144,18 +138,19 @@ def print_map():
 				file.write(n.name + "-" + array[j].name + '\n')
 
 
-pygame.key.set_repeat(400, 30)
 
-test = 1
-while (test):
-	largeText = pygame.font.Font('freesansbold.ttf',115)
-	TextSurf, TextRect = text_objects("A bit Racey", largeText)
-	TextRect.center = ((display_width/2),(display_height/2))
-	gameDisplay.blit(TextSurf, TextRect)
-	pygame.draw.rect(gameDisplay, green,(150,450,100,50))
-	pygame.draw.rect(gameDisplay, red,(550,450,100,50))
+def put_text_box (a):
+	"""This is the text object, used when displaying buttons. It
+        contains its text, it width, height, and x, y position"""
 
 loop_display = 1
+loop_init_map = 1
+loop_load_map = 1
+font = pygame.font.SysFont("comicsansms", 100, 1, 1)
+text = font.render("Load Map", 1, (207, 207, 196), (255, 95, 87))
+screen.blit(text, (X_SIZE / 2 - 50, Y_SIZE / 2 - 50))
+pygame.display.flip()
+
 while loop_display:
 
 	#    modulo_scale_x = array_len / X_SIZE
@@ -165,8 +160,10 @@ while loop_display:
 		if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
 			print_map()
 			loop_display = 0
+        while loop_load_map:
+            put_text_box("voc")
 
-
+        while loop_init_map:
 		if event.type == MOUSEBUTTONDOWN:
 			max_x += 1
 			add_new_node(max_x, event.pos[0], event.pos[1])
@@ -176,6 +173,5 @@ while loop_display:
 			create_link(down, up)
 	#Re-collage
 	screen.blit(screen, (0,0))   
-#    screen.blit(perso, position_perso)
 	#refresh
 	pygame.display.flip()
