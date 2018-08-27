@@ -12,8 +12,6 @@
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
-#include <stdlib.h>
-#include <unistd.h>
 //unistd is for sleep / chechking leaks ; take it away when done
 
 t_info	comment_mannagement(char *buf, t_info info)
@@ -31,10 +29,14 @@ t_info	comment_mannagement(char *buf, t_info info)
 	return (info);
 }
 
-int		main()
+int		main(int ac, char **av)
 {
 	t_info	info;
 
+	info.output = 0;
+	if (ac >= 2)
+		if (ft_strequ(av[1], "-output_map"))
+			info.output = 1;
 	info.n = 0;
 	info.end_begin_room = 0;
 	info.tab_size = DATA_INITIAL_SIZE;

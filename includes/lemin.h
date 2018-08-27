@@ -45,6 +45,7 @@ typedef struct		s_info
 {
 	t_node			*hash_table;
 	t_node			*nodelist;
+	int				output;
 	int				end_begin_room;
 	int				ant_nbr;
 	int				tab_size;

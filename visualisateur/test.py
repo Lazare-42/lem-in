@@ -2,8 +2,8 @@
 import pygame
 from pygame.locals import *
 
-X_SIZE = 2560
-Y_SIZE = 1440
+X_SIZE = 1920
+Y_SIZE = 1200
 pygame.init()
 
 #Ouverture de la screen Pygame
@@ -40,7 +40,7 @@ class NewNode:
         self.next = None
         return
     def __str__(self):
-        return  self.name +  ", " + str(self.x) + ", " + str (self.y) + str (self.tubes)
+        return  self.name +  " " + str(self.x) + " " + str (self.y)
 
 #Rafraichissement cd l'ecran
 pygame.display.flip()
@@ -95,49 +95,65 @@ for a in array:
         if n:
             pygame.draw.line(screen, [245, 245, 245], (a.x, a.y), (array[n].x, array[n].y), 5)
 
+# this creates a new link between two maps
 def create_link(down, up):
     draw_line = 0
     for n in array:
-        if n.x - down[0] <= 20 & n.y - down[1] <= 20:
+        if abs(n.x - down[0]) <= 20 and abs(n.y - down[1]) <= 20:
             draw_line += 1
             first = n
-        if n.x - up[0] <= 20 & n.y - up[1] <= 20:
+        if abs(n.x - up[0]) <= 20 and abs(n.y - up[1]) <= 20:
             draw_line += 1
             second = n
         if draw_line == 2:
             pygame.draw.line(screen, [245,245,220], (first.x, first.y), (second.x, second.y), 5)
-            print ("coucou")
+            first.tubes[array.index(second)] = 1
+            second.tubes[array.index(first)] = 1
 
 # this function adds a new node upon user click and updates the adjacence matrix connection
 def add_new_node(max_x, x, y):
     create = 1
     for n in array:
-        if abs(n.x - x) <= 20 & abs(n.y - y) <= 20:
+        if abs(n.x - x) <= 20 and abs(n.y - y) <= 20:
             create = 0
-            print ("I shall not create a new node !")
     if create == 0:
         return
-    print ("I shall create")
     for n in array:
         n.tubes.append(int(0))
     array.append(NewNode(str(max_x), x, y, [0 for i in range(len(array) + 1)]))
-    pygame.draw.circle(screen, [245,245,220], (x - x % array_len, y - y % array_len), 20, 0)
+    pygame.draw.circle(screen, [245,245,220], (x, y), 20, 0)
     tmp = array[-2]
     array[-2] = array[-1]
     array[-1] = tmp
+
+def print_map():
+	i = 0;
+	file = open('../new_lem-in', 'w+')
+	for n in array:
+		if n == array[0]:
+			file.write("##start\n")
+		if n == array[-1]:
+			file.write("##end\n")
+		file.write(n.name +  " " + str(n.x) + " " + str(n.y) + '\n')
+	i = 0
+	for n in array:
+		i += 1
+		for j in range (0, i):
+			if n.tubes[j]:
+				file.write(n.name + "-" + array[j].name + '\n')
+		
 
 pygame.key.set_repeat(400, 30)
 loop = 1
 while loop:
 
-    modulo_scale_x = array_len / X_SIZE
-    modulo_scale_y = array_len / Y_SIZE
+	#    modulo_scale_x = array_len / X_SIZE
+	# modulo_scale_y = array_len / Y_SIZE
 
     for event in pygame.event.get():    #Attente des events
-        if event.type == QUIT:
-            for a in array:
-                print a
-            loop = 0
+        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+				print_map()
+				loop = 0
 
 
         if event.type == MOUSEBUTTONDOWN:

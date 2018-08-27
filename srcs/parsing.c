@@ -12,6 +12,7 @@
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
+#include <stdlib.h>
 
 static t_info	get_tubes(t_info info, char *buf)
 {
@@ -29,7 +30,11 @@ static t_info	get_tubes(t_info info, char *buf)
 		ft_memdel((void**)&buf);
 		ret = get_next_line(0, &buf, '\n');
 	}
-	print_map_visualizer(info);
+	if (info.output)
+	{
+		print_map_visualizer(info);
+		exit(0);
+	}
 	return (info);
 }
 
