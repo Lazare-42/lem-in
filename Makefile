@@ -32,7 +32,7 @@ OBJS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
 OK = echo "[32m OK ✓ [0m"
 
-all: lib mkbin $(NAME)
+all: lib mkbin $(NAME) ./includes/lemin.h ./Makefile
 
 lib:
 	@make -C $(LIBDIR)
@@ -46,7 +46,7 @@ $(NAME): $(OBJS)
 	@echo "\x1B[33;4mCompiled with the rule\x1B[0m   \x1B[33;1m:\x1B[0m " ${CC} $(CFLAGS)
 	@$(OK)
 
-$(ODIR)/%.o : $(SDIR)/%.c
+$(ODIR)/%.o : $(SDIR)/%.c ./Makefile ./includes/lemin.h
 	@ echo "[34mAssembling lem-in object : [0m" $@
 	@ $(CC) $(CFLAGS) -c -o $@ $< -I$(INCDIR)
 
