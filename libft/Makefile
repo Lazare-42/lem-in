@@ -174,7 +174,7 @@ $(NAME): $(LIBFT_OBJECT)
 	@$(ARCH) $(NAME) $(LIBFT_OBJECT)
 	@$(OK)
 
-$(ODIR)/%.o : $(S_LIB_DIR)/%.c
+$(ODIR)/%.o : $(S_LIB_DIR)/%.c ./Makefile ./includes/libft.h
 	@ echo "[34mAssembling libft object : [0m" $@
 	@ $(CC) -o $@ $<
 
