@@ -20,7 +20,6 @@ t_info	comment_mannagement(char *buf, t_info info)
 	{
 		(void)buf;
 	// Attention : you need to strdup buf if you want to use the commentary
-
 	}
 	if (ft_strequ(buf, "##end"))
 		info.end_begin_room = END;
