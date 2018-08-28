@@ -139,17 +139,24 @@ def print_map():
 
 
 
-def put_text_box (a):
-	"""This is the text object, used when displaying buttons. It
-        contains its text, it width, height, and x, y position"""
+def text_objects(text, font):
+    textSurface = font.render(text, True, (0, 0, 0))
+    return textSurface, textSurface.get_rect()
+          
+def message_display(text):
+    largeText = pygame.font.Font('freesansbold.ttf',115)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = (X_SIZE/2,Y_SIZE / 2)
+    screen.blit(TextSurf, TextRect)
+    pygame.display.update()
+    pygame.display.flip()
+    test = 1
+    while test:
+        print "ok"
 
-loop_display = 1
 loop_init_map = 1
 loop_load_map = 1
-font = pygame.font.SysFont("comicsansms", 100, 1, 1)
-text = font.render("Load Map", 1, (207, 207, 196), (255, 95, 87))
-screen.blit(text, (X_SIZE / 2 - 50, Y_SIZE / 2 - 50))
-pygame.display.flip()
+loop_display = 1
 
 while loop_display:
 
@@ -160,8 +167,11 @@ while loop_display:
 		if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
 			print_map()
 			loop_display = 0
-        while loop_load_map:
-            put_text_box("voc")
+        first = 1
+        if loop_load_map:
+            if first:
+                message_display("coucou")
+
 
         while loop_init_map:
 		if event.type == MOUSEBUTTONDOWN:
