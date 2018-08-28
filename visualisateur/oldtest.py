@@ -1,6 +1,5 @@
 #!/usr/bin/python 
 import pygame
-import time
 from pygame.locals import *
 
 X_SIZE = 1920
@@ -138,76 +137,50 @@ def print_map():
 			if n.tubes[j]:
 				file.write(n.name + "-" + array[j].name + '\n')
 
+
+
 def text_objects(text, font):
-        textSurface = font.render(text, 1, (207, 207, 196), (255, 95, 87))
-        return textSurface, textSurface.get_rect()
+    textSurface = font.render(text, True, (0, 0, 0))
+    return textSurface, textSurface.get_rect()
+          
+def message_display(text):
+    largeText = pygame.font.Font('freesansbold.ttf',115)
+    TextSurf, TextRect = text_objects(text, largeText)
+    TextRect.center = (X_SIZE/2,Y_SIZE / 2)
+    screen.blit(TextSurf, TextRect)
+    pygame.display.update()
+    pygame.display.flip()
+    test = 1
+    while test:
+        print "ok"
 
-class Offset:
-
-    def __init__(self, x, y):
-        Offset.x = x
-        Offset.y = y
-
-class Button:
-
-    def __init__(self, font, TextSurf, TextRect):
-        Button.font = font
-        Button.TextSurf = TextSurf
-        Button.TextRect = TextRect
-
-
-def put_text_box (text_array):
-	"""This is the text object, used when displaying buttons. It contains its text, it width, height, and x, y position"""
-        text_box_number = len(text_array)
-        i = 1;
-        Offset(X_SIZE / (text_box_number + 1), Y_SIZE / (text_box_number + 1))
-        button_array = []
-        for n in text_array:
-            font = pygame.font.SysFont("comicsansms", 200 / text_box_number, 1, 1)
-            TextSurf, TextRect = text_objects(n, font)
-            TextRect.center = (i * Offset.x, i * Offset.y)
-            button_array.append(Button(font, TextSurf, TextRect))
-            screen.blit(TextSurf, TextRect)
-	    pygame.display.flip()
-            i += 1
-        return button_array
-
-def search_button_click (button_array, x, y):
-
-    for n in button_array:
-        print n.TextRect.center
-        if abs(x - n.TextRect.center[0]) <= n.TextRect.width / 2  and abs(y - n.TextRect.center[1]) <= n.TextRect.height / 2:
-            print "You Clicked on a button"
-
-
-loop_display = 1
-loop_init_map = 0
+loop_init_map = 1
 loop_load_map = 1
-text_array = []
-button_array = []
+loop_display = 1
 
 while loop_display:
+
+	#    modulo_scale_x = array_len / X_SIZE
+	# modulo_scale_y = array_len / Y_SIZE
 
 	for event in pygame.event.get():    #Attente des events
 		if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
 			print_map()
-                        loop_display = 0
-                if event.type == MOUSEBUTTONDOWN and loop_init_map:
+			loop_display = 0
+        first = 1
+        if loop_load_map:
+            if first:
+                message_display("coucou")
+
+
+        while loop_init_map:
+		if event.type == MOUSEBUTTONDOWN:
 			max_x += 1
 			add_new_node(max_x, event.pos[0], event.pos[1])
 			down = event.pos
-		if event.type == MOUSEBUTTONUP and loop_init_map:
+		if event.type == MOUSEBUTTONUP:
 			up = event.pos
 			create_link(down, up)
-                if event.type == MOUSEBUTTONDOWN and loop_load_map == 0:
-                    search_button_click(button_array, event.pos[0], event.pos[1])
-        if loop_load_map:
-            text_array.append("Load map")
-            text_array.append("Create map")
-            button_array = put_text_box(text_array)
-            loop_load_map = 0
-        while loop_init_map:
-                time.sleep(0.1)
 	#Re-collage
 	screen.blit(screen, (0,0))   
 	#refresh
