@@ -1,8 +1,8 @@
 from classes import *
 import glob
 import sys
-X_SIZE = 2000
-Y_SIZE = 1000
+X_SIZE = 1920
+Y_SIZE = 1200
 
 # this puts the map on the screen
 def show_map(array, screen, pygame):

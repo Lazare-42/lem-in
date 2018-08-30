@@ -7,8 +7,8 @@ from pygame.locals import *
 from classes import *
 from map_functions import *
 
-X_SIZE = 2000
-Y_SIZE = 1000
+X_SIZE = 1920
+Y_SIZE = 1200
 
 # this function adds a new node upon user click and updates the adjacence matrix connection
 def add_new_node(array, max_x, mouse, screen, pygame):
@@ -196,18 +196,28 @@ def set_ants_and_launch(map_array, screen, pygame):
                         ant_number = int(text_array[0][len("Ant number: "):])
                         launch_lem_in(map_array, ant_number, screen, pygame)
 
+def show_lem_in_output(map_array, output, screen, pygame):
+
+	print output
+	while loop_display:
+		for event in pygame.event.get():
+			if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+				loop_display = 0
+			elif event.type == MOUSEBUTTONDOWN:
+				search_if_restart_launch(event, 0)
+	
+
+
 def launch_lem_in(map_array, ant_number, screen, pygame):
 
-    loop_display = 1
-    print_map(map_array, ant_number)
-    show_map(map_array, screen, pygame)
-    put_main_buttons(screen, pygame, 0)
-    while loop_display:
-        for event in pygame.event.get():
-    	    if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    loop_display = 0
-            elif event.type == MOUSEBUTTONDOWN:
-                search_if_restart_launch(event, 0)
+	print_map(map_array, ant_number)
+	show_map(map_array, screen, pygame)
+	put_main_buttons(screen, pygame, 0)
+	# you could put a message : "Waiting for lem-in output here"
+	# this will not work if your program returns 1
+	command = "../lem-in" + "<" + "../new_lem-in"
+	output = subprocess.check_output(command, shell=True)
+	show_lem_in_output(map_array, output, screen, output)
 
 
 
