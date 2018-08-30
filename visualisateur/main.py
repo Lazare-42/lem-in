@@ -55,10 +55,17 @@ def put_text_box (text_array, screen, pygame):
                 Offset.y += y
         return button_array
 
-def put_main_buttons(screen, pygame):
+def put_main_buttons(screen, pygame, play_button):
 
+    if play_button:
+        play = pygame.image.load("./start.png").convert_alpha()
+        play = pygame.transform.scale(play, (70, 70))
+        play_pos = play.get_rect()
+        play_pos.center = (play_pos.width / 2, Y_SIZE - play_pos.height / 2)
+        screen.blit(play, play_pos)
+        pygame.display.flip()
     restart = pygame.image.load("./restart.png").convert_alpha()
-    restart = pygame.transform.scale(restart, (100, 100))
+    restart = pygame.transform.scale(restart, (70, 70))
     restart_pos = restart.get_rect()
     restart_pos.center = (X_SIZE - restart_pos.width / 2, restart_pos.height / 2)
     screen.blit(restart, restart_pos)
@@ -82,18 +89,22 @@ def error_func(screen, pygame):
     with open("./error_trace.txt", 'r') as lem_in_map:
         for line in lem_in_map:
             error_text.append(line)
-    error_text.append("OK")
+    put_main_buttons(screen, pygame, 0)
     button_array = put_text_box(error_text, screen, pygame)
     while wait_user:
         for event in pygame.event.get():
             if event.type == MOUSEBUTTONDOWN:
+                search_if_restart_launch(event, 0)
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
                     main()
 
-def search_if_restart(event):
-    if (abs(event.pos[0] - X_SIZE) < 100 and event.pos[1] < 100):
+def search_if_restart_launch(event, launch_lem_in):
+    if (abs(event.pos[0] - X_SIZE) < 70 and event.pos[1] < 70):
         main()
+    if (launch_lem_in):
+        if (event.pos[0] < 70 and abs(event.pos[1] - Y_SIZE) < 70):
+            main()
 
 def show_all_maps(screen, pygame):
 
@@ -107,7 +118,7 @@ def show_all_maps(screen, pygame):
     while wait_choice:
         for event in pygame.event.get():
             if event.type == MOUSEBUTTONDOWN:
-                search_if_restart(event)
+                search_if_restart_launch(event, 1)
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
                     for n in maps_locations:
@@ -141,7 +152,7 @@ def main():
     			print_map(map_array)
                         loop_display = 0
                 if event.type == MOUSEBUTTONDOWN and loop_init_map:
-                        search_if_restart(event)
+                        search_if_restart_launch(event, 1)
     			max_x += 1
     			map_array = add_new_node(map_array, max_x, event.pos, screen, pygame)
     			down = event.pos
@@ -154,13 +165,13 @@ def main():
                         if button:
                             button_array = []
                             if button == "Load map":
-                                put_main_buttons(screen, pygame)
+                                put_main_buttons(screen, pygame, 1)
                                 map_array, max_x = show_all_maps(screen, pygame)
                                 show_map(map_array, screen, pygame)
-                                put_main_buttons(screen, pygame)
+                                put_main_buttons(screen, pygame, 1)
                                 loop_init_map = 2
                             elif button == "Create map":
-                                put_main_buttons(screen, pygame)
+                                put_main_buttons(screen, pygame, 1)
                                 map_array, max_x = load_map("./new_map")
                                 show_map(map_array, screen, pygame)
                                 loop_init_map = 2
