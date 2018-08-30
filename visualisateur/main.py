@@ -7,8 +7,8 @@ from pygame.locals import *
 from classes import *
 from map_functions import *
 
-X_SIZE = 2560
-Y_SIZE = 1440
+X_SIZE = 2000
+Y_SIZE = 1000
 
 # this function adds a new node upon user click and updates the adjacence matrix connection
 def add_new_node(array, max_x, mouse, screen, pygame):
@@ -28,10 +28,66 @@ def add_new_node(array, max_x, mouse, screen, pygame):
 	array[-1] = tmp
         return array
 
+#this function displays error in maps which are loaded
+def error_func(screen, pygame):
+    error_text = []
+    wait_user = 1
+    error_text.append("Error :")
+    with open("./error_trace.txt", 'r') as lem_in_map:
+        for line in lem_in_map:
+            error_text.append(line)
+    put_main_buttons(screen, pygame, 0)
+    button_array = put_text_box(error_text, screen, pygame)
+    while wait_user:
+        for event in pygame.event.get():
+            if event.type == MOUSEBUTTONDOWN:
+                search_if_restart_launch(event, 0)
+                button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
+                if button:
+                    main()
+
+# this function searches for clicks on the restart or the play button
+def search_if_restart_launch(event, set_ants_and_launch):
+    if (abs(event.pos[0] - X_SIZE) < 70 and event.pos[1] < 70):
+        main()
+    if (set_ants_and_launch):
+        if (event.pos[0] < 70 and abs(event.pos[1] - Y_SIZE) < 70):
+            return 1
+    return 0
+
+# this function loads all the maps 
+def show_all_maps(screen, pygame):
+
+    wait_choice = 1
+    button_array = []
+    maps_locations = glob.glob("../test_maps//*")
+    map_array = []
+    for n in maps_locations:
+        map_array.append(n.split('/')[2])
+    button_array = put_text_box(map_array, screen, pygame)
+    while wait_choice:
+        for event in pygame.event.get():
+            if event.type == MOUSEBUTTONDOWN:
+                search_if_restart_launch(event, 0)
+                button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
+                if button:
+                    for n in maps_locations:
+                        if button == n.split('/')[2]:
+                            command = "./lem-in_visualizer" + "<" + n
+                            o = subprocess.call(command, shell=True)
+                            if o > 0:
+                                error_func(screen, pygame)
+                                return None
+                            else:
+                                map_array, max_x = load_map("./output.map")
+                            return map_array, max_x
+
+#this function creates a text object for each button
 def text_objects(text, font):
         textSurface = font.render(text, 1, (207, 207, 196), (255, 95, 87))
         return textSurface, textSurface.get_rect()
 
+#this function creates buttons
 def put_text_box (text_array, screen, pygame):
 	"""This is the text function, used when display all buttons whose names are found in put text box. It contains its text, it width, height, and x, y position"""
         text_box_number = int(math.sqrt(len(text_array)))
@@ -55,6 +111,7 @@ def put_text_box (text_array, screen, pygame):
                 Offset.y += y
         return button_array
 
+#this function displays the re-load and play buttons
 def put_main_buttons(screen, pygame, play_button):
 
     if play_button:
@@ -72,6 +129,7 @@ def put_main_buttons(screen, pygame, play_button):
     pygame.display.flip()
 
 
+#this function searches for clicks in buttons contained in button_array. If there is a click, it returns the button name
 def search_button_click (button_array, x, y, screen, pygame):
 
     text_array = []
@@ -82,55 +140,63 @@ def search_button_click (button_array, x, y, screen, pygame):
             return n.name
     return None
 
-def error_func(screen, pygame):
-    error_text = []
-    wait_user = 1
-    error_text.append("Error :")
-    with open("./error_trace.txt", 'r') as lem_in_map:
-        for line in lem_in_map:
-            error_text.append(line)
-    put_main_buttons(screen, pygame, 0)
-    button_array = put_text_box(error_text, screen, pygame)
-    while wait_user:
-        for event in pygame.event.get():
-            if event.type == MOUSEBUTTONDOWN:
-                search_if_restart_launch(event, 0)
-                button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
-                if button:
-                    main()
 
-def search_if_restart_launch(event, launch_lem_in):
-    if (abs(event.pos[0] - X_SIZE) < 70 and event.pos[1] < 70):
-        main()
-    if (launch_lem_in):
-        if (event.pos[0] < 70 and abs(event.pos[1] - Y_SIZE) < 70):
-            main()
-
-def show_all_maps(screen, pygame):
-
-    wait_choice = 1
+#this function waits for the user input to define ants and then launches lem-in
+def set_ants_and_launch(map_array, screen, pygame):
+    
+    wait_for_ants = 1
+    text_array = []
     button_array = []
-    maps_locations = glob.glob("../test_maps//*")
-    map_array = []
-    for n in maps_locations:
-        map_array.append(n.split('/')[2])
-    button_array = put_text_box(map_array, screen, pygame)
-    while wait_choice:
-        for event in pygame.event.get():
+    text_array.append("Ant number: ")
+    text_array.append("Go !")
+    put_text_box(text_array, screen, pygame)
+    screen.fill((0, 0, 0))
+    screen.blit(screen, (0,0))   
+    pygame.display.flip()
+    button_array = put_text_box(text_array, screen, pygame)
+
+    while wait_for_ants:
+    	for event in pygame.event.get():   
+    	    if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                wait_for_ants = 0
+            if (event.type == KEYDOWN):
+                if event.key == K_0:
+                    text_array[0] += "0"
+                elif event.key == K_1:
+                    text_array[0] += "1"
+                elif event.key == K_2:
+                    text_array[0] += "2"
+                elif event.key == K_3:
+                    text_array[0] += "3"
+                elif event.key == K_4:
+                    text_array[0] += "4"
+                elif event.key == K_5:
+                    text_array[0] += "5"
+                elif event.key == K_6:
+                    text_array[0] += "6"
+                elif event.key == K_7:
+                    text_array[0] += "7"
+                elif event.key == K_8:
+                    text_array[0] += "8"
+                elif event.key == K_9:
+                    text_array[0] += "9"
+                elif event.key == K_BACKSPACE and len(text_array[0]) > len("Ant number: "):
+                    text_array[0] = text_array[0][:-1]
+                if event.key == K_0 or event.key == K_1 or event.key == K_2 or event.key == K_3 or event.key == K_4 or event.key == K_5 or event.key == K_6 or event.key == K_7 or event.key == K_8 or event.key == K_9:
+                        put_text_box(text_array, screen, pygame)
+                elif event.key == K_BACKSPACE:
+                    screen.fill((0, 0, 0))
+                    screen.blit(screen, (0,0))   
+                    pygame.display.flip()
+                    put_text_box(text_array, screen, pygame)
             if event.type == MOUSEBUTTONDOWN:
-                search_if_restart_launch(event, 1)
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
-                    for n in maps_locations:
-                        if button == n.split('/')[2]:
-                            command = "./lem-in_visualizer" + "<" + n
-                            o = subprocess.call(command, shell=True)
-                            if o > 0:
-                                error_func(screen, pygame)
-                                return None
-                            else:
-                                map_array, max_x = load_map("./output.map")
-                            return map_array, max_x
+                    if button == "Go !":
+                        print text_array[0]
+                        ant_number = int(text_array[0][len("Ant number: "):])
+                        print ant_number
+                                #launch_lem_in(map_array, screen, pygame)
 
 def main():
     pygame.init()
@@ -145,19 +211,20 @@ def main():
     button_array = []
     map_array = []
     
-    while loop_display:
+    while loop_display: #Boucle principale : attente des events
     
-    	for event in pygame.event.get():    #Attente des events
+    	for event in pygame.event.get():   
     		if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-    			print_map(map_array)
                         loop_display = 0
-                if event.type == MOUSEBUTTONDOWN and loop_init_map:
-                        search_if_restart_launch(event, 1)
+                elif event.type == MOUSEBUTTONDOWN and loop_init_map:
+                        if search_if_restart_launch(event, 1):
+                            set_ants_and_launch(map_array, screen, pygame)
+                        else:
+    			    map_array = add_new_node(map_array, max_x, event.pos, screen, pygame)
     			max_x += 1
-    			map_array = add_new_node(map_array, max_x, event.pos, screen, pygame)
     			down = event.pos
                         loop_init_map = 1
-                if event.type == MOUSEBUTTONUP and loop_init_map and loop_init_map != 2:
+                elif event.type == MOUSEBUTTONUP and loop_init_map and loop_init_map != 2:
     			up = event.pos
     			map_array = create_link(map_array, down, up, screen, pygame)
                 if event.type == MOUSEBUTTONDOWN and welcome_screen == 0:
@@ -165,7 +232,7 @@ def main():
                         if button:
                             button_array = []
                             if button == "Load map":
-                                put_main_buttons(screen, pygame, 1)
+                                put_main_buttons(screen, pygame, 0)
                                 map_array, max_x = show_all_maps(screen, pygame)
                                 show_map(map_array, screen, pygame)
                                 put_main_buttons(screen, pygame, 1)
