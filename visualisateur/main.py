@@ -193,10 +193,24 @@ def set_ants_and_launch(map_array, screen, pygame):
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
                     if button == "Go !":
-                        print text_array[0]
                         ant_number = int(text_array[0][len("Ant number: "):])
-                        print ant_number
-                                #launch_lem_in(map_array, screen, pygame)
+                        launch_lem_in(map_array, ant_number, screen, pygame)
+
+def launch_lem_in(map_array, ant_number, screen, pygame):
+
+    loop_display = 1
+    print_map(map_array, ant_number)
+    show_map(map_array, screen, pygame)
+    put_main_buttons(screen, pygame, 0)
+    while loop_display:
+        for event in pygame.event.get():
+    	    if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                    loop_display = 0
+            elif event.type == MOUSEBUTTONDOWN:
+                search_if_restart_launch(event, 0)
+
+
+
 
 def main():
     pygame.init()

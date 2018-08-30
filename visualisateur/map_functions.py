@@ -89,11 +89,11 @@ def print_matrix(array):
         sys.stdout.write('\n')
 
 # this function prints the map in a file called new_lem-in
-def print_map(array):
+def print_map(array, ant_number):
 	i = 0;
 	file = open('../new_lem-in', 'w+')
         # Attention I am setting ant number to 10 but you should be able to change
-        file.write(str(10) + "\n")
+        file.write(str(ant_number) + "\n")
 	for n in array:
 		if n == array[0]:
 			file.write("##start\n")
