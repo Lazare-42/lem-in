@@ -14,7 +14,7 @@ def show_map(array, screen, pygame):
         	elif a == array[-1]:
         		pygame.draw.circle(screen, [245, 0, 0], (a.x, a.y), 20, 0)
         	else:
-        		pygame.draw.circle(screen, [245,245,220], (a.x - a.x % array_len, a.y - a.y % array_len), 20, 0)
+        		pygame.draw.circle(screen, [245,245,220], (a.x, a.y), 20, 0)
         	for n in a.tubes:
         		if n:
         		    pygame.draw.line(screen, [245, 245, 245], (a.x, a.y), (array[i].x, array[i].y), 5)

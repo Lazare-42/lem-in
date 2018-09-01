@@ -196,6 +196,7 @@ def set_ants_and_launch(map_array, screen, pygame):
                     if button == "Go !":
                         ant_number = int(text_array[0][len("Ant number: "):])
                         launch_lem_in(map_array, ant_number, screen, pygame)
+
 import time
 def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 
@@ -204,15 +205,15 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
         ant_nbr = int(n.split('-')[0][1:])
         ant_nbr -= 1
         room_nbr = int(n.split('-')[1])
-        #if (ant_array[ant_nbr].x != map_array[0].x and ant_array[ant_nbr].y != map_array[0].y):
-        pygame.draw.circle(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
+        if (ant_array[ant_nbr].x != map_array[0].x and ant_array[ant_nbr].y != map_array[0].y):
+            pygame.draw.circle(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
         ant_array[ant_nbr].x = map_array[room_nbr].x
         ant_array[ant_nbr].y = map_array[room_nbr].y
-       # if (ant_array[ant_nbr].x != map_array[-1].x and ant_array[ant_nbr].y != map_array[-1].y):
-	pygame.draw.circle(screen, [128,0,128], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
+        if (ant_array[ant_nbr].x != map_array[-1].x and ant_array[ant_nbr].y != map_array[-1].y):
+            pygame.draw.circle(screen, [128,0,128], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
     	screen.blit(screen, (0,0))   
-    	#refresh
     	pygame.display.flip()
+        pygame.time.wait(500)
 
 
 def launch_lem_in(map_array, ant_number, screen, pygame):
@@ -230,10 +231,13 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
             line = output.stdout.readline()
             if line == "":
                 break
+            if line.find("Error", 0) != -1 or line.find("ERROR", 0) != -1:
+                put_text_box([line], screen, pygame)
             if show_output == 0:
                 if 'L' in line:
                     show_output = 1
             if show_output == 1:
+                #sys.stdin.read(1)
                 show_lem_in_output(map_array, ant_array, line, screen, pygame)
         while loop_display:
             for event in pygame.event.get():   
@@ -241,8 +245,6 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
                     loop_display = 0
                 if event.type == MOUSEBUTTONDOWN:
                     search_if_restart_launch(event, 0)
-
-
 
 def main():
     pygame.init()
