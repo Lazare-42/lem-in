@@ -11,6 +11,13 @@ class NewNode:
 	def __str__(self):
 		return  self.name +  " " + str(self.x) + " " + str (self.y)
 
+class Ant:
+    """This is the ant class"""
+
+    def __init__(self, current_x, current_y):
+        self.x = current_x
+        self.y = current_y
+
 class Offset:
     """This is the offset object used to put offset between buttons"""
 

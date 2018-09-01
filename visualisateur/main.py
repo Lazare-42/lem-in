@@ -11,7 +11,7 @@ X_SIZE = 1920
 Y_SIZE = 1200
 
 # this function adds a new node upon user click and updates the adjacence matrix connection
-def add_new_node(array, max_x, mouse, screen, pygame):
+def add_new_node(array, node_nbr, mouse, screen, pygame):
 	create = 1
 	for n in array:
 		if abs(n.x - mouse[0]) <= 20 and abs(n.y - mouse[1]) <= 20:
@@ -21,11 +21,12 @@ def add_new_node(array, max_x, mouse, screen, pygame):
 	for n in array:
 		n.tubes.append(n.tubes[-1])
                 n.tubes[-2] = 0
-	array.append(NewNode(str(max_x), mouse[0], mouse[1], [0 for i in range(len(array) + 1)]))
+	array.append(NewNode(array[-1].name, mouse[0], mouse[1], [0 for i in range(len(array) + 1)]))
 	pygame.draw.circle(screen, [245,245,220], (mouse[0], mouse[1]), 20, 0)
 	tmp = array[-2]
 	array[-2] = array[-1]
 	array[-1] = tmp
+        array[-1].name = str(node_nbr)
         return array
 
 #this function displays error in maps which are loaded
@@ -79,8 +80,8 @@ def show_all_maps(screen, pygame):
                                 error_func(screen, pygame)
                                 return None
                             else:
-                                map_array, max_x = load_map("./output.map")
-                            return map_array, max_x
+                                map_array, max_x, node_nbr = load_map("./output.map")
+                            return map_array, max_x, node_nbr
 
 #this function creates a text object for each button
 def text_objects(text, font):
@@ -195,30 +196,51 @@ def set_ants_and_launch(map_array, screen, pygame):
                     if button == "Go !":
                         ant_number = int(text_array[0][len("Ant number: "):])
                         launch_lem_in(map_array, ant_number, screen, pygame)
+import time
+def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 
-def show_lem_in_output(map_array, output, screen, pygame):
-
-	print output
-	while loop_display:
-		for event in pygame.event.get():
-			if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-				loop_display = 0
-			elif event.type == MOUSEBUTTONDOWN:
-				search_if_restart_launch(event, 0)
-	
+    total_moves = output.split((' '))
+    for n in total_moves[0:-1]:
+        ant_nbr = int(n.split('-')[0][1:])
+        ant_nbr -= 1
+        room_nbr = int(n.split('-')[1])
+        #if (ant_array[ant_nbr].x != map_array[0].x and ant_array[ant_nbr].y != map_array[0].y):
+        pygame.draw.circle(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
+        ant_array[ant_nbr].x = map_array[room_nbr].x
+        ant_array[ant_nbr].y = map_array[room_nbr].y
+       # if (ant_array[ant_nbr].x != map_array[-1].x and ant_array[ant_nbr].y != map_array[-1].y):
+	pygame.draw.circle(screen, [128,0,128], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
+    	screen.blit(screen, (0,0))   
+    	#refresh
+    	pygame.display.flip()
 
 
 def launch_lem_in(map_array, ant_number, screen, pygame):
 
+        loop_display = 1
 	print_map(map_array, ant_number)
 	show_map(map_array, screen, pygame)
 	put_main_buttons(screen, pygame, 0)
-	# you could put a message : "Waiting for lem-in output here"
-	# this will not work if your program returns 1
+        show_output = 0
 	command = "../lem-in" + "<" + "../new_lem-in"
-	output = subprocess.check_output(command, shell=True)
-	show_lem_in_output(map_array, output, screen, output)
-
+        ant_array = [Ant(map_array[0].x, map_array[0].y) for i in range (0, ant_number)]
+        output = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
+        while(True):
+            retcode = output.poll() #returns None while subprocess is running
+            line = output.stdout.readline()
+            if line == "":
+                break
+            if show_output == 0:
+                if 'L' in line:
+                    show_output = 1
+            if show_output == 1:
+                show_lem_in_output(map_array, ant_array, line, screen, pygame)
+        while loop_display:
+            for event in pygame.event.get():   
+    	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                    loop_display = 0
+                if event.type == MOUSEBUTTONDOWN:
+                    search_if_restart_launch(event, 0)
 
 
 
@@ -228,6 +250,7 @@ def main():
     pygame.key.set_repeat(400, 30)
     pygame.display.flip()
     
+    new_node_nbr = 1
     loop_display = 1
     loop_init_map = 0
     welcome_screen = 1
@@ -244,8 +267,8 @@ def main():
                         if search_if_restart_launch(event, 1):
                             set_ants_and_launch(map_array, screen, pygame)
                         else:
-    			    map_array = add_new_node(map_array, max_x, event.pos, screen, pygame)
-    			max_x += 1
+    			    map_array = add_new_node(map_array, new_node_nbr, event.pos, screen, pygame)
+                            new_node_nbr += 1
     			down = event.pos
                         loop_init_map = 1
                 elif event.type == MOUSEBUTTONUP and loop_init_map and loop_init_map != 2:
@@ -257,13 +280,14 @@ def main():
                             button_array = []
                             if button == "Load map":
                                 put_main_buttons(screen, pygame, 0)
-                                map_array, max_x = show_all_maps(screen, pygame)
+                                map_array, max_x, new_node_nbr = show_all_maps(screen, pygame)
                                 show_map(map_array, screen, pygame)
                                 put_main_buttons(screen, pygame, 1)
                                 loop_init_map = 2
                             elif button == "Create map":
                                 put_main_buttons(screen, pygame, 1)
-                                map_array, max_x = load_map("./new_map")
+                                map_array, max_x, new_node_nbr = load_map("./new_map")
+                                new_node_nbr += 1
                                 show_map(map_array, screen, pygame)
                                 loop_init_map = 2
     
