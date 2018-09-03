@@ -220,7 +220,6 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
         ant_nbr = int(n.split('-')[0][1:])
         ant_nbr -= 1
         room_nbr = int(n.split('-')[1])
-        print str(ant_nbr) + "is the ant number " + str(room_nbr) + " is the room_nbr"
         if (ant_array[ant_nbr].x != map_array[0].x and ant_array[ant_nbr].y != map_array[0].y):
             pygame.draw.circle(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
 	pygame.draw.line(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), (map_array[room_nbr].x, map_array[room_nbr].y), 5)
