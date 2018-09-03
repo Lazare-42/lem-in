@@ -13,6 +13,10 @@ Y_SIZE = 1200
 def delete_node(array, node, screen, pygame):
     node_nbr = array.index(node)
     array.remove(node);
+    for n in array[node_nbr:]:
+        tmp = int(n.name)
+        tmp -= 1
+        n.name = str(tmp)
     for n in array:
         del n.tubes[node_nbr]
     screen.fill(pygame.Color(0, 0, 0))
@@ -25,9 +29,9 @@ def add_del_node(array, node_nbr, mouse, delete_mode, screen, pygame):
 	for n in array:
 		if abs(n.x - mouse[0]) <= 20 and abs(n.y - mouse[1]) <= 20:
                     if delete_mode:
-	        	return delete_node(array, n, screen, pygame)
+	        	return delete_node(array, n, screen, pygame), node_nbr
                     else:
-                        return array
+                        return array, node_nbr
 	for n in array:
 		n.tubes.append(n.tubes[-1])
                 n.tubes[-2] = 0
@@ -37,7 +41,8 @@ def add_del_node(array, node_nbr, mouse, delete_mode, screen, pygame):
 	array[-2] = array[-1]
 	array[-1] = tmp
         array[-1].name = str(node_nbr)
-        return array
+        node_nbr += 1
+        return array, node_nbr
 
 #this function displays error in maps which are loaded
 def error_func(screen, pygame):
@@ -215,6 +220,7 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
         ant_nbr = int(n.split('-')[0][1:])
         ant_nbr -= 1
         room_nbr = int(n.split('-')[1])
+        print str(ant_nbr) + "is the ant number " + str(room_nbr) + " is the room_nbr"
         if (ant_array[ant_nbr].x != map_array[0].x and ant_array[ant_nbr].y != map_array[0].y):
             pygame.draw.circle(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
 	pygame.draw.line(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), (map_array[room_nbr].x, map_array[room_nbr].y), 5)
@@ -287,9 +293,8 @@ def main():
                         if search_if_restart_launch(event, 1):
                             set_ants_and_launch(map_array, screen, pygame)
                         else:
-    			    map_array = add_del_node(map_array, new_node_nbr, event.pos, delete_mode, screen, pygame)
+    			    map_array, new_node_nbr = add_del_node(map_array, new_node_nbr, event.pos, delete_mode, screen, pygame)
                             delete_mode = 0
-                            new_node_nbr += 1
     			down = event.pos
                         loop_init_map = 1
                 elif event.type == MOUSEBUTTONUP and loop_init_map and loop_init_map != 2:
