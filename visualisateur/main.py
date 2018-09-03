@@ -176,39 +176,43 @@ def set_ants_and_launch(map_array, screen, pygame):
     	    if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                 wait_for_ants = 0
             if (event.type == KEYDOWN):
-                if event.key == K_0:
+                if event.key == K_0 or event.key == K_KP0:
                     text_array[0] += "0"
-                elif event.key == K_1:
+                elif event.key == K_1 or event.key == K_KP1:
                     text_array[0] += "1"
-                elif event.key == K_2:
+                elif event.key == K_2 or event.key == K_KP2:
                     text_array[0] += "2"
-                elif event.key == K_3:
+                elif event.key == K_3 or event.key == K_KP3:
                     text_array[0] += "3"
-                elif event.key == K_4:
+                elif event.key == K_4 or event.key == K_KP4:
                     text_array[0] += "4"
-                elif event.key == K_5:
+                elif event.key == K_5 or event.key == K_KP5:
                     text_array[0] += "5"
-                elif event.key == K_6:
+                elif event.key == K_6 or event.key == K_KP6:
                     text_array[0] += "6"
-                elif event.key == K_7:
+                elif event.key == K_7 or event.key == K_KP7:
                     text_array[0] += "7"
-                elif event.key == K_8:
+                elif event.key == K_8 or event.key == K_KP8:
                     text_array[0] += "8"
-                elif event.key == K_9:
+                elif event.key == K_9 or event.key == K_KP9:
                     text_array[0] += "9"
                 elif event.key == K_BACKSPACE and len(text_array[0]) > len("Ant number: "):
                     text_array[0] = text_array[0][:-1]
-                if event.key == K_0 or event.key == K_1 or event.key == K_2 or event.key == K_3 or event.key == K_4 or event.key == K_5 or event.key == K_6 or event.key == K_7 or event.key == K_8 or event.key == K_9:
+                if event.key == K_0 or event.key == K_1 or event.key == K_2 or event.key == K_3 or event.key == K_4 or event.key == K_5 or event.key == K_6 or event.key == K_7 or event.key == K_8 or event.key == K_9 or event.key == K_KP0 or event.key == K_KP1 or event.key == K_KP2 or event.key == K_KP3 or event.key == K_KP4 or event.key == K_KP5 or event.key == K_KP6 or event.key == K_KP7 or event.key == K_KP8 or event.key == K_KP9:
                         put_text_box(text_array, screen, pygame)
                 elif event.key == K_BACKSPACE:
                     screen.fill((0, 0, 0))
                     screen.blit(screen, (0,0))   
                     pygame.display.flip()
                     put_text_box(text_array, screen, pygame)
-            if event.type == MOUSEBUTTONDOWN:
+            if event.type == MOUSEBUTTONDOWN and ((text_array[0][len("Ant number: "):])):
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
                     if button == "Go !":
+                            ant_number = int(text_array[0][len("Ant number: "):])
+                            launch_lem_in(map_array, ant_number, screen, pygame)
+            if event.type == KEYDOWN and ((text_array[0][len("Ant number: "):])) and event.key == K_RETURN:
+                        screen.fill(pygame.Color(0, 0, 0))
                         ant_number = int(text_array[0][len("Ant number: "):])
                         launch_lem_in(map_array, ant_number, screen, pygame)
 
@@ -227,6 +231,8 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
         ant_array[ant_nbr].y = map_array[room_nbr].y
         if (ant_array[ant_nbr].x != map_array[-1].x and ant_array[ant_nbr].y != map_array[-1].y):
             pygame.draw.circle(screen, [147,112,219], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
+        draw_first_last_nodes(map_array[0], map_array, screen, pygame)
+        draw_first_last_nodes(map_array[-1], map_array, screen, pygame)
     	screen.blit(screen, (0,0))   
     	pygame.display.flip()
 
@@ -288,6 +294,14 @@ def main():
                         loop_display = 0
                 if event.type == KEYDOWN and event.key == K_d:
                     delete_mode = 1
+                if event.type == KEYDOWN and event.key == K_RETURN and loop_init_map:
+                        set_ants_and_launch(map_array, screen, pygame)
+                if event.type == KEYDOWN and event.key == K_RETURN and loop_init_map == 0:
+                        screen.fill(pygame.Color(0, 0, 0))
+                        put_main_buttons(screen, pygame, 1)
+                        map_array, max_x, new_node_nbr = load_map("./new_map")
+                        new_node_nbr += 1
+                        show_map(map_array, screen, pygame)
                 elif event.type == MOUSEBUTTONDOWN and loop_init_map:
                         if search_if_restart_launch(event, 1):
                             set_ants_and_launch(map_array, screen, pygame)
