@@ -236,10 +236,23 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
     	screen.blit(screen, (0,0))   
     	pygame.display.flip()
 
+def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
+
+        i = 0
+        loop_display = 1
+        total_moves_nbr = len(all_movements)
+        while loop_display:
+            for event in pygame.event.get():   
+    	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+                    loop_display = 0
+                if event.type == MOUSEBUTTONDOWN:
+                    search_if_restart_launch(event, 0)
+            if (i < total_moves_nbr):
+                show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame)
+                i += 1
 
 def launch_lem_in(map_array, ant_number, screen, pygame):
 
-        loop_display = 1
 	print_map(map_array, ant_number)
 	show_map(map_array, screen, pygame)
 	put_main_buttons(screen, pygame, 0)
@@ -260,17 +273,7 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
                     show_output = 1
             if show_output == 1:
                 all_movements.append(line)
-        i = 0
-        total_moves_nbr = len(all_movements)
-        while loop_display:
-            for event in pygame.event.get():   
-    	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    loop_display = 0
-                if event.type == MOUSEBUTTONDOWN:
-                    search_if_restart_launch(event, 0)
-                if (event.type == KEYDOWN and i < total_moves_nbr):
-                    show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame)
-                    i += 1
+        manage_ant_movement(map_array, ant_array, all_movements, screen, pygame)
 
 def main():
     pygame.init()
