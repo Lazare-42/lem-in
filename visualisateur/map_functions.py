@@ -4,21 +4,29 @@ import sys
 X_SIZE = 1920
 Y_SIZE = 1200
 
+def draw_first_last_nodes(node, array, screen, pygame):
+	if node == array[0]:
+		pygame.draw.circle(screen, [0,245,0], (node.x, node.y), 20, 0)
+                return 1
+	elif node == array[-1]:
+		pygame.draw.circle(screen, [245, 0, 0], (node.x, node.y), 20, 0)
+                return 1
+        else:
+            return 0
+
 # this puts the map on the screen
 def show_map(array, screen, pygame):
         array_len = len(array)
         for a in array:
                 i = 0
-        	if a == array[0]:
-        		pygame.draw.circle(screen, [0,245,0], (a.x, a.y), 20, 0)
-        	elif a == array[-1]:
-        		pygame.draw.circle(screen, [245, 0, 0], (a.x, a.y), 20, 0)
-        	else:
-        		pygame.draw.circle(screen, [245,245,220], (a.x, a.y), 20, 0)
         	for n in a.tubes:
         		if n:
-        		    pygame.draw.line(screen, [245, 245, 245], (a.x, a.y), (array[i].x, array[i].y), 5)
+        		    pygame.draw.line(screen, [44, 117, 117], (a.x, a.y), (array[i].x, array[i].y), 5)
                         i += 1
+                if draw_first_last_nodes(a, array, screen, pygame) == 0:
+        	    pygame.draw.circle(screen, [44,117,117], (a.x, a.y), 20, 0)
+        draw_first_last_nodes(array[0], array, screen, pygame)
+        draw_first_last_nodes(array[-1], array, screen, pygame)
     	pygame.display.flip()
 
 # this puts the map to scale
@@ -78,9 +86,11 @@ def create_link(array, down, up, screen, pygame):
 			draw_line += 1
 			second = n
 	if draw_line == 2:
-		pygame.draw.line(screen, [245,245,220], (first.x, first.y), (second.x, second.y), 5)
+		pygame.draw.line(screen, [44,117,117], (first.x, first.y), (second.x, second.y), 5)
 		first.tubes[array.index(second)] = 1
 		second.tubes[array.index(first)] = 1
+                draw_first_last_nodes(first, array, screen, pygame)
+                draw_first_last_nodes(second, array, screen, pygame)
         return array
 
 def print_matrix(array):

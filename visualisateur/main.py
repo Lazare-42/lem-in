@@ -10,19 +10,29 @@ from map_functions import *
 X_SIZE = 1920
 Y_SIZE = 1200
 
+def delete_node(array, node, screen, pygame):
+    node_nbr = array.index(node)
+    array.remove(node);
+    for n in array:
+        del n.tubes[node_nbr]
+    screen.fill(pygame.Color(0, 0, 0))
+    show_map(array, screen, pygame)
+    put_main_buttons(screen, pygame, 1)
+    return (array)
+
 # this function adds a new node upon user click and updates the adjacence matrix connection
-def add_new_node(array, node_nbr, mouse, screen, pygame):
-	create = 1
+def add_del_node(array, node_nbr, mouse, delete_mode, screen, pygame):
 	for n in array:
 		if abs(n.x - mouse[0]) <= 20 and abs(n.y - mouse[1]) <= 20:
-			create = 0
-	if create == 0:
-		return array
+                    if delete_mode:
+	        	return delete_node(array, n, screen, pygame)
+                    else:
+                        return array
 	for n in array:
 		n.tubes.append(n.tubes[-1])
                 n.tubes[-2] = 0
 	array.append(NewNode(array[-1].name, mouse[0], mouse[1], [0 for i in range(len(array) + 1)]))
-	pygame.draw.circle(screen, [245,245,220], (mouse[0], mouse[1]), 20, 0)
+	pygame.draw.circle(screen, [44,117,117], (mouse[0], mouse[1]), 20, 0)
 	tmp = array[-2]
 	array[-2] = array[-1]
 	array[-1] = tmp
@@ -207,13 +217,13 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
         room_nbr = int(n.split('-')[1])
         if (ant_array[ant_nbr].x != map_array[0].x and ant_array[ant_nbr].y != map_array[0].y):
             pygame.draw.circle(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
+	pygame.draw.line(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), (map_array[room_nbr].x, map_array[room_nbr].y), 5)
         ant_array[ant_nbr].x = map_array[room_nbr].x
         ant_array[ant_nbr].y = map_array[room_nbr].y
         if (ant_array[ant_nbr].x != map_array[-1].x and ant_array[ant_nbr].y != map_array[-1].y):
-            pygame.draw.circle(screen, [128,0,128], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
+            pygame.draw.circle(screen, [147,112,219], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
     	screen.blit(screen, (0,0))   
     	pygame.display.flip()
-        pygame.time.wait(500)
 
 
 def launch_lem_in(map_array, ant_number, screen, pygame):
@@ -225,6 +235,7 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
         show_output = 0
 	command = "../lem-in" + "<" + "../new_lem-in"
         ant_array = [Ant(map_array[0].x, map_array[0].y) for i in range (0, ant_number)]
+        all_movements = []
         output = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         while(True):
             retcode = output.poll() #returns None while subprocess is running
@@ -237,14 +248,18 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
                 if 'L' in line:
                     show_output = 1
             if show_output == 1:
-                #sys.stdin.read(1)
-                show_lem_in_output(map_array, ant_array, line, screen, pygame)
+                all_movements.append(line)
+        i = 0
+        total_moves_nbr = len(all_movements)
         while loop_display:
             for event in pygame.event.get():   
     	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                     loop_display = 0
                 if event.type == MOUSEBUTTONDOWN:
                     search_if_restart_launch(event, 0)
+                if (event.type == KEYDOWN and i < total_moves_nbr):
+                    show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame)
+                    i += 1
 
 def main():
     pygame.init()
@@ -256,6 +271,7 @@ def main():
     loop_display = 1
     loop_init_map = 0
     welcome_screen = 1
+    delete_mode = 0
     text_array = []
     button_array = []
     map_array = []
@@ -265,11 +281,14 @@ def main():
     	for event in pygame.event.get():   
     		if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                         loop_display = 0
+                if event.type == KEYDOWN and event.key == K_d:
+                    delete_mode = 1
                 elif event.type == MOUSEBUTTONDOWN and loop_init_map:
                         if search_if_restart_launch(event, 1):
                             set_ants_and_launch(map_array, screen, pygame)
                         else:
-    			    map_array = add_new_node(map_array, new_node_nbr, event.pos, screen, pygame)
+    			    map_array = add_del_node(map_array, new_node_nbr, event.pos, delete_mode, screen, pygame)
+                            delete_mode = 0
                             new_node_nbr += 1
     			down = event.pos
                         loop_init_map = 1
