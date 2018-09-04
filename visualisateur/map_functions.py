@@ -21,7 +21,7 @@ def show_map(array, screen, pygame):
                 i = 0
         	for n in a.tubes:
         		if n:
-        		    pygame.draw.line(screen, [44, 117, 117], (a.x, a.y), (array[i].x, array[i].y), 5)
+        		    pygame.draw.line(screen, [44, 117, 117], (a.x, a.y), (array[i].x, array[i].y), 2)
                         i += 1
                 if draw_first_last_nodes(a, array, screen, pygame) == 0:
         	    pygame.draw.circle(screen, [44,117,117], (a.x, a.y), 20, 0)

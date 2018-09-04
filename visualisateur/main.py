@@ -63,10 +63,10 @@ def error_func(screen, pygame):
                     main()
 
 # this function searches for clicks on the restart or the play button
-def search_if_restart_launch(event, set_ants_and_launch):
+def search_if_restart_launch(event, input_buttons):
     if (abs(event.pos[0] - X_SIZE) < 70 and event.pos[1] < 70):
         main()
-    if (set_ants_and_launch):
+    if (input_buttons):
         if (event.pos[0] < 70 and abs(event.pos[1] - Y_SIZE) < 70):
             return 1
     return 0
@@ -87,16 +87,32 @@ def show_all_maps(screen, pygame):
                 search_if_restart_launch(event, 0)
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
+                    screen.fill(pygame.Color(0, 0, 0))
+	            pygame.display.flip()
                     for n in maps_locations:
                         if button == n.split('/')[2]:
-                            command = "./lem-in_visualizer" + "<" + n
+                            command = "./lem-in_visualizer" + "<" + str(n) + " /Users/lazrossi/Documents/42/lem-in/visualisateur/output.map"
                             o = subprocess.call(command, shell=True)
                             if o > 0:
                                 error_func(screen, pygame)
                                 return None
                             else:
                                 map_array, max_x, node_nbr = load_map("./output.map")
-                            return map_array, max_x, node_nbr
+                return map_array, max_x, node_nbr
+
+def load_random_map(screen, pygame):
+
+    text_array = input_buttons(screen, pygame, ["Node Number: ", "Connection %: "]);
+    node_number = text_array[0][len("Node Number: "):]
+    connection_percentage = text_array[1][len("Connection %: "):]
+    command = "./lem-in_visualizer"  + " /Users/lazrossi/Documents/42/lem-in/visualisateur/output.map" + " " + node_number + " " + connection_percentage
+    o = subprocess.call(command, shell=True)
+    if o > 0:
+        error_func(screen, pygame)
+        return None
+    else:
+        map_array, max_x, node_nbr = load_map("./output.map")
+    return map_array, max_x, node_nbr
 
 #this function creates a text object for each button
 def text_objects(text, font):
@@ -109,9 +125,9 @@ def put_text_box (text_array, screen, pygame):
         text_box_number = int(math.sqrt(len(text_array)))
         i = 0;
         x = 0;
-        Offset(X_SIZE / (text_box_number + 1), Y_SIZE / (text_box_number + 1))
+        Offset(X_SIZE / (text_box_number + 1), Y_SIZE / (text_box_number + 2))
         y = Offset.y
-        Offset.y = 300
+        Offset.y = 200
         button_array = []
         for n in text_array:
             font = pygame.font.SysFont("comicsansms", 200 / text_box_number, 1, 1)
@@ -151,53 +167,58 @@ def search_button_click (button_array, x, y, screen, pygame):
     text_array = []
     for n in button_array:
         if abs(x - n.TextRect.center[0]) <= n.TextRect.width / 2  and abs(y - n.TextRect.center[1]) <= n.TextRect.height / 2:
-            screen.fill(pygame.Color(0, 0, 0))
-	    pygame.display.flip()
             return n.name
     return None
 
+import copy
 
 #this function waits for the user input to define ants and then launches lem-in
-def set_ants_and_launch(map_array, screen, pygame):
+def input_buttons(screen, pygame, text_array):
     
     wait_for_ants = 1
-    text_array = []
-    button_array = []
-    text_array.append("Ant number: ")
     text_array.append("Go !")
+    text_array_copy = copy.deepcopy(text_array)
     put_text_box(text_array, screen, pygame)
     screen.fill((0, 0, 0))
     screen.blit(screen, (0,0))   
     pygame.display.flip()
     button_array = put_text_box(text_array, screen, pygame)
-
+    i = 0
     while wait_for_ants:
     	for event in pygame.event.get():   
     	    if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
                 wait_for_ants = 0
+            if event.type == MOUSEBUTTONDOWN:
+                    button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
+                    if button:
+                        for n in text_array:
+                            if n == button:
+                                i = text_array.index(n)
+                                if i == len(text_array) - 1:
+                                    i = 0
             if (event.type == KEYDOWN):
                 if event.key == K_0 or event.key == K_KP0:
-                    text_array[0] += "0"
+                    text_array[i] += "0"
                 elif event.key == K_1 or event.key == K_KP1:
-                    text_array[0] += "1"
+                    text_array[i] += "1"
                 elif event.key == K_2 or event.key == K_KP2:
-                    text_array[0] += "2"
+                    text_array[i] += "2"
                 elif event.key == K_3 or event.key == K_KP3:
-                    text_array[0] += "3"
+                    text_array[i] += "3"
                 elif event.key == K_4 or event.key == K_KP4:
-                    text_array[0] += "4"
+                    text_array[i] += "4"
                 elif event.key == K_5 or event.key == K_KP5:
-                    text_array[0] += "5"
+                    text_array[i] += "5"
                 elif event.key == K_6 or event.key == K_KP6:
-                    text_array[0] += "6"
+                    text_array[i] += "6"
                 elif event.key == K_7 or event.key == K_KP7:
-                    text_array[0] += "7"
+                    text_array[i] += "7"
                 elif event.key == K_8 or event.key == K_KP8:
-                    text_array[0] += "8"
+                    text_array[i] += "8"
                 elif event.key == K_9 or event.key == K_KP9:
-                    text_array[0] += "9"
-                elif event.key == K_BACKSPACE and len(text_array[0]) > len("Ant number: "):
-                    text_array[0] = text_array[0][:-1]
+                    text_array[i] += "9"
+                elif event.key == K_BACKSPACE and len(text_array[i]) > len(text_array_copy[i]):
+                    text_array[i] = text_array[i][:-1]
                 if event.key == K_0 or event.key == K_1 or event.key == K_2 or event.key == K_3 or event.key == K_4 or event.key == K_5 or event.key == K_6 or event.key == K_7 or event.key == K_8 or event.key == K_9 or event.key == K_KP0 or event.key == K_KP1 or event.key == K_KP2 or event.key == K_KP3 or event.key == K_KP4 or event.key == K_KP5 or event.key == K_KP6 or event.key == K_KP7 or event.key == K_KP8 or event.key == K_KP9:
                         put_text_box(text_array, screen, pygame)
                 elif event.key == K_BACKSPACE:
@@ -205,16 +226,20 @@ def set_ants_and_launch(map_array, screen, pygame):
                     screen.blit(screen, (0,0))   
                     pygame.display.flip()
                     put_text_box(text_array, screen, pygame)
-            if event.type == MOUSEBUTTONDOWN and ((text_array[0][len("Ant number: "):])):
+            can_return = 1
+            if event.type == MOUSEBUTTONDOWN or event.type == KEYDOWN:
+                for n in text_array[0:-1]:
+                    if len(n) <= len(text_array_copy[text_array.index(n)]):
+                        can_return = 0
+            if event.type == MOUSEBUTTONDOWN and can_return:
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
                     if button == "Go !":
-                            ant_number = int(text_array[0][len("Ant number: "):])
-                            launch_lem_in(map_array, ant_number, screen, pygame)
-            if event.type == KEYDOWN and ((text_array[0][len("Ant number: "):])) and event.key == K_RETURN:
                         screen.fill(pygame.Color(0, 0, 0))
-                        ant_number = int(text_array[0][len("Ant number: "):])
-                        launch_lem_in(map_array, ant_number, screen, pygame)
+                        return text_array
+            elif event.type == KEYDOWN and event.key == K_RETURN and can_return:
+                screen.fill(pygame.Color(0, 0, 0))
+                return text_array
 
 import time
 def show_lem_in_output(map_array, ant_array, output, screen, pygame):
@@ -298,7 +323,9 @@ def main():
                 if event.type == KEYDOWN and event.key == K_d:
                     delete_mode = 1
                 if event.type == KEYDOWN and event.key == K_RETURN and loop_init_map:
-                        set_ants_and_launch(map_array, screen, pygame)
+                        text_array = input_buttons(screen, pygame, ["Ant number: "])
+                        ant_number = int(text_array[0][len("Ant number: "):])
+                        launch_lem_in(map_array, ant_number, screen, pygame)
                 if event.type == KEYDOWN and event.key == K_RETURN and loop_init_map == 0:
                         screen.fill(pygame.Color(0, 0, 0))
                         put_main_buttons(screen, pygame, 1)
@@ -307,7 +334,9 @@ def main():
                         show_map(map_array, screen, pygame)
                 elif event.type == MOUSEBUTTONDOWN and loop_init_map:
                         if search_if_restart_launch(event, 1):
-                            set_ants_and_launch(map_array, screen, pygame)
+                            text_array = input_buttons(screen, pygame, ["Ant number: "])
+                            ant_number = int(text_array[0][len("Ant number: "):])
+                            launch_lem_in(map_array, ant_number, screen, pygame)
                         else:
     			    map_array, new_node_nbr = add_del_node(map_array, new_node_nbr, event.pos, delete_mode, screen, pygame)
                             delete_mode = 0
@@ -319,22 +348,32 @@ def main():
                 if event.type == MOUSEBUTTONDOWN and welcome_screen == 0:
                         button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                         if button:
+                            screen.fill(pygame.Color(0, 0, 0))
+	                    pygame.display.flip()
                             button_array = []
                             if button == "Load map":
                                 put_main_buttons(screen, pygame, 0)
                                 map_array, max_x, new_node_nbr = show_all_maps(screen, pygame)
                                 show_map(map_array, screen, pygame)
-                                put_main_buttons(screen, pygame, 1)
                                 loop_init_map = 2
+                                put_main_buttons(screen, pygame, 1)
                             elif button == "Create map":
                                 put_main_buttons(screen, pygame, 1)
                                 map_array, max_x, new_node_nbr = load_map("./new_map")
                                 new_node_nbr += 1
                                 show_map(map_array, screen, pygame)
                                 loop_init_map = 2
+                            elif button == "Create random map":
+                                put_main_buttons(screen, pygame, 0)
+                                map_array, max_x, new_node_nbr = load_random_map(screen, pygame)
+                                map_array, max_x, new_node_nbr = load_map("./output.map")
+                                show_map(map_array, screen, pygame)
+                                loop_init_map = 2
+                                put_main_buttons(screen, pygame, 1)
     
         if welcome_screen:
                 text_array.append("Load map")
+                text_array.append("Create random map")
                 text_array.append("Create map")
                 button_array = put_text_box(text_array, screen, pygame)
                 welcome_screen = 0

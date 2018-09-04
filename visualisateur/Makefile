@@ -5,10 +5,10 @@ SOURCES =	main.c \
 			hashtable.c \
 			data_structure_operations.c \
 			store_node.c \
-			print_map.c \
 			parsing.c \
 			swap_end_begin_rooms.c \
 			print_map_visualizer.c \
+			map_creator.c \
 
 
 LIBDIR = libft

@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:05:33 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/29 20:33:36 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/04 16:35:21 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static t_info	get_tubes(t_info info, char *buf)
 		ft_memdel((void**)&buf);
 		ret = get_next_line(0, &buf, '\n');
 	}
-	print_map_visualizer(info);
 	return (info);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/29 20:17:43 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/04 21:18:28 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,22 @@ typedef	struct		s_node
 	t_node			*next;
 }					t_node;
 
+typedef enum    	e_type
+{
+    				std, 
+					loop_full,
+					deadend_full,
+					uselesspath_full
+}               	t_type;
+
+typedef struct		s_map_creator
+{
+	t_type			type;
+	int				node_nb;
+	int				links_percent;
+	int				is_valide;
+}					t_map_creator;
+
 typedef struct		s_path
 {
 	int				node;
@@ -52,7 +68,6 @@ typedef struct		s_info
 	int				n;
 }					t_info;
 
-void				print_map(t_info info, int where);
 void				lemin_error(char *error);
 t_node				*hash_insert(t_info info, t_node new_node);
 t_node				hash_retrieve(t_info info, const char *to_find);
@@ -70,11 +85,11 @@ t_info				swap_end_room(t_info info);
 int					hashtable_key(const char *name);
 t_node				*hash_delete_elem(t_info info, const char *to_find);
 const char			*set_get_end_name(const char *end_name);
-void				print_hash_map(t_info info);
 t_info				swap_end_begin_room(t_info info, int start_or_end);
 const char			*set_get_end_name(const char *name);
 t_info				djisktra(t_info info);
 const char			*set_get_start_name(const char *name);
-void				print_map_visualizer(t_info info);
+int     			**map_creator(t_map_creator map_creator_info, char *path);
+void				print_map_visualizer(t_info info, char *path);
 
 #endif
