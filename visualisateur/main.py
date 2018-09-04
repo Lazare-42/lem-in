@@ -1,5 +1,6 @@
 #!/usr/bin/python 
 import pygame
+import copy
 import time
 import subprocess 
 import math
@@ -7,8 +8,8 @@ from pygame.locals import *
 from classes import *
 from map_functions import *
 
-X_SIZE = 1920
-Y_SIZE = 1200
+X_SIZE = 2560
+Y_SIZE = 1440
 
 def delete_node(array, node, screen, pygame):
     node_nbr = array.index(node)
@@ -170,7 +171,6 @@ def search_button_click (button_array, x, y, screen, pygame):
             return n.name
     return None
 
-import copy
 
 #this function waits for the user input to define ants and then launches lem-in
 def input_buttons(screen, pygame, text_array):
@@ -249,17 +249,14 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
         ant_nbr = int(n.split('-')[0][1:])
         ant_nbr -= 1
         room_nbr = int(n.split('-')[1])
-        if (ant_array[ant_nbr].x != map_array[0].x and ant_array[ant_nbr].y != map_array[0].y):
-            pygame.draw.circle(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
-	pygame.draw.line(screen, [192,192,192], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), (map_array[room_nbr].x, map_array[room_nbr].y), 5)
-        ant_array[ant_nbr].x = map_array[room_nbr].x
-        ant_array[ant_nbr].y = map_array[room_nbr].y
-        if (ant_array[ant_nbr].x != map_array[-1].x and ant_array[ant_nbr].y != map_array[-1].y):
-            pygame.draw.circle(screen, [147,112,219], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 20, 0)
-        draw_first_last_nodes(map_array[0], map_array, screen, pygame)
-        draw_first_last_nodes(map_array[-1], map_array, screen, pygame)
-    	screen.blit(screen, (0,0))   
-    	pygame.display.flip()
+        i = 0
+        while (i < 5):
+            pygame.draw.circle(screen, [44,117,117], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 2, 0)
+            ant_array[ant_nbr].x = map_array[room_nbr].x
+            ant_array[ant_nbr].y = map_array[room_nbr].y
+            pygame.draw.circle(screen, [147,112,219], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 2, 0)
+    	    screen.blit(screen, (0,0))   
+    	    pygame.display.flip()
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 
