@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/25 16:49:20 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/06 01:00:51 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/07 00:45:13 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,12 @@ typedef struct	s_paths_info
 	float		time;
 }				t_paths_info;
 
+typedef struct	s_node
+{
+	int			index;
+	int			weight;
+}				t_node;
+
 int		**queue_create(int n);
 void	queue_add_elem(int **queue, int *node);
 int		*queue_pick_last(int **queue);
@@ -96,5 +102,14 @@ void	working_mat_add_new_paths(int **working_mat, int **tmp_mat, int n);
 void	mat_reverse_used_paths(int **tmp_mat, int **working_mat, int size);
 void	ilstdel(t_ilst **ilst);
 void	plstdel(t_plst **plst);
+void	heap_print(t_node *heap);
+t_node	*heap_create(int n);
+void	heap_add(t_node *heap, t_node node);
+t_node	heap_pick_first(t_node *heap);
+void	l_heap_print(int **heap);
+int		**l_heap_create(int n);
+void	l_heap_add(int **heap, int *node);
+int		*l_heap_pick_first(int **heap);
+void	l_heap_del(int ***heap);
 
 #endif
