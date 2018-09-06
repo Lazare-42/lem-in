@@ -8,8 +8,13 @@ SOURCES =	main.c \
 			print_map.c \
 			parsing.c \
 			swap_end_begin_rooms.c \
-			djisktra.c \
-			print_map_visualizer.c \
+			queue.c \
+			lemin_plst.c \
+			lemin_ilst.c \
+			get_paths.c \
+			ft_mat.c \
+			dijkstra.c \
+			lemin_mat.c \
 
 
 LIBDIR = libft
@@ -18,7 +23,7 @@ SDIR = srcs
 
 ODIR = bin
 
-CFLAGS = -Werror -Wall -Wextra -Ofast
+CFLAGS = -Werror -Wall -Wextra -Ofast -fsanitize=address
 
 INCDIR = includes
 

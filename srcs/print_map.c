@@ -94,16 +94,19 @@ void	print_tubes(t_info info)
 	int		square;
 
 	i = -1;
-	ft_printf("\nAnt number : %d[[end]]\n", info.ant_nbr);
+	ft_printf("\nAnt number : %d[[end]]\n", info.ant_nb);
 	ft_printf("[[underline]][[cyan]]This is the adjacence matrix :[[end]]\n");
 	ft_printf("%-12s\n", "Room Name :");
-	while (++i < info.n)
+	while (++i < info.n + 1)
 	{
 		n = -1;
-		ft_printf("%-12s", info.nodelist[i].name);
-		while (++n < info.n)
+		if (i - 1 >= 0)
+			ft_printf("%-12s", info.nodelist[i - 1].name);
+		else
+			ft_printf("%-12s", NULL);
+		while (++n < info.n + 1)
 		{
-			if ((square = info.nodelist[i].tubes[n]) && n != i)
+			if ((square = info.o_mat[i][n]) && n != i)
 				ft_printf("[[green]][[bold]]%d [[end]]", square);
 			else if (n != i)
 				ft_printf("[[blue]]%d [[end]]", square);

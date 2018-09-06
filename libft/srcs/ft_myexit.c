@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/20 10:17:35 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/02/21 11:36:48 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/08/29 20:18:18 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ void	ft_myexit(char *str)
 {
 	ft_putstr_fd(str, 2);
 	ft_putchar_fd('\n', 2);
-	exit(0);
+	exit(1);
 }

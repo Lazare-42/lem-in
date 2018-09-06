@@ -30,11 +30,6 @@ static t_info	get_tubes(t_info info, char *buf)
 		ft_memdel((void**)&buf);
 		ret = get_next_line(0, &buf, '\n');
 	}
-	if (info.output)
-	{
-		print_map_visualizer(info);
-		exit(0);
-	}
 	return (info);
 }
 
@@ -77,12 +72,12 @@ t_info			parse_map(t_info info)
 			lemin_error("get_next_line returned -1 in parse_map or void_map");
 		if (buf[0] == '#')
 			info = comment_mannagement(buf, info);
-		if (!info.ant_nbr)
+		if (!info.ant_nb)
 		{
-			if (!(info.ant_nbr = ft_atoi(buf)))
+			if (!(info.ant_nb = ft_atoi(buf)))
 				lemin_error("First line must be ant number > 0");
 		}
-		else if (info.ant_nbr)
+		else if (info.ant_nb)
 		{
 			info = get_rooms(info, buf);
 			return (info);

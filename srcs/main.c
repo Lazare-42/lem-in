@@ -28,22 +28,21 @@ t_info	comment_mannagement(char *buf, t_info info)
 	return (info);
 }
 
-int		main(int ac, char **av)
+int		main()
 {
 	t_info	info;
+	t_best_paths	best_paths;
 
-	info.output = 0;
-	if (ac >= 2)
-		if (ft_strequ(av[1], "-output_map"))
-			info.output = 1;
 	info.n = 0;
 	info.end_begin_room = 0;
 	info.tab_size = DATA_INITIAL_SIZE;
-	info.ant_nbr = 0;
+	info.ant_nb = 0;
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);
 	info = parse_map(info);
-	info = djisktra(info);
+	best_paths = get_best_paths(&info, 2);
+	printf("\nBEST SET OF PATHS : %.1f time\n", best_paths.time); plst_print(&(best_paths.plst));
+	print_map(info, 2);
 	/* !! */
 //	print_hash_map(info);
 //	print_map(info, 0);

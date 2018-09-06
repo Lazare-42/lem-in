@@ -1,1 +1,1 @@
-get_next_line returned -1 in parse_map or void_map
+First line must be ant number > 0

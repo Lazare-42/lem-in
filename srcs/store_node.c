@@ -65,8 +65,6 @@ t_node	node_create(char *buf, int node_number)
 	new_node.number = node_number;
 	new_node.name = NULL;
 	name_and_pos = NULL;
-	new_node.path_marker = NULL;
-	new_node.weight = NULL;
 	if (!(name_and_pos = ft_split_whitespaces(buf)))
 		lemin_error("error in split whitespaces in node_create");
 	new_node.name = name_and_pos[0];
@@ -84,27 +82,22 @@ t_info	create_tubes(t_info info)
 {
 	int i;
 	int	n;
-	int	*tubes;
-	int	*weight;
+	int	**tubes;
 
 	i = -1;
-	while (++i < info.n)
-	{
-		weight = NULL;
-		tubes = NULL;
-		if (!(tubes = malloc(sizeof(int) * info.n)))
+	tubes = NULL;
+	if (!(tubes = malloc(sizeof(int *) * (info.n + 1))))
 			lemin_error("malloc error in create_tubes");
-		if (!(weight = malloc(sizeof(int) * info.n)))
+	while (++i < info.n + 1)
+	{
+		tubes[i] = NULL;
+		if (!(tubes[i] = malloc(sizeof(int) * (info.n + 1))))
 			lemin_error("malloc error in create_tubes");
 		n = -1;
-		while (++n < info.n)
-		{
-			tubes[n] = 0;
-			weight[n] = NO_PATH;
-		}
-		info.nodelist[i].tubes = tubes;
-		info.nodelist[i].weight = weight;
+		while (++n < info.n + 1)
+			tubes[i][n] = 0;
 	}
+	info.o_mat = tubes;
 	return (info);
 }
 
@@ -127,7 +120,7 @@ t_info	tube_assign(char *buf, t_info info)
 	to_find_2 = &buf[i];
 	tube_1 = hash_retrieve(info, to_find_1);
 	tube_2 = hash_retrieve(info, to_find_2);
-	info.nodelist[tube_1.number].tubes[tube_2.number] = 1;
-	info.nodelist[tube_2.number].tubes[tube_1.number] = 1;
+	info.o_mat[tube_1.number + 1][tube_2.number + 1] = 1;
+	info.o_mat[tube_2.number + 1][tube_1.number + 1] = 1;
 	return (info);
 }
