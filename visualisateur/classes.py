@@ -13,11 +13,13 @@ class NewNode:
 
 class Ant_move:
 
-	def __init__(self, depart_x, vec_x, depart_y, vec_y):
+	def __init__(self, depart_x, vec_x, depart_y, vec_y, arrive_x, arrive_y):
 		self.depart_x = depart_x
 		self.vec_x = vec_x
 		self.depart_y = depart_y,
 		self.vec_y = vec_y
+		self.arrive_x = arrive_x
+		self.arrive_y = arrive_y
 
 class Ant:
     """This is the ant class"""

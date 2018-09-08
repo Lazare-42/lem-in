@@ -1,8 +1,8 @@
 from classes import *
 import glob
 import sys
-X_SIZE = 2000
-Y_SIZE = 1200
+X_SIZE = 1800
+Y_SIZE = 1100
 
 def draw_first_last_nodes(node, array, screen, pygame):
 	if node == array[0]:
