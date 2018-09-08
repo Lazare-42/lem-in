@@ -254,11 +254,18 @@ def show_movements_1_turn(screen, pygame, ants, i):
 def erase_ant(screen, pygame, ants, map_array):
 	for n in ants:
 		for i in range (1, NB_STEP):
-			pygame.display.update(pygame.draw.circle(screen, [0, 0, 0], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0))
-			pygame.display.update(pygame.draw.line(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), (n.arrive_x, n.arrive_y), 2))
-		if n.arrive_x != map_array[0].x:
-			pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (n.arrive_x, n.arrive_y), 20, 0))
-			pygame.display.update(pygame.draw.circle(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), 20, 0))
+			pygame.draw.circle(screen, [0, 0, 0], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0)
+			pygame.draw.line(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), (n.arrive_x, n.arrive_y), 2)
+
+			if n.depart_x == map_array[0].x and n.depart_y[0] == map_array[0].y:
+				draw_first_last_nodes(map_array[0], map_array, screen, pygame)
+			if n.arrive_x == map_array[-1].x and n.arrive_y == map_array[-1].y:
+				draw_first_last_nodes(map_array[-1], map_array, screen, pygame)
+			pygame.display.flip()
+			if n.arrive_x != map_array[-1].x or n.arrive_y != map_array[-1].y:
+				pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (n.arrive_x, n.arrive_y), 20, 0))
+			if n.depart_y[0] != map_array[0].y or n.depart_x != map_array[0].x:
+				pygame.display.update(pygame.draw.circle(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), 20, 0))
 
 def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 

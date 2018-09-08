@@ -86,7 +86,7 @@ def create_link(array, down, up, screen, pygame):
 			draw_line += 1
 			second = n
 	if draw_line == 2:
-		pygame.draw.line(screen, [44,117,117], (first.x, first.y), (second.x, second.y), 5)
+		pygame.draw.line(screen, [44,117,117], (first.x, first.y), (second.x, second.y), 2)
 		first.tubes[array.index(second)] = 1
 		second.tubes[array.index(first)] = 1
                 draw_first_last_nodes(first, array, screen, pygame)
