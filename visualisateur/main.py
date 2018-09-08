@@ -245,33 +245,36 @@ NB_STEP = 5
 import time
 import thread
 
-def draw_one_ant(screen, pygame, x, y):
-	pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (x, y), 6, 0))
+def draw_one_ant(screen, pygame, ants, i):
+	for n in ants:
+		pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0))
 
-def erase_ant(screen, pygame, x, y, map_array):
-	pygame.display.update(pygame.draw.circle(screen, [0, 0, 0], (x, y), 6, 0))
+def erase_ant(screen, pygame, ants, i, map_array):
+	for n in ants:
+		pygame.display.update(pygame.draw.circle(screen, [0, 0, 0], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0))
 	show_map(map_array, screen, pygame)
 
 def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 
-    total_moves = output.split((' '))
-    for n in total_moves[0:-1]:
-        ant_nbr = int(n.split('-')[0][1:])
-        ant_nbr -= 1
-        room_nbr = int(n.split('-')[1])
-    	pygame.draw.circle(screen, [44,117,117], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 2, 0)
-        depart_x = ant_array[ant_nbr].x
-        depart_y = ant_array[ant_nbr].y
-        ant_array[ant_nbr].x = map_array[room_nbr].x
-        ant_array[ant_nbr].y = map_array[room_nbr].y
-        arrive_x = ant_array[ant_nbr].x
-        arrive_y = ant_array[ant_nbr].y 
-        vec_x = (arrive_x - depart_x) / NB_STEP
-        vec_y = (arrive_y - depart_y) / NB_STEP
-        for i in range (0, NB_STEP):
-			thread.start_new_thread(draw_one_ant, (screen, pygame, depart_x + vec_x * i, depart_y + vec_y * i))
-			pygame.time.wait(400)
-			thread.start_new_thread(erase_ant, (screen, pygame, depart_x + vec_x * i, depart_y + vec_y * i, map_array))
+	ant_moves_line = []
+	total_moves = output.split((' '))
+	for n in total_moves[0:-1]:
+		ant_nbr = int(n.split('-')[0][1:])
+		ant_nbr -= 1
+		room_nbr = int(n.split('-')[1])
+		depart_x = ant_array[ant_nbr].x
+		depart_y = ant_array[ant_nbr].y
+		ant_array[ant_nbr].x = map_array[room_nbr].x
+		ant_array[ant_nbr].y = map_array[room_nbr].y
+		arrive_x = ant_array[ant_nbr].x
+		arrive_y = ant_array[ant_nbr].y 
+		vec_x = (arrive_x - depart_x) / NB_STEP
+		vec_y = (arrive_y - depart_y) / NB_STEP
+		ant_moves_line.append(Ant_move(int(depart_x), int(vec_x), int(depart_y), int(vec_y)))
+	for i in range (0, NB_STEP):
+		thread.start_new_thread(draw_one_ant, (screen, pygame, ant_moves_line, i)) 
+		pygame.time.wait(400)
+		thread.start_new_thread(erase_ant, (screen, pygame, ant_moves_line, i, map_array)) 
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 
@@ -285,9 +288,8 @@ def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
                 if event.type == MOUSEBUTTONDOWN:
                     search_if_restart_launch(event, 0)
             if (i < total_moves_nbr):
-                show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame)
-				#show_map(map_array, screen, pygame)
-                i += 1
+   				show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame)
+   				i += 1
 
 def launch_lem_in(map_array, ant_number, screen, pygame):
 

@@ -11,6 +11,14 @@ class NewNode:
 	def __str__(self):
 		return  self.name +  " " + str(self.x) + " " + str (self.y)
 
+class Ant_move:
+
+	def __init__(self, depart_x, vec_x, depart_y, vec_y):
+		self.depart_x = depart_x
+		self.vec_x = vec_x
+		self.depart_y = depart_y,
+		self.vec_y = vec_y
+
 class Ant:
     """This is the ant class"""
 
