@@ -62,7 +62,7 @@ def error_func(screen, pygame):
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
                     main()
-
+	
 # this function searches for clicks on the restart or the play button
 def search_if_restart_launch(event, input_buttons):
     if (abs(event.pos[0] - X_SIZE) < 70 and event.pos[1] < 70):
@@ -241,7 +241,17 @@ def input_buttons(screen, pygame, text_array):
                 screen.fill(pygame.Color(0, 0, 0))
                 return text_array
 
+NB_STEP = 5
 import time
+import thread
+
+def draw_one_ant(screen, pygame, x, y):
+	pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (x, y), 6, 0))
+
+def erase_ant(screen, pygame, x, y, map_array):
+	pygame.display.update(pygame.draw.circle(screen, [0, 0, 0], (x, y), 6, 0))
+	show_map(map_array, screen, pygame)
+
 def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 
     total_moves = output.split((' '))
@@ -249,14 +259,19 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
         ant_nbr = int(n.split('-')[0][1:])
         ant_nbr -= 1
         room_nbr = int(n.split('-')[1])
-        i = 0
-        while (i < 5):
-            pygame.draw.circle(screen, [44,117,117], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 2, 0)
-            ant_array[ant_nbr].x = map_array[room_nbr].x
-            ant_array[ant_nbr].y = map_array[room_nbr].y
-            pygame.draw.circle(screen, [147,112,219], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 2, 0)
-    	    screen.blit(screen, (0,0))   
-    	    pygame.display.flip()
+    	pygame.draw.circle(screen, [44,117,117], (ant_array[ant_nbr].x, ant_array[ant_nbr].y), 2, 0)
+        depart_x = ant_array[ant_nbr].x
+        depart_y = ant_array[ant_nbr].y
+        ant_array[ant_nbr].x = map_array[room_nbr].x
+        ant_array[ant_nbr].y = map_array[room_nbr].y
+        arrive_x = ant_array[ant_nbr].x
+        arrive_y = ant_array[ant_nbr].y 
+        vec_x = (arrive_x - depart_x) / NB_STEP
+        vec_y = (arrive_y - depart_y) / NB_STEP
+        for i in range (0, NB_STEP):
+			thread.start_new_thread(draw_one_ant, (screen, pygame, depart_x + vec_x * i, depart_y + vec_y * i))
+			pygame.time.wait(400)
+			thread.start_new_thread(erase_ant, (screen, pygame, depart_x + vec_x * i, depart_y + vec_y * i, map_array))
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 
@@ -271,6 +286,7 @@ def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
                     search_if_restart_launch(event, 0)
             if (i < total_moves_nbr):
                 show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame)
+				#show_map(map_array, screen, pygame)
                 i += 1
 
 def launch_lem_in(map_array, ant_number, screen, pygame):
@@ -295,7 +311,7 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
                     show_output = 1
             if show_output == 1:
                 all_movements.append(line)
-		#manage_ant_movement(map_array, ant_array, all_movements, screen, pygame)
+        manage_ant_movement(map_array, ant_array, all_movements, screen, pygame)
 
 def main():
     pygame.init()
