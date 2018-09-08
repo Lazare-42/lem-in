@@ -1,5 +1,6 @@
 #!/usr/bin/python 
 import pygame
+import thread
 import copy
 import time
 import subprocess 
@@ -242,17 +243,14 @@ def input_buttons(screen, pygame, text_array):
                 return text_array
 
 NB_STEP = 5
-import time
-import thread
 
-def draw_one_ant(screen, pygame, ants, i):
+def show_movements_1_turn(screen, pygame, ants, i):
 	for n in ants:
 		pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0))
 
 def erase_ant(screen, pygame, ants, i, map_array):
-	for n in ants:
-		pygame.display.update(pygame.draw.circle(screen, [0, 0, 0], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0))
-	show_map(map_array, screen, pygame)
+   	screen.blit(screen, (0,0))   
+	pygame.display.flip()
 
 def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 
@@ -271,10 +269,11 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 		vec_x = (arrive_x - depart_x) / NB_STEP
 		vec_y = (arrive_y - depart_y) / NB_STEP
 		ant_moves_line.append(Ant_move(int(depart_x), int(vec_x), int(depart_y), int(vec_y)))
+	tmp_screen = screen.copy()
 	for i in range (0, NB_STEP):
-		thread.start_new_thread(draw_one_ant, (screen, pygame, ant_moves_line, i)) 
-		pygame.time.wait(400)
-		thread.start_new_thread(erase_ant, (screen, pygame, ant_moves_line, i, map_array)) 
+		thread.start_new_thread(show_movements_1_turn, (screen, pygame, ant_moves_line, i)) 
+		pygame.time.wait(500)
+		thread.start_new_thread(erase_ant, (tmp_screen, pygame, ant_moves_line, i, map_array)) 
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 
