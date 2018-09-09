@@ -1,6 +1,7 @@
 #!/usr/bin/python 
 import pygame
 import thread
+from threading import Thread
 import copy
 import time
 import subprocess 
@@ -242,14 +243,15 @@ def input_buttons(screen, pygame, text_array):
                 screen.fill(pygame.Color(0, 0, 0))
                 return text_array
 
-NB_STEP = 5
+NB_STEP = 50
 
 def show_movements_1_turn(screen, pygame, ants, i):
 	for n in ants:
 		if i != NB_STEP:
-			pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0))
+			pygame.display.update(pygame.draw.circle(screen, [255 * i % 100, 112, 219], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0))
 		else:
-			pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 15, 0))
+			pygame.display.update(pygame.draw.circle(screen, [255 * i % 100, 112, 219], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 15, 0))
+		pygame.time.delay(25)
 
 def erase_ant(screen, pygame, ants, map_array):
 	for n in ants:
@@ -286,10 +288,15 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 		ant_moves_line.append(Ant_move(depart_x, vec_x, depart_y, vec_y, arrive_x, arrive_y))
 	for i in range (0, NB_STEP):
 		if (i != 0):
-			thread.start_new_thread(show_movements_1_turn, (screen, pygame, ant_moves_line, i)) 
-			pygame.time.wait(500)
+			thread = Thread(target = show_movements_1_turn, args = (screen, pygame, ant_moves_line, i))
+			thread.start()
+			thread.join()
+			#thread.start_new_thread(show_movements_1_turn, (screen, pygame, ant_moves_line, i)) 
 		if i == NB_STEP - 1:
-			thread.start_new_thread(erase_ant, (screen, pygame, ant_moves_line, map_array)) 
+			thread = Thread(target = erase_ant, args = (screen, pygame, ant_moves_line, map_array))
+			thread.start()
+			thread.join()
+			#thread.start_new_thread(erase_ant, (screen, pygame, ant_moves_line, map_array)) 
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 
