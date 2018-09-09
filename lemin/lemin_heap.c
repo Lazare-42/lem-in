@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/06 22:34:22 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/07 00:52:18 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/09 21:21:04 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	l_heap_print(int **heap)
 	int	i;
 
 	i = 1;
-	ft_printf("\033[31mHEAP - len %d\n\033[0m", heap[0][0]);
+	printf("\033[31mHEAP - len %d\n\033[0m", heap[0][0]);
 	while (i < heap[0][0] + 1)
 	{
-		ft_printf(" %03d | node add : %03x | node weight : %03d\n", i,
+		printf(" %03d | node add : %03x | node weight : %03d\n", i,
 			(int)heap[i], heap[i][0]);
 		i++;
 	}
