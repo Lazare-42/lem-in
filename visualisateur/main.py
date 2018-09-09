@@ -245,19 +245,17 @@ def input_buttons(screen, pygame, text_array):
 
 NB_STEP = 50
 
-def show_movements_1_turn(screen, pygame, ants, i):
+def show_movements_1_turn(screen, pygame, ants, i, map_array):
+
 	for n in ants:
-		if i != NB_STEP:
-			pygame.display.update(pygame.draw.circle(screen, [255 * i % 100, 112, 219], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0))
-		else:
-			pygame.display.update(pygame.draw.circle(screen, [255 * i % 100, 112, 219], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 15, 0))
-		pygame.time.delay(25)
+		if i != 1:
+			pygame.display.update(pygame.draw.circle(screen, [0, 0, 0], ((n.arrive_x - n.depart_x) * (i-1) / NB_STEP + n.depart_x, (n.arrive_y - n.depart_y[0]) * (i-1) / NB_STEP + n.depart_y[0]), 6 if (i-1) != NB_STEP else 15, 0))
+		pygame.draw.line(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), (n.arrive_x, n.arrive_y), 2)
+		pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], ((n.arrive_x - n.depart_x) * i / NB_STEP + n.depart_x, (n.arrive_y - n.depart_y[0]) * i / NB_STEP + n.depart_y[0]), 6 if i != NB_STEP else 15, 0))
+		pygame.time.delay(3 / len(ants))
 
 def erase_ant(screen, pygame, ants, map_array):
 	for n in ants:
-		for i in range (1, NB_STEP):
-			pygame.draw.circle(screen, [0, 0, 0], (n.depart_x + n.vec_x * i, n.depart_y[0] + n.vec_y * i), 6, 0)
-			pygame.draw.line(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), (n.arrive_x, n.arrive_y), 2)
 
 			if n.depart_x == map_array[0].x and n.depart_y[0] == map_array[0].y:
 				draw_first_last_nodes(map_array[0], map_array, screen, pygame)
@@ -286,17 +284,14 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 		vec_x = (arrive_x - depart_x) / NB_STEP
 		vec_y = (arrive_y - depart_y) / NB_STEP
 		ant_moves_line.append(Ant_move(depart_x, vec_x, depart_y, vec_y, arrive_x, arrive_y))
-	for i in range (0, NB_STEP):
-		if (i != 0):
-			thread = Thread(target = show_movements_1_turn, args = (screen, pygame, ant_moves_line, i))
-			thread.start()
-			thread.join()
-			#thread.start_new_thread(show_movements_1_turn, (screen, pygame, ant_moves_line, i)) 
+	for i in range (1, NB_STEP):
+		thread = Thread(target = show_movements_1_turn, args = (screen, pygame, ant_moves_line, i, map_array))
+		thread.start()
+		thread.join()
 		if i == NB_STEP - 1:
 			thread = Thread(target = erase_ant, args = (screen, pygame, ant_moves_line, map_array))
 			thread.start()
 			thread.join()
-			#thread.start_new_thread(erase_ant, (screen, pygame, ant_moves_line, map_array)) 
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 
