@@ -6,13 +6,11 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 22:56:02 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/06 00:57:56 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/09 21:45:29 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
-#include "../libft/includes/libft.h"
-#include <stdlib.h>
+#include "lemin.h"
 
 static void	mat_reset_for_dijkstra(int **mat, int size)
 {
@@ -30,17 +28,15 @@ static void	mat_reset_for_dijkstra(int **mat, int size)
 int			dijkstra(int **mat, int size)
 {
 	int	*node;
-	int	**queue;
+	int	**heap;
 	int	x;
 	int	weight;
-	int	is_path; //DANS L ATTENTE DE LA HEAP UNIQUEMENT
 
-	is_path = 0; //PROVISOIRE
 	node = &(mat[1][0]);
-	queue = queue_create(size);
-	queue_add_elem(queue, node);
+	heap = l_heap_create(size);
+	l_heap_add(heap, node);
 	mat_reset_for_dijkstra(mat, size);
-	while ((node = queue_pick_last(queue)))
+	while ((node = l_heap_pick_first(heap)))
 	{
 		x = 0;
 		weight = *node;
@@ -49,13 +45,11 @@ int			dijkstra(int **mat, int size)
 			if (node[x] && weight + node[x] < mat[x][0])
 			{
 				mat[x][0] = weight + node[x];
-				queue_add_elem(queue, &(mat[x][0]));
+				l_heap_add(heap, &(mat[x][0]));
 				if (x == size - 1)
-					is_path = 1; // PROVISOIRE
-					//return (1);
+					return (1);
 			}
 		}
 	}
-	free(queue);
-	return (is_path);
+	return (0);
 }

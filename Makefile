@@ -15,7 +15,7 @@ SOURCES =	main.c \
 			ft_mat.c \
 			dijkstra.c \
 			lemin_mat.c \
-
+			lemin_heap.c \
 
 LIBDIR = libft
 

@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/25 19:53:57 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/09 22:09:33 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,12 @@ void	working_mat_add_new_paths(int **working_mat, int **tmp_mat, int n);
 void	mat_reverse_used_paths(int **tmp_mat, int **working_mat, int size);
 void	ilstdel(t_ilst **ilst);
 void	plstdel(t_plst **plst);
+void	l_heap_print(int **heap);
+int		**l_heap_create(int n);
+void	l_heap_add(int **heap, int *node);
+int		*l_heap_pick_first(int **heap);
+void	l_heap_del(int ***heap);
+//void	mat_print(int **mat, int size);
 
 void				print_map(t_info info, int where);
 void				lemin_error(char *error);
