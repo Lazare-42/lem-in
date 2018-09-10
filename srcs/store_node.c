@@ -120,7 +120,10 @@ t_info	tube_assign(char *buf, t_info info)
 	to_find_2 = &buf[i];
 	tube_1 = hash_retrieve(info, to_find_1);
 	tube_2 = hash_retrieve(info, to_find_2);
-	info.o_mat[tube_1.number + 1][tube_2.number + 1] = 1;
-	info.o_mat[tube_2.number + 1][tube_1.number + 1] = 1;
+	if (tube_1.number != tube_2.number)
+	{
+		info.o_mat[tube_1.number + 1][tube_2.number + 1] = 1;
+		info.o_mat[tube_2.number + 1][tube_1.number + 1] = 1;
+	}
 	return (info);
 }
