@@ -245,13 +245,14 @@ def input_buttons(screen, pygame, text_array):
 
 NB_STEP = 50
 
-def show_movements_1_turn(screen, pygame, ants, i, map_array):
+
+def show_movements_1_turn(screen, pygame, ants, i, map_array, circle_red, circle_red_pos):
 
 	for n in ants:
 		if i != 1:
-			pygame.display.update(pygame.draw.circle(screen, [0, 0, 0], ((n.arrive_x - n.depart_x) * (i-1) / NB_STEP + n.depart_x, (n.arrive_y - n.depart_y[0]) * (i-1) / NB_STEP + n.depart_y[0]), 6 if (i-1) != NB_STEP else 15, 0))
-		pygame.draw.line(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), (n.arrive_x, n.arrive_y), 2)
-		pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], ((n.arrive_x - n.depart_x) * i / NB_STEP + n.depart_x, (n.arrive_y - n.depart_y[0]) * i / NB_STEP + n.depart_y[0]), 6 if i != NB_STEP else 15, 0))
+			circle_red_pos.center =  ((n.arrive_x - n.depart_x) * i / NB_STEP + n.depart_x, (n.arrive_y - n.depart_y[0]) * i / NB_STEP + n.depart_y[0]) 
+			screen.blit(circle_red, circle_red_pos)
+			pygame.display.flip()
 		pygame.time.delay(3 / len(ants))
 
 def erase_ant(screen, pygame, ants, map_array):
@@ -267,7 +268,7 @@ def erase_ant(screen, pygame, ants, map_array):
 			if n.depart_y[0] != map_array[0].y or n.depart_x != map_array[0].x:
 				pygame.display.update(pygame.draw.circle(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), 20, 0))
 
-def show_lem_in_output(map_array, ant_array, output, screen, pygame):
+def show_lem_in_output(map_array, ant_array, output, screen, pygame, circle_red, circle_red_pos):
 
 	ant_moves_line = []
 	total_moves = output.split((' '))
@@ -285,28 +286,29 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame):
 		vec_y = (arrive_y - depart_y) / NB_STEP
 		ant_moves_line.append(Ant_move(depart_x, vec_x, depart_y, vec_y, arrive_x, arrive_y))
 	for i in range (1, NB_STEP):
-		thread = Thread(target = show_movements_1_turn, args = (screen, pygame, ant_moves_line, i, map_array))
+		thread = Thread(target = show_movements_1_turn, args = (screen, pygame, ant_moves_line, i, map_array, circle_red, circle_red_pos))
 		thread.start()
-		thread.join()
 		if i == NB_STEP - 1:
 			thread = Thread(target = erase_ant, args = (screen, pygame, ant_moves_line, map_array))
 			thread.start()
-			thread.join()
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 
-        i = 0
-        loop_display = 1
-        total_moves_nbr = len(all_movements)
-        while loop_display:
-            for event in pygame.event.get():   
-    	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-                    loop_display = 0
-                if event.type == MOUSEBUTTONDOWN:
-                    search_if_restart_launch(event, 0)
-            if (i < total_moves_nbr):
-   				show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame)
-   				i += 1
+	i = 0
+	loop_display = 1
+	total_moves_nbr = len(all_movements)
+	circle_red = pygame.image.load("./red_circle.png").convert_alpha()
+	circle_red = pygame.transform.scale(circle_red, (6, 6))
+	circle_red_pos = circle_red.get_rect()
+	while loop_display:
+	    for event in pygame.event.get():   
+	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+	            loop_display = 0
+	        if event.type == MOUSEBUTTONDOWN:
+	            search_if_restart_launch(event, 0)
+	    if (i < total_moves_nbr):
+			show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame, circle_red, circle_red_pos)
+			i += 1
 
 def launch_lem_in(map_array, ant_number, screen, pygame):
 
