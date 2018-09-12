@@ -13,6 +13,7 @@ from map_functions import *
 X_SIZE = 1800
 Y_SIZE = 1100
 
+#this function deletes the node clicked upon
 def delete_node(array, node, screen, pygame, node_nbr):
     node_nbr = array.index(node)
     array.remove(node);
@@ -159,12 +160,14 @@ def put_text_box (text_array, screen, pygame):
 def put_main_buttons(screen, pygame, play_button):
 
     if play_button:
-        play = pygame.image.load("./start.png").convert_alpha()
-        play = pygame.transform.scale(play, (70, 70))
-        play_pos = play.get_rect()
-        play_pos.center = (play_pos.width / 2, Y_SIZE - play_pos.height / 2)
-        screen.blit(play, play_pos)
-        pygame.display.flip()
+		if play_button == 1:
+			play = pygame.image.load("./start.png").convert_alpha()
+		else:
+			play = pygame.image.load("./skip.png").convert_alpha()
+		play = pygame.transform.scale(play, (70, 70))
+		play_pos = play.get_rect()
+		play_pos.center = (play_pos.width / 2, Y_SIZE - play_pos.height / 2)
+		screen.blit(play, play_pos)
     restart = pygame.image.load("./restart.png").convert_alpha()
     restart = pygame.transform.scale(restart, (70, 70))
     restart_pos = restart.get_rect()
@@ -306,7 +309,7 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame, circle_red,
 #			thread.start()
 #			thread.join()
 
-def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
+def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame, ant_number):
 
 	i = 0
 	loop_display = 1
@@ -314,7 +317,7 @@ def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 	circle_red = pygame.image.load("./red_circle.png").convert_alpha()
 	circle_red = pygame.transform.scale(circle_red, (10, 10))
 	circle_red_pos = circle_red.get_rect()
-	while loop_display:
+	while loop_display and i < total_moves_nbr:
 	    for event in pygame.event.get():   
 	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
 	            loop_display = 0
@@ -323,13 +326,52 @@ def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 	    if (i < total_moves_nbr):
 			show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame, circle_red, circle_red_pos)
 			i += 1
+	if loop_display:
+		show_score(map_array[-1].weight, len(all_movements), pygame, screen, ant_number)
+
+def  show_score(fastest_path, lem_in, pygame, screen, ant_number):
+	result = float(lem_in) / float(fastest_path + ant_number - 1)
+	result = "%.2f" % result
+	screen.fill(pygame.Color(0, 0, 0))
+	screen.blit(screen, (0,0))   
+	pygame.display.flip()
+	wait = 1
+	button_array = []
+	button_array.append("Ants traveled at ")
+	button_array.append(str(result) + " times")
+	button_array.append("the speed of Dijsktra")
+	button_array = put_text_box(button_array, screen, pygame)
+	while wait:
+		for event in pygame.event.get():   
+			if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+				wait = 0
+			if event.type == KEYDOWN and event.key == K_RETURN:
+					main()
+			if event.type == MOUSEBUTTONDOWN:
+			        button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
+			        if button:
+						main()
+
+
+def find_shortest_path(map_array, speed, node):
+	pos = 0
+	if (node == map_array[-1]):
+		map_array[-1].weight = speed
+	for n in node.tubes:
+		if n:
+			if map_array[pos].weight > speed:
+				map_array[pos].weight = speed
+				find_shortest_path(map_array, speed + 1, map_array[pos])
+		pos += 1
 
 def launch_lem_in(map_array, ant_number, screen, pygame):
 
 	print_map(map_array, ant_number)
 	show_map(map_array, screen, pygame)
-	put_main_buttons(screen, pygame, 0)
+	put_main_buttons(screen, pygame, 2)
+	pygame.display.flip()
         show_output = 0
+	find_shortest_path(map_array, 0, map_array[0])
 	command = "../lem-in" + "<" + "../new_lem-in"
         ant_array = [Ant(map_array[0].x, map_array[0].y) for i in range (0, ant_number)]
         all_movements = []
@@ -346,7 +388,7 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
                     show_output = 1
             if show_output == 1:
                 all_movements.append(line)
-        manage_ant_movement(map_array, ant_array, all_movements, screen, pygame)
+        manage_ant_movement(map_array, ant_array, all_movements, screen, pygame, ant_number)
 
 def main():
     pygame.init()
