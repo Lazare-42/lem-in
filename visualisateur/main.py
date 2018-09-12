@@ -13,7 +13,7 @@ from map_functions import *
 X_SIZE = 1800
 Y_SIZE = 1100
 
-def delete_node(array, node, screen, pygame):
+def delete_node(array, node, screen, pygame, node_nbr):
     node_nbr = array.index(node)
     array.remove(node);
     for n in array[node_nbr:]:
@@ -25,14 +25,15 @@ def delete_node(array, node, screen, pygame):
     screen.fill(pygame.Color(0, 0, 0))
     show_map(array, screen, pygame)
     put_main_buttons(screen, pygame, 1)
-    return (array)
+    node_nbr = len(array)
+    return (array, node_nbr)
 
 # this function adds a new node upon user click and updates the adjacence matrix connection
 def add_del_node(array, node_nbr, mouse, delete_mode, screen, pygame):
 	for n in array:
-		if abs(n.x - mouse[0]) <= 20 and abs(n.y - mouse[1]) <= 20:
+		if abs(n.x - mouse[0]) <= 40 and abs(n.y - mouse[1]) <= 40:
                     if delete_mode:
-	        	return delete_node(array, n, screen, pygame), node_nbr
+	        	return delete_node(array, n, screen, pygame, node_nbr)
                     else:
                         return array, node_nbr
 	for n in array:
@@ -78,11 +79,15 @@ def search_if_restart_launch(event, input_buttons):
 def show_all_maps(screen, pygame):
 
     wait_choice = 1
+    o = 0
+    max_x = 10
+    node_nbr = 10
     button_array = []
     maps_locations = glob.glob("../test_maps//*")
     map_array = []
     for n in maps_locations:
         map_array.append(n.split('/')[2])
+    map_array.append("last map")
     button_array = put_text_box(map_array, screen, pygame)
     while wait_choice:
         for event in pygame.event.get():
@@ -90,18 +95,22 @@ def show_all_maps(screen, pygame):
                 search_if_restart_launch(event, 0)
                 button = search_button_click(button_array, event.pos[0], event.pos[1], screen, pygame)
                 if button:
-                    screen.fill(pygame.Color(0, 0, 0))
-	            pygame.display.flip()
-                    for n in maps_locations:
-                        if button == n.split('/')[2]:
-                            command = "./lem-in_visualizer" + "<" + str(n) + " /Users/lazrossi/Documents/42/lem-in/visualisateur/output.map"
-                            o = subprocess.call(command, shell=True)
-                            if o > 0:
-                                error_func(screen, pygame)
-                                return None
-                            else:
-                                map_array, max_x, node_nbr = load_map("./output.map")
-                return map_array, max_x, node_nbr
+   					screen.fill(pygame.Color(0, 0, 0))
+   					pygame.display.flip()
+   					if button == "last map":
+   					     command = "./lem-in_visualizer" + "<" + "../new_lem-in" + " /Users/lazrossi/Documents/42/lem-in/visualisateur/output.map"
+   					     o = subprocess.call(command, shell=True)
+   					else:
+   						 for n in maps_locations:
+   						     if button == n.split('/')[2]:
+   								command = "./lem-in_visualizer" + "<" + str(n) + " /Users/lazrossi/Documents/42/lem-in/visualisateur/output.map"
+   								o = subprocess.call(command, shell=True)
+   					if o > 0:
+   					   error_func(screen, pygame)
+   					   return None
+   					else:
+   					   map_array, max_x, node_nbr = load_map("./output.map")
+   					return map_array, max_x, node_nbr
 
 def load_random_map(screen, pygame):
 
