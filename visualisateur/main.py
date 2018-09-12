@@ -268,19 +268,6 @@ def show_movements_1_turn(screen, pygame, ants, i, map_array, circle_red, circle
 	pygame.display.flip()
 	pygame.time.delay(3 / len(ants))
 
-def erase_ant(screen, pygame, ants, map_array):
-	for n in ants:
-
-			if n.depart_x == map_array[0].x and n.depart_y[0] == map_array[0].y:
-				draw_first_last_nodes(map_array[0], map_array, screen, pygame)
-			if n.arrive_x == map_array[-1].x and n.arrive_y == map_array[-1].y:
-				draw_first_last_nodes(map_array[-1], map_array, screen, pygame)
-			pygame.display.flip()
-			if n.arrive_x != map_array[-1].x or n.arrive_y != map_array[-1].y:
-				pygame.display.update(pygame.draw.circle(screen, [147, 112, 219], (n.arrive_x, n.arrive_y), 20, 0))
-			if n.depart_y[0] != map_array[0].y or n.depart_x != map_array[0].x:
-				pygame.display.update(pygame.draw.circle(screen, [44, 117, 117], (n.depart_x, n.depart_y[0]), 20, 0))
-
 def show_lem_in_output(map_array, ant_array, output, screen, pygame, circle_red, circle_red_pos):
 
 	ant_moves_line = []
@@ -304,10 +291,6 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame, circle_red,
 		thread.start()
 		thread.join()
 	screen.blit(screen_copy, (0, 0))
-#		if i == NB_STEP - 1:
-#			thread = Thread(target = erase_ant, args = (screen, pygame, ant_moves_line, map_array))
-#			thread.start()
-#			thread.join()
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame, ant_number):
 
@@ -319,9 +302,11 @@ def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame, ant
 	circle_red_pos = circle_red.get_rect()
 	while loop_display and i < total_moves_nbr:
 	    for event in pygame.event.get():   
-	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
-	            loop_display = 0
-	        if event.type == MOUSEBUTTONDOWN:
+			if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
+			    loop_display = 0
+			if event.type == KEYDOWN and event.key == K_RETURN:		
+				show_score(map_array[-1].weight, len(all_movements), pygame, screen, ant_number)
+			if event.type == MOUSEBUTTONDOWN:
 				if search_if_restart_launch(event, 1):
 					show_score(map_array[-1].weight, len(all_movements), pygame, screen, ant_number)
 	    if (i < total_moves_nbr):
