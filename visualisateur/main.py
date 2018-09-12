@@ -41,12 +41,12 @@ def add_del_node(array, node_nbr, mouse, delete_mode, screen, pygame):
                 n.tubes[-2] = 0
 	array.append(NewNode(array[-1].name, mouse[0], mouse[1], [0 for i in range(len(array) + 1)]))
 	pygame.draw.circle(screen, [44,117,117], (mouse[0], mouse[1]), 20, 0)
-	tmp = array[-2]
-	array[-2] = array[-1]
-	array[-1] = tmp
-        array[-1].name = str(node_nbr)
-        node_nbr += 1
-        return array, node_nbr
+	tmp = copy.deepcopy(array[-2])
+	tmp.name = int(tmp.name) + 1
+	tmp.name = str(tmp.name)
+	array.remove(array[-2])
+	array.append(tmp)
+	return array, node_nbr
 
 #this function displays error in maps which are loaded
 def error_func(screen, pygame):
@@ -300,10 +300,11 @@ def show_lem_in_output(map_array, ant_array, output, screen, pygame, circle_red,
 		thread = Thread(target = show_movements_1_turn, args = (screen, pygame, ant_moves_line, i, map_array, circle_red, circle_red_pos, screen_copy))
 		thread.start()
 		thread.join()
-		if i == NB_STEP - 1:
-			thread = Thread(target = erase_ant, args = (screen, pygame, ant_moves_line, map_array))
-			thread.start()
-			thread.join()
+	screen.blit(screen_copy, (0, 0))
+#		if i == NB_STEP - 1:
+#			thread = Thread(target = erase_ant, args = (screen, pygame, ant_moves_line, map_array))
+#			thread.start()
+#			thread.join()
 
 def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame):
 
