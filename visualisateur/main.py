@@ -322,7 +322,8 @@ def manage_ant_movement(map_array, ant_array, all_movements, screen, pygame, ant
 	        if event.type == QUIT or (event.type == KEYDOWN and event.key == K_ESCAPE):
 	            loop_display = 0
 	        if event.type == MOUSEBUTTONDOWN:
-	            search_if_restart_launch(event, 0)
+				if search_if_restart_launch(event, 1):
+					show_score(map_array[-1].weight, len(all_movements), pygame, screen, ant_number)
 	    if (i < total_moves_nbr):
 			show_lem_in_output(map_array, ant_array, all_movements[i], screen, pygame, circle_red, circle_red_pos)
 			i += 1

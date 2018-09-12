@@ -7,6 +7,7 @@ class NewNode:
 		self.x = x
 		self.y = y
 		self.tubes = tubes
+		self.weight = 1000000
 		return
 	def __str__(self):
 		return  self.name +  " " + str(self.x) + " " + str (self.y)
