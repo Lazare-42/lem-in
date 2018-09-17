@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/09 22:09:33 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/17 02:24:25 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define START 1
 # define DATA_INITIAL_SIZE 1024
 # define GROWTH_FACTOR 2
+# define BIG 100000
 
 typedef	struct		s_node t_node;
 
@@ -92,6 +93,13 @@ typedef struct	s_paths_info
 	float		time;
 }				t_paths_info;
 
+typedef struct	s_conflict
+{
+	int			node_1;
+	int			node_2;
+	int			distance_from_a;
+}				t_conflict;
+
 int		**queue_create(int n);
 void	queue_add_elem(int **queue, int *node);
 int		*queue_pick_last(int **queue);
@@ -115,7 +123,7 @@ int		plst_get_len(t_plst **plst);
 int		**mat_init(int size);
 void	mat_cpy(int **dst_mat, int **src_mat, int size);
 void	mat_reset(int **mat, int size);
-void	mat_del_joint_path(int **tmp_mat, int **working_mat, int size);
+int		mat_del_joint_path(int **tmp_mat, int **working_mat, int size);
 void	mat_del_link(int **tmp_mat, int prev_node_index, int next_node_index);
 void	working_mat_add_new_paths(int **working_mat, int **tmp_mat, int n);
 void	mat_reverse_used_paths(int **tmp_mat, int **working_mat, int size);
@@ -126,6 +134,7 @@ int		**l_heap_create(int n);
 void	l_heap_add(int **heap, int *node);
 int		*l_heap_pick_first(int **heap);
 void	l_heap_del(int ***heap);
+void	mat_del_node(int **tmp_mat, int **working_mat, int n, int node);
 //void	mat_print(int **mat, int size);
 
 void				print_map(t_info info, int where);
