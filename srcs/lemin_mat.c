@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 23:07:41 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/17 02:39:46 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/17 02:51:59 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,6 @@ static	int		w_get_next(int **tmp_mat, int **working_mat, int size, int	current_i
 	x = 1;
 	lighter_weight = 99;
 	lighter_node_index = size - 2;
-	//printf("current node index = %c\n", current_index + 65);
-	//getchar();
 	if (current_index == 0)
 		return (-1);
 	while (x < size)
@@ -78,23 +76,15 @@ void	working_mat_add_new_paths(int **working_mat, int **tmp_mat, int n)
 	int		next_node_index;
 	int		prev_node_index;
 
-	ft_printf("w mat add enter\n");
 	while (dijkstra(tmp_mat, n + 1))
 	{
-		ft_printf("w mat add enter loop 1\n");
 		prev_node_index = n - 1;
 		while ((next_node_index = w_get_next(tmp_mat, working_mat, n + 1, prev_node_index)) >= 0)
 		{
-			mat_print(tmp_mat, n + 1);
-			mat_print(working_mat, n + 1);
-			ft_printf("w mat add enter loop 2\nprev_mode_index = %c\nnext_node_index = %c\n", prev_node_index + 65, next_node_index + 65);
-			getchar();
-			//mat_del_link(tmp_mat, prev_node_index, next_node_index);
 			mat_del_node(tmp_mat, working_mat, n, prev_node_index);
 			working_mat[next_node_index + 1][prev_node_index + 1] = BIG;
 			working_mat[0][prev_node_index + 1] += 1;
 			prev_node_index = next_node_index;
-			mat_print(working_mat, n + 1);
 		}
 	}
 }
