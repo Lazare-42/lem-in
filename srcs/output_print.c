@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 03:58:24 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/18 04:06:49 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/18 17:05:55 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ static void	path_reverse(t_best_paths *best_paths)
 	}
 }
 
-static void	ilst_move(t_ilst *ilst)
+static void	ilst_move(t_ilst *ilst, t_info info)
 {
+	(void)info;
 	while (ilst)
 	{
 		if (ilst->next)
@@ -62,14 +63,14 @@ static void	ilst_move(t_ilst *ilst)
 			{
 				ilst->ant_index = ilst->next->ant_index;
 				ilst->next->ant_index = 0;
-				ft_printf("L%d-%c ", ilst->ant_index, ilst->n + 65);
+				ft_printf("L%d-%s ", ilst->ant_index, info.nodelist[ilst->n].name);
 			}
 		}
 		ilst = ilst->next;
 	}
 }
 
-static void	move_print(t_best_paths *best_paths)
+static void	move_print(t_best_paths *best_paths, t_info info)
 {
 	int		time;
 	int		time_tot;
@@ -90,7 +91,7 @@ static void	move_print(t_best_paths *best_paths)
 				plst->first_node->ant_index = new_ant_index;
 				plst->nbftot--;
 			}
-			ilst_move(plst->path);
+			ilst_move(plst->path, info);
 			plst = plst->next;
 		}
 		ft_printf("\n");
@@ -102,5 +103,5 @@ void	output_print(t_best_paths *best_paths, t_info *info)
 {
 	nbfpp_add(best_paths, info->ant_nb);
 	path_reverse(best_paths);
-	move_print(best_paths);
+	move_print(best_paths, *info);
 }

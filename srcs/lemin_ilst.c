@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 20:18:15 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/18 15:48:58 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/18 17:05:48 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,15 +55,15 @@ void	ilstdel(t_ilst **ilst)
 {
 	t_ilst	*tmp;
 
-	printf("ilstdel enter\n"); fflush(stdout);
+//	printf("ilstdel enter\n"); fflush(stdout);
 	if (!(ilst) || ilst == (t_ilst **)16)
 		return;
-	printf("ilstdel after check 0 - ilst = %ld\n", (long)ilst); fflush(stdout);
+//	printf("ilstdel after check 0 - ilst = %ld\n", (long)ilst); fflush(stdout);
 	tmp = *ilst;
-	printf("ilstdel after tmp initialized - tmp = %ld\n", (long)tmp); fflush(stdout);
+//	printf("ilstdel after tmp initialized - tmp = %ld\n", (long)tmp); fflush(stdout);
 	while (*ilst && *ilst != (t_ilst *)12)
 	{
-		printf("ilstdel loop\n"); fflush(stdout);
+//		printf("ilstdel loop\n"); fflush(stdout);
 		*ilst = tmp->next;
 		free(tmp);
 		tmp = *ilst;
