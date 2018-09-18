@@ -6,12 +6,13 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/17 02:53:03 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/18 04:04:15 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
+#include <math.h>
 //unistd is for sleep / chechking leaks ; take it away when done
 
 t_info	comment_mannagement(char *buf, t_info info)
@@ -44,6 +45,7 @@ int		main()
 	best_paths = get_best_paths(&info, 2);
 	printf("\nBEST SET OF PATHS : %.1f time\n", best_paths.time); plst_print(&(best_paths.plst));
 	print_map(info, 2);
+	output_print(&best_paths, &info);
 	/* !! */
 //	print_hash_map(info);
 //	print_map(info, 0);

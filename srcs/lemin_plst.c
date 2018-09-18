@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 22:44:40 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/06 01:21:29 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/18 02:05:58 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ t_plst	*plstnew(t_ilst *path)
 		return (0);
 	new_m->path = path;
 	new_m->path_len = 0;
+	new_m->nbftot = 0;
+	new_m->nbf = 0;
+	new_m->first_node = 0;
 	new_m->next = NULL;
 	return (new_m);
 }
@@ -70,7 +73,7 @@ void	plst_print(t_plst **plst)
 	i = 0;
 	while (tmp)
 	{
-		printf("\nCHEMIN %d - LEN %d\n\n", i, tmp->path_len);
+		ft_printf("\nCHEMIN %d - LEN %d - NBFTOT %d\n\n", i, tmp->path_len, tmp->nbftot);
 		ilst_print(&(tmp->path));
 		tmp = tmp->next;
 		i++;
