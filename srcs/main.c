@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/18 04:04:15 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/18 15:55:58 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_info	comment_mannagement(char *buf, t_info info)
 		info.end_begin_room = START;
 	return (info);
 }
-
+#include <unistd.h>
 int		main()
 {
 	t_info	info;
@@ -42,14 +42,17 @@ int		main()
 	info.nodelist = create_table(info);
 	info = parse_map(info);
 	mat_print(info.o_mat, info.n + 1);
-	best_paths = get_best_paths(&info, 2);
-	printf("\nBEST SET OF PATHS : %.1f time\n", best_paths.time); plst_print(&(best_paths.plst));
-	print_map(info, 2);
-	output_print(&best_paths, &info);
+	best_paths = get_best_paths(&info, 1);
+	//printf("\nBEST SET OF PATHS : %.1f time\n", best_paths.time); plst_print(&(best_paths.plst));
+	//print_map(info, 2);
+	//output_print(&best_paths, &info);
 	/* !! */
 //	print_hash_map(info);
 //	print_map(info, 0);
 //	sleep(130);
 	/* !! */
+	mat_free(&(info.working_mat), info.n + 1);
+	mat_free(&(info.tmp_mat), info.n + 1);
+	//sleep (45);
 	return (1);
 }

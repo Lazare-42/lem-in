@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 22:59:12 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/09 22:14:04 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/18 14:35:15 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,19 @@ void	mat_print(int **mat, int size)
 		printf("\n"); fflush(stdout);
 		y++;
 	}
+}
+
+void	mat_free(int	***mat, int size)
+{
+	int y;
+
+	y = 0;
+	while (y < size)
+	{
+		free((*mat)[y]);
+		y++;
+	}
+	free(*mat);
 }
 
 int		**mat_init(int size)

@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/18 04:04:13 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/18 14:32:26 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ void	l_heap_del(int ***heap);
 void	mat_del_node(int **tmp_mat, int **working_mat, int n, int node);
 t_ilst	*ilstrev(t_ilst **ilst);
 void	output_print(t_best_paths *best_paths, t_info *info);
+void	mat_free(int	***mat, int size);
 //void	mat_print(int **mat, int size);
 
 void				print_map(t_info info, int where);

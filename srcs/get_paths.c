@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 22:00:14 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/17 02:51:57 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/18 15:49:12 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,10 @@ void			update_best_paths(t_best_paths *best_paths, t_plst *new_plst, /*int ant_n
 {
 	if (new_time < best_paths->time)
 	{
-		best_paths->time = new_time;
-		plstdel(&(best_paths->plst));
+		if (best_paths->time != INT_MAX)
+			plstdel(&(best_paths->plst));
 		best_paths->plst = new_plst;
+		best_paths->time = new_time;
 	}
 	else
 	{
@@ -72,16 +73,19 @@ void			update_best_paths(t_best_paths *best_paths, t_plst *new_plst, /*int ant_n
 int				add_path_if_usefull(float ant_nb, t_paths_info *p_info, t_lst_g *lst_g)
 {
 	float	new_time;
+	int		better_path_found;
 
+	better_path_found = 0;
 	new_time = (ant_nb + p_info->paths_total_len - p_info->paths_nb) / p_info->paths_nb;
 	if (new_time <  p_info->time)
 	{
 		p_info->time = new_time;
 		lst_g->tmp_plst->path = lst_g->new_ilst;
 		plstadd(&(lst_g->new_plst), lst_g->tmp_plst);
-		return (1);
+		better_path_found = 1;
 	}
-	return (0);
+	//plstdel(&(lst_g->tmp_plst));
+	return (better_path_found);
 }
 
 void			p_info_init(t_paths_info *p_info)
@@ -133,7 +137,10 @@ void			save_paths_from_mat_if_better(t_info *info,
 			n_mem.prev_node_i = n_mem.next_node_i;
 			lst_g.tmp_ilst = ilstnew(n_mem.next_node_i);
 			ilstadd(&(lst_g.new_ilst), lst_g.tmp_ilst);
+			//ilstdel(&(lst_g.tmp_ilst));
 		}
+		//printf("plstdel\n"); fflush(stdout);
+		//plstdel(&(lst_g.tmp_plst));
 		if (!(add_path_if_usefull(info->ant_nb, &p_info, &lst_g)))
 			break;
 	}
@@ -201,7 +208,7 @@ t_best_paths	get_best_paths(t_info *info, int it_nb)
 {
 	int				i;
 	t_best_paths	best_paths;
-	
+
 	info->tmp_mat = mat_init(info->n + 1);
 	info->working_mat = mat_init(info->n + 1);
 	best_paths.time = INT_MAX;
