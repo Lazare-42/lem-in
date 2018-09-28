@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/19 13:01:42 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/28 15:15:56 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,6 @@ int		main()
 	/* !! */
 	mat_free(&(info.working_mat), info.n + 1);
 	mat_free(&(info.tmp_mat), info.n + 1);
-	//sleep (45);
+	sleep (45);
 	return (1);
 }
