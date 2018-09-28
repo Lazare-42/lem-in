@@ -5,7 +5,6 @@ SOURCES =	main.c \
 			hashtable.c \
 			data_structure_operations.c \
 			store_node.c \
-			print_map.c \
 			parsing.c \
 			swap_end_begin_rooms.c \
 			queue.c \
@@ -17,6 +16,7 @@ SOURCES =	main.c \
 			lemin_mat.c \
 			lemin_heap.c \
 			output_print.c \
+#			print_map.c \
 
 LIBDIR = libft
 
@@ -24,7 +24,7 @@ SDIR = srcs
 
 ODIR = bin
 
-CFLAGS = -Werror -Wall -Wextra -Ofast -fsanitize=address
+CFLAGS = -Werror -Wall -Wextra -Ofast #-fsanitize=address
 
 INCDIR = includes
 

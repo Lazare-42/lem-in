@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:05:47 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/20 15:05:48 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/28 15:38:02 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static t_info	swap_nodelist_endroom(t_info info, int start_or_end)
 
 	if (start_or_end == END)
 	{
-		end_begin = hash_retrieve(info, set_get_end_name(NULL));
+		end_begin = hash_retrieve(info, info.end_name);
 		swap = info.nodelist[info.n - 1];
 		info.nodelist[info.n - 1] = end_begin;
 		info.nodelist[end_begin.number] = swap;
 	}
 	else if (start_or_end == START)
 	{
-		end_begin = hash_retrieve(info, set_get_start_name(NULL));
+		end_begin = hash_retrieve(info, info.begin_name);
 		swap = info.nodelist[0];
 		info.nodelist[0] = end_begin;
 		info.nodelist[end_begin.number] = swap;
@@ -35,7 +35,7 @@ static t_info	swap_nodelist_endroom(t_info info, int start_or_end)
 	return (info);
 }
 
-t_info	swap_end_begin_room(t_info info, int start_or_end)
+t_info			swap_end_begin_room(t_info info, int start_or_end)
 {
 	t_node		end_begin;
 	t_node		swap;
@@ -45,7 +45,7 @@ t_info	swap_end_begin_room(t_info info, int start_or_end)
 
 	where = (start_or_end == START) ? 0 : info.n - 1;
 	name = (start_or_end == START) ?
-		set_get_start_name(NULL) : set_get_end_name(NULL);
+		info.begin_name : info.end_name;
 	swap = info.nodelist[where];
 	info = swap_nodelist_endroom(info, start_or_end);
 	end_begin = hash_retrieve(info, name);

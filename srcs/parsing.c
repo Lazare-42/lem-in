@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:05:33 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/25 19:54:46 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/28 15:28:34 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_info	get_rooms(t_info info, char *buf)
 			info = comment_mannagement(buf, info);
 		else
 		{
-			info  = store_node_handler(info, node_create(buf, node_number++));
+			info = store_node_handler(info, node_create(buf, node_number++));
 			info.end_begin_room = 0;
 		}
 		ft_memdel((void**)&buf);

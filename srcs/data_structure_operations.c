@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:05:17 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/05 16:05:41 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/28 15:50:26 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
 
-static void	old_hashtable_memdel(t_info info, t_node **old_hashtable)
+static void		old_hashtable_memdel(t_info info, t_node **old_hashtable)
 {
 	int		i;
 	t_node	*tmp;
@@ -34,7 +34,7 @@ static void	old_hashtable_memdel(t_info info, t_node **old_hashtable)
 	ft_memdel((void**)old_hashtable);
 }
 
-t_node		*collisioned_node_reinsertion(t_node *collisioned_node,
+static t_node	*collisioned_node_reinsertion(t_node *collisioned_node,
 		t_node *new_hashtable, t_info info)
 {
 	t_node	*tmp;
@@ -43,14 +43,14 @@ t_node		*collisioned_node_reinsertion(t_node *collisioned_node,
 	{
 		tmp = collisioned_node->next;
 		collisioned_node->next = NULL;
-		new_hashtable = hash_insert(info, *collisioned_node); 
+		new_hashtable = hash_insert(info, *collisioned_node);
 		ft_memdel((void**)&collisioned_node);
 		collisioned_node = tmp;
 	}
 	return (new_hashtable);
 }
 
-t_node		*resize_hashtable(t_info info)
+t_node			*resize_hashtable(t_info info)
 {
 	int		i;
 	t_node	*collisioned_node;
@@ -67,17 +67,17 @@ t_node		*resize_hashtable(t_info info)
 		{
 			collisioned_node = old_hashtable[i].next;
 			old_hashtable[i].next = NULL;
-			new_hashtable = hash_insert(info, old_hashtable[i]); 
+			new_hashtable = hash_insert(info, old_hashtable[i]);
 			if (collisioned_node)
-				collisioned_node_reinsertion
-				(collisioned_node, new_hashtable, info);
+				collisioned_node_reinsertion(
+				collisioned_node, new_hashtable, info);
 		}
 	}
 	old_hashtable_memdel(info, &old_hashtable);
 	return (new_hashtable);
 }
 
-t_node	*resize_nodelist(t_info info)
+t_node			*resize_nodelist(t_info info)
 {
 	t_node	*new_nodelist;
 	int		i;
@@ -94,7 +94,7 @@ t_node	*resize_nodelist(t_info info)
 	return (new_nodelist);
 }
 
-t_node	*create_table(t_info info)
+t_node			*create_table(t_info info)
 {
 	t_node	*new_nodelist;
 	t_node	void_node;

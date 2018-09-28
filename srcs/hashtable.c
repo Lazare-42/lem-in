@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/12 15:54:19 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/20 14:03:54 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/28 15:46:58 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,17 +79,20 @@ t_node			hash_retrieve(t_info info, const char *to_find)
 static t_node	*list_search_to_del(t_info info, const char *to_find,
 		int hash_key)
 {
-	t_node *tmp;
+	t_node	*tmp;
 	t_node	*malloced_node;
 
 	tmp = NULL;
 	malloced_node = info.hash_table[hash_key].next;
 	if (!ft_strcmp(malloced_node->name, to_find))
 		info.hash_table[hash_key].next = NULL;
-	else while (ft_strcmp(malloced_node->name, to_find))
+	else
 	{
-		tmp = malloced_node;
-		malloced_node = malloced_node->next;
+		while (ft_strcmp(malloced_node->name, to_find))
+		{
+			tmp = malloced_node;
+			malloced_node = malloced_node->next;
+		}
 	}
 	if (tmp)
 		tmp->next = malloced_node->next;

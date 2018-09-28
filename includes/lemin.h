@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/18 14:32:26 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/28 15:36:14 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ typedef struct		s_info
 	int				tab_size;
 	int				shortest_path;
 	int				n;
+	const char		*end_name;
+	const char		*begin_name;
 }					t_info;
 
 typedef struct	s_ilst
@@ -161,10 +163,7 @@ t_info				tube_assign(char *buf, t_info info);
 t_info				swap_end_room(t_info info);
 int					hashtable_key(const char *name);
 t_node				*hash_delete_elem(t_info info, const char *to_find);
-const char			*set_get_end_name(const char *end_name);
 void				print_hash_map(t_info info);
 t_info				swap_end_begin_room(t_info info, int start_or_end);
-const char			*set_get_end_name(const char *name);
-const char			*set_get_start_name(const char *name);
 
 #endif

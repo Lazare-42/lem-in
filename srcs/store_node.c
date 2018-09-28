@@ -6,34 +6,13 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/13 18:27:56 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/05 16:06:09 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/28 15:37:40 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
-#include "../libft/includes/libft.h"
 #include <stdlib.h>
-#include <unistd.h>
-//unistd is for sleep / chechking leaks ; take it away when done
-
-const char	*set_get_end_name(const char *name)
-{
-	static const char	*storage = NULL;
-
-	if (name)
-		storage = name;
-	return (storage);
-}
-
-const char	*set_get_start_name(const char *name)
-{
-	static const char	*storage = NULL;
-
-	if (name)
-		storage = name;
-	return (storage);
-}
 
 t_info	store_node_handler(t_info info, t_node new_node)
 {
@@ -44,13 +23,13 @@ t_info	store_node_handler(t_info info, t_node new_node)
 		info.hash_table = resize_hashtable(info);
 	}
 	info.nodelist[info.n] = new_node;
-	info.hash_table = hash_insert(info, new_node); 
+	info.hash_table = hash_insert(info, new_node);
 	if (info.end_begin_room)
 	{
 		if (info.end_begin_room == END)
-			set_get_end_name(new_node.name);
+			info.end_name = new_node.name;
 		else
-			set_get_start_name(new_node.name);
+			info.begin_name = new_node.name;
 	}
 	info.n++;
 	return (info);
@@ -60,7 +39,6 @@ t_node	node_create(char *buf, int node_number)
 {
 	char	**name_and_pos;
 	t_node	new_node;
-
 
 	new_node.number = node_number;
 	new_node.name = NULL;
@@ -87,7 +65,7 @@ t_info	create_tubes(t_info info)
 	i = -1;
 	tubes = NULL;
 	if (!(tubes = malloc(sizeof(int *) * (info.n + 1))))
-			lemin_error("malloc error in create_tubes");
+		lemin_error("malloc error in create_tubes");
 	while (++i < info.n + 1)
 	{
 		tubes[i] = NULL;
