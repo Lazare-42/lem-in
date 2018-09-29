@@ -1,0 +1,19 @@
+50
+##start
+A 0 0
+B 0 0
+C 0 0
+D 0 0
+E 0 0
+F 0 0
+G 0 0
+##end
+H 0 0
+A-H
+B-C
+C-D
+D-H
+A-E
+E-F
+F-G
+G-H

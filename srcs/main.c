@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/28 15:36:52 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/29 20:26:11 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		main()
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);
 	info = parse_map(info);
-	best_paths = get_best_paths(&info, 150);
+	best_paths = get_best_paths(&info, 1);
 	//printf("\nBEST SET OF PATHS : %.1f time\n", best_paths.time); plst_print(&(best_paths.plst));
 	//print_map(info, 2);
 	output_print(&best_paths, &info);
@@ -52,6 +52,5 @@ int		main()
 	/* !! */
 	mat_free(&(info.working_mat), info.n + 1);
 	mat_free(&(info.tmp_mat), info.n + 1);
-	sleep (45);
 	return (1);
 }

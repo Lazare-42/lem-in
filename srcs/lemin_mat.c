@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/05 23:07:41 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/17 02:51:59 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/29 23:45:50 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,11 @@ void	working_mat_add_new_paths(int **working_mat, int **tmp_mat, int n)
 
 	while (dijkstra(tmp_mat, n + 1))
 	{
+		debug();
 		prev_node_index = n - 1;
 		while ((next_node_index = w_get_next(tmp_mat, working_mat, n + 1, prev_node_index)) >= 0)
 		{
+			debug();
 			mat_del_node(tmp_mat, working_mat, n, prev_node_index);
 			working_mat[next_node_index + 1][prev_node_index + 1] = BIG;
 			working_mat[0][prev_node_index + 1] += 1;

@@ -6,13 +6,13 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/02/21 11:36:19 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/06/28 09:39:32 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/29 19:00:57 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/libft.h"
 
-void	debug(void)
+int	debug(void)
 {
 	static int nbr = 0;
 
@@ -21,4 +21,5 @@ void	debug(void)
 	ft_putchar(' ');
 	ft_putnbr(nbr);
 	ft_putchar('\n');
+	return (nbr);
 }

@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/12/18 15:27:37 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/08/23 12:37:33 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/29 19:00:55 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ char				*ft_joinfree_heapstr_stackstr(char **s1, char *s2,
 char				*ft_strdupfrom_free(const char **str, int from);
 char				**ft_tab_replacestr(char ***tab, char **str, char *cmp);
 int					int_ft_putchar(int c);
-void				debug();
+int					debug();
 int					ft_put_fatal_error(char *str);
 void				*ft_put_error_return_null(char *error_msg,
 		char *function_name);
