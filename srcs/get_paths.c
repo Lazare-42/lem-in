@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 22:00:14 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/29 23:08:40 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/09/30 22:01:34 by jboursal         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,18 +232,13 @@ t_best_paths	get_best_paths(t_info *info, int it_nb)
 	mat_cpy(info->tmp_mat, info->o_mat, info->n + 1);
 	while (i < it_nb)
 	{
-		printf("PUT REVERSED\n"); fflush(stdout);
 		mat_put_reversed_path(info->tmp_mat, info->working_mat, info->n + 1);
 		if (!(mat_del_joint_path(info->tmp_mat, info->working_mat, info->n)))
 			mat_del_last_conflict(info->tmp_mat, info->working_mat, info->n);
-		printf("PUT RESET\n"); fflush(stdout);
 		mat_reset(info->working_mat, info->n);
 		save_paths_from_mat_if_better(info, &best_paths);
-		printf("PUT REVERSED 2\n"); fflush(stdout);
 		mat_put_reversed_path(info->tmp_mat, info->working_mat, info->n + 1);
-		printf("REVERSE USED PATH\n"); fflush(stdout);
 		mat_reverse_used_paths(info->tmp_mat, info->working_mat, info->n + 1);
-		printf("ADD NEW PATH\n"); fflush(stdout);
 		working_mat_add_new_paths(info->working_mat, info->tmp_mat, info->n);
 		i++;
 	}

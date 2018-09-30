@@ -99,12 +99,12 @@ def show_all_maps(screen, pygame):
    					screen.fill(pygame.Color(0, 0, 0))
    					pygame.display.flip()
    					if button == "last map":
-   					     command = "./lem-in_visualizer" + "<" + "../new_lem-in" + " /Users/lazrossi/Documents/42/lem-in/visualisateur/output.map"
+   					     command = "./lem-in_visualizer" + "<" + "../new_lem-in" + " ./output.map"
    					     o = subprocess.call(command, shell=True)
    					else:
    						 for n in maps_locations:
    						     if button == n.split('/')[2]:
-   								command = "./lem-in_visualizer" + "<" + str(n) + " /Users/lazrossi/Documents/42/lem-in/visualisateur/output.map"
+   								command = "./lem-in_visualizer" + "<" + str(n) + " ./output.map"
    								o = subprocess.call(command, shell=True)
    					if o > 0:
    					   error_func(screen, pygame)
