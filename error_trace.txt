@@ -1,1 +1,1 @@
-First line must be ant number > 0
+You passed an empty line in the map

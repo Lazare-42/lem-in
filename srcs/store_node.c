@@ -43,6 +43,8 @@ t_node	node_create(char *buf, int node_number)
 	new_node.number = node_number;
 	new_node.name = NULL;
 	name_and_pos = NULL;
+	if (buf && !buf[0])
+		lemin_error("You passed an empty line in the map");
 	if (!(name_and_pos = ft_split_whitespaces(buf)))
 		lemin_error("error in split whitespaces in node_create");
 	new_node.name = name_and_pos[0];
