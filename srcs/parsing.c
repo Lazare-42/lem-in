@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:05:33 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/28 15:28:34 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/01 11:37:29 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,31 @@ static t_info	get_rooms(t_info info, char *buf)
 	return (info);
 }
 
+void			store_line(const char *buf, t_map *map)
+{
+	const char			**new_map;
+	unsigned int		map_counter;
+
+	map->line_nbr++;
+	if (map->line_nbr == map->size || map->to_print)
+	{
+		map->size *= 2;
+		new_map = NULL;
+		map_counter = 0;
+		if (NULL == (new_map = malloc(sizeof(char *) * map->size)))
+			lemin_error("malloc error in store_line");
+		while (map_counter < map->size / 2 && map->to_print)
+		{
+			new_map[map_counter] = map->to_print[map_counter];
+			map_counter++;
+		}
+		if (map->to_print)
+			ft_memdel((void**)&(map->to_print));
+		map->to_print = new_map;
+	}
+	map->to_print[map->line_nbr] = buf;
+}
+
 t_info			parse_map(t_info info)
 {
 	char	*buf;
@@ -82,7 +107,7 @@ t_info			parse_map(t_info info)
 			info = get_rooms(info, buf);
 			return (info);
 		}
-		ft_memdel((void**)&buf);
+		store_line(buf, &(info.map));
 	}
 	return (info);
 }

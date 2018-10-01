@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/10/01 02:06:57 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/01 11:37:30 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define START 1
 # define DATA_INITIAL_SIZE 1024
 # define GROWTH_FACTOR 2
+# define INITIAL_MAP_SIZE 128
 # define BIG 100000
 
 typedef	struct		s_node t_node;
@@ -39,10 +40,18 @@ typedef struct		s_path
 	int				weight_number;
 }					t_path;
 
+typedef struct		s_map
+{
+	const char		**to_print;
+	unsigned int	size;
+	unsigned int	line_nbr;
+}					t_map;
+
 typedef struct		s_info
 {
 	t_node			*hash_table;
 	t_node			*nodelist;
+	t_map			map;
 	int				**o_mat;
 	int				**tmp_mat;
 	int				**working_mat;
