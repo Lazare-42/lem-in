@@ -365,7 +365,6 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
         while(True):
             retcode = output.poll() #returns None while subprocess is running
             line = output.stdout.readline()
-            print line
             if line == "":
                 break
             if line.find("Error", 0) != -1 or line.find("ERROR", 0) != -1:
