@@ -118,7 +118,7 @@ def load_random_map(screen, pygame):
     text_array = input_buttons(screen, pygame, ["Node Number: ", "Connection %: "]);
     node_number = text_array[0][len("Node Number: "):]
     connection_percentage = text_array[1][len("Connection %: "):]
-    command = "./lem-in_visualizer"  + " /Users/lazrossi/Documents/42/lem-in/visualisateur/output.map" + " " + node_number + " " + connection_percentage
+    command = "./lem-in_visualizer"  + " ./output.map" + " " + node_number + " " + connection_percentage
     o = subprocess.call(command, shell=True)
     if o > 0:
         error_func(screen, pygame)
@@ -266,7 +266,7 @@ def show_movements_1_turn(screen, pygame, ants, i, map_array, circle_red, circle
 			circle_red_pos.center =  ((n.arrive_x - n.depart_x) * i / NB_STEP + n.depart_x, (n.arrive_y - n.depart_y[0]) * i / NB_STEP + n.depart_y[0]) 
 			screen.blit(circle_red, circle_red_pos)
 	pygame.display.flip()
-	pygame.time.delay(3 / len(ants))
+	pygame.time.delay(3 / (len(ants) + 1))
 
 def show_lem_in_output(map_array, ant_array, output, screen, pygame, circle_red, circle_red_pos):
 
@@ -358,13 +358,14 @@ def launch_lem_in(map_array, ant_number, screen, pygame):
 	pygame.display.flip()
         show_output = 0
 	find_shortest_path(map_array, 0, map_array[0])
-	command = "../lem-in" + "<" + "../new_lem-in"
+	command = "../lem-in" + "<" + "../new_lem-in" + " for visualiser"
         ant_array = [Ant(map_array[0].x, map_array[0].y) for i in range (0, ant_number)]
         all_movements = []
         output = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True)
         while(True):
             retcode = output.poll() #returns None while subprocess is running
             line = output.stdout.readline()
+            print line
             if line == "":
                 break
             if line.find("Error", 0) != -1 or line.find("ERROR", 0) != -1:

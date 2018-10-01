@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/10/01 11:37:30 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/01 02:06:57 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 
 # define DATA_MULTIPLIER 37
 #define NO_PATH 1231501
+# define PRINT_INPUT 1
 # define END -1
+# define DUPLICATE 45
+# define SAVE_ADRESS 78
 # define START 1
+# define FILE_SIZE 2
 # define DATA_INITIAL_SIZE 1024
 # define GROWTH_FACTOR 2
-# define INITIAL_MAP_SIZE 128
 # define BIG 100000
 
 typedef	struct		s_node t_node;
@@ -42,9 +45,9 @@ typedef struct		s_path
 
 typedef struct		s_map
 {
-	const char		**to_print;
-	unsigned int	size;
-	unsigned int	line_nbr;
+	char			**lines;
+	int				size;
+	int				line_nbr;
 }					t_map;
 
 typedef struct		s_info
@@ -151,11 +154,10 @@ int		*l_heap_pick_first(int **heap);
 void	l_heap_del(int ***heap);
 void	mat_del_node(int **tmp_mat, int **working_mat, int n, int node);
 t_ilst	*ilstrev(t_ilst **ilst);
-void	output_print(t_best_paths *best_paths, t_info *info);
+void	output_print(t_best_paths *best_paths, t_info *info, int print_input);
 void	mat_free(int	***mat, int size);
 //void	mat_print(int **mat, int size);
 
-void				print_map(t_info info, int where);
 void				lemin_error(char *error);
 t_node				*hash_insert(t_info info, t_node new_node);
 t_node				hash_retrieve(t_info info, const char *to_find);

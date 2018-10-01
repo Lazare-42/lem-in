@@ -1,1 +1,1 @@
-You passed an empty line in the map
+input a map

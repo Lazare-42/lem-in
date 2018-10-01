@@ -6,13 +6,41 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:05:33 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/10/01 11:37:29 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/09/28 15:28:34 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
 #include <stdlib.h>
+
+static void		save_lines(t_info *info, char *buf, int duplicate_or_save)
+{
+	char		**new_map;
+	int			map_counter;
+
+	if (NULL == info->map.lines || info->map.line_nbr == info->map.size)
+	{
+		if (info->map.line_nbr == info->map.size)
+			info->map.size *= 2;
+		new_map = NULL;
+		if (!(new_map = malloc(sizeof(char *) * info->map.size)))
+			lemin_error("malloc error in save_lines");
+		if (NULL != info->map.lines)
+		{
+			map_counter = -1;
+			while (++map_counter < info->map.size / 2)
+				new_map[map_counter] = info->map.lines[map_counter];
+			ft_memdel((void**)&(info->map.lines));
+		}
+		info->map.lines = new_map;
+	}
+	if (duplicate_or_save == SAVE_ADRESS)
+		info->map.lines[info->map.line_nbr] = buf;
+	else if (NULL == (info->map.lines[info->map.line_nbr] = ft_strdup(buf)))
+		lemin_error("ft_strdup error in save_lines");
+	info->map.line_nbr++;
+}
 
 static t_info	get_tubes(t_info info, char *buf)
 {
@@ -25,8 +53,11 @@ static t_info	get_tubes(t_info info, char *buf)
 	{
 		if (buf[0] == '#')
 			info = comment_mannagement(buf, info);
-		else
+		else if (buf)
+		{
+			save_lines(&info, buf, DUPLICATE);
 			info = tube_assign(buf, info);
+		}
 		ft_memdel((void**)&buf);
 		ret = get_next_line(0, &buf, '\n');
 	}
@@ -51,37 +82,14 @@ static t_info	get_rooms(t_info info, char *buf)
 			info = store_node_handler(info, node_create(buf, node_number++));
 			info.end_begin_room = 0;
 		}
-		ft_memdel((void**)&buf);
+		if (buf)
+			save_lines(&info, buf, SAVE_ADRESS);
 		ret = get_next_line(0, &buf, '\n');
 	}
 	lemin_error("no tubes after room declaration or GNL return was < 1");
 	return (info);
 }
 
-void			store_line(const char *buf, t_map *map)
-{
-	const char			**new_map;
-	unsigned int		map_counter;
-
-	map->line_nbr++;
-	if (map->line_nbr == map->size || map->to_print)
-	{
-		map->size *= 2;
-		new_map = NULL;
-		map_counter = 0;
-		if (NULL == (new_map = malloc(sizeof(char *) * map->size)))
-			lemin_error("malloc error in store_line");
-		while (map_counter < map->size / 2 && map->to_print)
-		{
-			new_map[map_counter] = map->to_print[map_counter];
-			map_counter++;
-		}
-		if (map->to_print)
-			ft_memdel((void**)&(map->to_print));
-		map->to_print = new_map;
-	}
-	map->to_print[map->line_nbr] = buf;
-}
 
 t_info			parse_map(t_info info)
 {
@@ -107,7 +115,8 @@ t_info			parse_map(t_info info)
 			info = get_rooms(info, buf);
 			return (info);
 		}
-		store_line(buf, &(info.map));
+		if (buf)
+			save_lines(&info, buf, SAVE_ADRESS);
 	}
 	return (info);
 }

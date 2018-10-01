@@ -99,8 +99,23 @@ static void	move_print(t_best_paths *best_paths, t_info info)
 	}
 }
 
-void	output_print(t_best_paths *best_paths, t_info *info)
+static void	print_map(t_info *info)
 {
+	int i;
+
+	i = 0;
+	while (i < info->map.line_nbr)
+	{
+		ft_printf("%s\n", info->map.lines[i]);
+		i++;
+	}
+	ft_printf("\n");
+}
+
+void	output_print(t_best_paths *best_paths, t_info *info, int print_input)
+{
+	if (print_input == PRINT_INPUT)
+		print_map(info);
 	nbfpp_add(best_paths, info->ant_nb);
 	path_reverse(best_paths);
 	move_print(best_paths, *info);

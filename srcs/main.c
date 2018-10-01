@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/10/01 11:37:29 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/01 02:12:34 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,19 @@ t_info	comment_mannagement(char *buf, t_info info)
 		info.end_begin_room = START;
 	return (info);
 }
+#include <unistd.h>
 
-int		main()
+
+int		main(int ac, char **av)
 {
 	t_info	info;
 	t_best_paths	best_paths;
 
+	(void)av;
 	info.n = 0;
-	info.map.to_print = NULL;
-	info.map.size = INITIAL_MAP_SIZE;
+	info.map.lines = NULL;
 	info.map.line_nbr = 0;
+	info.map.size = FILE_SIZE;
 	info.end_begin_room = 0;
 	info.tab_size = DATA_INITIAL_SIZE;
 	info.ant_nb = 0;
@@ -45,12 +48,6 @@ int		main()
 	info.nodelist = create_table(info);
 	info = parse_map(info);
 	get_best_paths(&info, &best_paths,  10);
-	unsigned int i = 0;
-	while (i < info.map.size)
-	{
-		ft_printf("%s\n", info.map.to_print[i]);
-		i++;
-	}
-//	output_print(&best_paths, &info);
-	return (1);
+	output_print(&best_paths, &info, ac == 1 ? PRINT_INPUT : 0);
+	return (0);
 }
