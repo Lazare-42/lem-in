@@ -5,73 +5,157 @@
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
 add_path_if_usefull	get_paths.c	/^int				add_path_if_usefull(float ant_nb, t_paths_info *p_info, t_lst_g *lst_g)$/;"	f
-collisioned_node_reinsertion	data_structure_operations.c	/^t_node		*collisioned_node_reinsertion(t_node *collisioned_node,$/;"	f
+add_path_if_usefull	tmp.c	/^int				add_path_if_usefull(float ant_nb, t_paths_info *p_info, t_lst_g *lst_g)$/;"	f
+collisioned_node_reinsertion	data_structure_operations.c	/^static t_node	*collisioned_node_reinsertion(t_node *collisioned_node,$/;"	f	file:
+collisioned_node_reinsertion	tmp.c	/^static t_node	*collisioned_node_reinsertion(t_node *collisioned_node,$/;"	f	file:
 comment_mannagement	main.c	/^t_info	comment_mannagement(char *buf, t_info info)$/;"	f
-create_table	data_structure_operations.c	/^t_node	*create_table(t_info info)$/;"	f
+comment_mannagement	tmp.c	/^t_info	comment_mannagement(char *buf, t_info info)$/;"	f
+create_table	data_structure_operations.c	/^t_node			*create_table(t_info info)$/;"	f
+create_table	tmp.c	/^t_node			*create_table(t_info info)$/;"	f
 create_tubes	store_node.c	/^t_info	create_tubes(t_info info)$/;"	f
+create_tubes	tmp.c	/^t_info	create_tubes(t_info info)$/;"	f
 dijkstra	dijkstra.c	/^int			dijkstra(int **mat, int size)$/;"	f
-djisktra	new_djisktra.c	/^t_info	djisktra(t_info info)$/;"	f
+dijkstra	tmp.c	/^int			dijkstra(int **mat, int size)$/;"	f
 get_best_paths	get_paths.c	/^t_best_paths	get_best_paths(t_info *info, int it_nb)$/;"	f
+get_best_paths	tmp.c	/^t_best_paths	get_best_paths(t_info *info, int it_nb)$/;"	f
 get_from_model	main_test.c	/^int		get_from_model(int y, int x)$/;"	f
+get_from_model	tmp.c	/^int		get_from_model(int y, int x)$/;"	f
 get_next	get_paths.c	/^int				get_next(int **mat, int size, int current_index)$/;"	f
+get_next	tmp.c	/^int				get_next(int **mat, int size, int current_index)$/;"	f
 get_paths_total_len	get_paths.c	/^int				get_paths_total_len(t_plst **plst)$/;"	f
+get_paths_total_len	tmp.c	/^int				get_paths_total_len(t_plst **plst)$/;"	f
 get_rooms	parsing.c	/^static t_info	get_rooms(t_info info, char *buf)$/;"	f	file:
+get_rooms	tmp.c	/^static t_info	get_rooms(t_info info, char *buf)$/;"	f	file:
 get_tubes	parsing.c	/^static t_info	get_tubes(t_info info, char *buf)$/;"	f	file:
+get_tubes	tmp.c	/^static t_info	get_tubes(t_info info, char *buf)$/;"	f	file:
 hash_delete_elem	hashtable.c	/^t_node			*hash_delete_elem(t_info info, const char *to_find)$/;"	f
+hash_delete_elem	tmp.c	/^t_node			*hash_delete_elem(t_info info, const char *to_find)$/;"	f
 hash_insert	hashtable.c	/^t_node			*hash_insert(t_info info, t_node new_node)$/;"	f
+hash_insert	tmp.c	/^t_node			*hash_insert(t_info info, t_node new_node)$/;"	f
 hash_retrieve	hashtable.c	/^t_node			hash_retrieve(t_info info, const char *to_find)$/;"	f
+hash_retrieve	tmp.c	/^t_node			hash_retrieve(t_info info, const char *to_find)$/;"	f
 hashtable_key	hashtable.c	/^int				hashtable_key(const char *name)$/;"	f
+hashtable_key	tmp.c	/^int				hashtable_key(const char *name)$/;"	f
+ilst_move	output_print.c	/^static void	ilst_move(t_ilst *ilst, t_info info)$/;"	f	file:
+ilst_move	tmp.c	/^static void	ilst_move(t_ilst *ilst, t_info info)$/;"	f	file:
 ilst_print	lemin_ilst.c	/^void	ilst_print(t_ilst **ilst)$/;"	f
+ilst_print	tmp.c	/^void	ilst_print(t_ilst **ilst)$/;"	f
 ilstadd	lemin_ilst.c	/^void	ilstadd(t_ilst **ilst, t_ilst *new_ilst)$/;"	f
+ilstadd	tmp.c	/^void	ilstadd(t_ilst **ilst, t_ilst *new_ilst)$/;"	f
 ilstdel	lemin_ilst.c	/^void	ilstdel(t_ilst **ilst)$/;"	f
+ilstdel	tmp.c	/^void	ilstdel(t_ilst **ilst)$/;"	f
 ilstnew	lemin_ilst.c	/^t_ilst	*ilstnew(int const n)$/;"	f
+ilstnew	tmp.c	/^t_ilst	*ilstnew(int const n)$/;"	f
+ilstrev	lemin_ilst.c	/^t_ilst	*ilstrev(t_ilst **head)$/;"	f
+ilstrev	tmp.c	/^t_ilst	*ilstrev(t_ilst **head)$/;"	f
 l_heap_add	lemin_heap.c	/^void	l_heap_add(int **heap, int *node)$/;"	f
+l_heap_add	tmp.c	/^void	l_heap_add(int **heap, int *node)$/;"	f
+l_heap_chrnul	lemin_heap.c	/^int		l_heap_chrnul(int **heap, int *node)$/;"	f
+l_heap_chrnul	tmp.c	/^int		l_heap_chrnul(int **heap, int *node)$/;"	f
 l_heap_create	lemin_heap.c	/^int		**l_heap_create(int n)$/;"	f
+l_heap_create	tmp.c	/^int		**l_heap_create(int n)$/;"	f
 l_heap_del	lemin_heap.c	/^void	l_heap_del(int ***heap)$/;"	f
+l_heap_del	tmp.c	/^void	l_heap_del(int ***heap)$/;"	f
 l_heap_pick_first	lemin_heap.c	/^int		*l_heap_pick_first(int **heap)$/;"	f
+l_heap_pick_first	tmp.c	/^int		*l_heap_pick_first(int **heap)$/;"	f
 l_heap_print	lemin_heap.c	/^void	l_heap_print(int **heap)$/;"	f
+l_heap_print	tmp.c	/^void	l_heap_print(int **heap)$/;"	f
 lemin_error	error_func.c	/^void	lemin_error(char *error)$/;"	f
+lemin_error	tmp.c	/^void	lemin_error(char *error)$/;"	f
 list_search_to_del	hashtable.c	/^static t_node	*list_search_to_del(t_info info, const char *to_find,$/;"	f	file:
+list_search_to_del	tmp.c	/^static t_node	*list_search_to_del(t_info info, const char *to_find,$/;"	f	file:
 main	main.c	/^int		main()$/;"	f
 main	main_test.c	/^int	main(void)$/;"	f
-malloc_path_marker	new_djisktra.c	/^int		***malloc_path_marker(t_info info)$/;"	f
-mark_next_elem	new_djisktra.c	/^t_info	mark_next_elem(t_info info, t_path path)$/;"	f
+main	tmp.c	/^int		main()$/;"	f
+main	tmp.c	/^int	main(void)$/;"	f
 mat_cpy	ft_mat.c	/^void	mat_cpy(int **dst_mat, int **src_mat, int size)$/;"	f
-mat_del_joint_path	lemin_mat.c	/^void	mat_del_joint_path(int **tmp_mat, int **working_mat, int size)$/;"	f
+mat_cpy	tmp.c	/^void	mat_cpy(int **dst_mat, int **src_mat, int size)$/;"	f
+mat_del_joint_path	lemin_mat.c	/^int		mat_del_joint_path(int **tmp_mat, int **working_mat, int size)$/;"	f
+mat_del_joint_path	tmp.c	/^int		mat_del_joint_path(int **tmp_mat, int **working_mat, int size)$/;"	f
+mat_del_last_conflict	get_paths.c	/^void	mat_del_last_conflict(int **tmp_mat, int **working_mat, int n)$/;"	f
+mat_del_last_conflict	tmp.c	/^void	mat_del_last_conflict(int **tmp_mat, int **working_mat, int n)$/;"	f
 mat_del_link	lemin_mat.c	/^void	mat_del_link(int **tmp_mat, int prev_node_index, int next_node_index)$/;"	f
+mat_del_link	tmp.c	/^void	mat_del_link(int **tmp_mat, int prev_node_index, int next_node_index)$/;"	f
+mat_del_links	get_paths.c	/^void			mat_del_links(int **tmp_mat, int **working_mat, int node_from, int node_to)$/;"	f
+mat_del_links	tmp.c	/^void			mat_del_links(int **tmp_mat, int **working_mat, int node_from, int node_to)$/;"	f
+mat_del_node	get_paths.c	/^void			mat_del_node(int **tmp_mat, int **working_mat, int n, int node)$/;"	f
+mat_del_node	tmp.c	/^void			mat_del_node(int **tmp_mat, int **working_mat, int n, int node)$/;"	f
+mat_free	ft_mat.c	/^void	mat_free(int	***mat, int size)$/;"	f
+mat_free	tmp.c	/^void	mat_free(int	***mat, int size)$/;"	f
 mat_init	ft_mat.c	/^int		**mat_init(int size)$/;"	f
+mat_init	tmp.c	/^int		**mat_init(int size)$/;"	f
 mat_init_from_model	main_test.c	/^int		**mat_init_from_model(int n)$/;"	f
+mat_init_from_model	tmp.c	/^int		**mat_init_from_model(int n)$/;"	f
 mat_print	ft_mat.c	/^void	mat_print(int **mat, int size)$/;"	f
 mat_print	main_test.c	/^void	mat_print(int **mat, int size)$/;"	f
+mat_print	tmp.c	/^void	mat_print(int **mat, int size)$/;"	f
+mat_put_reversed_path	get_paths.c	/^void			mat_put_reversed_path(int **tmp_mat, int**working_mat, int n)$/;"	f
+mat_put_reversed_path	tmp.c	/^void			mat_put_reversed_path(int **tmp_mat, int**working_mat, int n)$/;"	f
 mat_reset	ft_mat.c	/^void	mat_reset(int **mat, int size)$/;"	f
+mat_reset	tmp.c	/^void	mat_reset(int **mat, int size)$/;"	f
 mat_reset_for_dijkstra	dijkstra.c	/^static void	mat_reset_for_dijkstra(int **mat, int size)$/;"	f	file:
+mat_reset_for_dijkstra	tmp.c	/^static void	mat_reset_for_dijkstra(int **mat, int size)$/;"	f	file:
 mat_reverse_used_paths	lemin_mat.c	/^void	mat_reverse_used_paths(int **tmp_mat, int **working_mat, int size)$/;"	f
+mat_reverse_used_paths	tmp.c	/^void	mat_reverse_used_paths(int **tmp_mat, int **working_mat, int size)$/;"	f
+move_print	output_print.c	/^static void	move_print(t_best_paths *best_paths, t_info info)$/;"	f	file:
+move_print	tmp.c	/^static void	move_print(t_best_paths *best_paths, t_info info)$/;"	f	file:
+nbfpp_add	output_print.c	/^static void	nbfpp_add(t_best_paths *best_paths, int ant_nb)$/;"	f	file:
+nbfpp_add	tmp.c	/^static void	nbfpp_add(t_best_paths *best_paths, int ant_nb)$/;"	f	file:
 node_create	store_node.c	/^t_node	node_create(char *buf, int node_number)$/;"	f
-old_hashtable_memdel	data_structure_operations.c	/^static void	old_hashtable_memdel(t_info info, t_node **old_hashtable)$/;"	f	file:
+node_create	tmp.c	/^t_node	node_create(char *buf, int node_number)$/;"	f
+old_hashtable_memdel	data_structure_operations.c	/^static void		old_hashtable_memdel(t_info info, t_node **old_hashtable)$/;"	f	file:
+old_hashtable_memdel	tmp.c	/^static void		old_hashtable_memdel(t_info info, t_node **old_hashtable)$/;"	f	file:
+output_print	output_print.c	/^void	output_print(t_best_paths *best_paths, t_info *info)$/;"	f
+output_print	tmp.c	/^void	output_print(t_best_paths *best_paths, t_info *info)$/;"	f
 p_info_init	get_paths.c	/^void			p_info_init(t_paths_info *p_info)$/;"	f
+p_info_init	tmp.c	/^void			p_info_init(t_paths_info *p_info)$/;"	f
 parse_map	parsing.c	/^t_info			parse_map(t_info info)$/;"	f
+parse_map	tmp.c	/^t_info			parse_map(t_info info)$/;"	f
+path_reverse	output_print.c	/^static void	path_reverse(t_best_paths *best_paths)$/;"	f	file:
+path_reverse	tmp.c	/^static void	path_reverse(t_best_paths *best_paths)$/;"	f	file:
 plst_get_len	lemin_plst.c	/^int		plst_get_len(t_plst **plst)$/;"	f
+plst_get_len	tmp.c	/^int		plst_get_len(t_plst **plst)$/;"	f
 plst_print	lemin_plst.c	/^void	plst_print(t_plst **plst)$/;"	f
+plst_print	tmp.c	/^void	plst_print(t_plst **plst)$/;"	f
 plstadd	lemin_plst.c	/^void	plstadd(t_plst **plst, t_plst *new_plst)$/;"	f
+plstadd	tmp.c	/^void	plstadd(t_plst **plst, t_plst *new_plst)$/;"	f
 plstdel	lemin_plst.c	/^void	plstdel(t_plst **plst)$/;"	f
+plstdel	tmp.c	/^void	plstdel(t_plst **plst)$/;"	f
 plstnew	lemin_plst.c	/^t_plst	*plstnew(t_ilst *path)$/;"	f
+plstnew	tmp.c	/^t_plst	*plstnew(t_ilst *path)$/;"	f
 print_hash_map	print_map.c	/^void	print_hash_map(t_info info)$/;"	f
+print_hash_map	tmp.c	/^void	print_hash_map(t_info info)$/;"	f
 print_map	print_map.c	/^void	print_map(t_info info, int to_print)$/;"	f
+print_map	tmp.c	/^void	print_map(t_info info, int to_print)$/;"	f
 print_rooms	print_map.c	/^void	print_rooms(t_info info)$/;"	f
+print_rooms	tmp.c	/^void	print_rooms(t_info info)$/;"	f
 print_tubes	print_map.c	/^void	print_tubes(t_info info)$/;"	f
+print_tubes	tmp.c	/^void	print_tubes(t_info info)$/;"	f
 queue_add_elem	queue.c	/^void	queue_add_elem(int **queue, int *node)$/;"	f
+queue_add_elem	tmp.c	/^void	queue_add_elem(int **queue, int *node)$/;"	f
 queue_create	queue.c	/^int		**queue_create(int n)$/;"	f
+queue_create	tmp.c	/^int		**queue_create(int n)$/;"	f
 queue_pick_last	queue.c	/^int		*queue_pick_last(int **queue)$/;"	f
+queue_pick_last	tmp.c	/^int		*queue_pick_last(int **queue)$/;"	f
 queue_print	queue.c	/^void	queue_print(int **queue, int n)$/;"	f
-resize_hashtable	data_structure_operations.c	/^t_node		*resize_hashtable(t_info info)$/;"	f
-resize_nodelist	data_structure_operations.c	/^t_node	*resize_nodelist(t_info info)$/;"	f
+queue_print	tmp.c	/^void	queue_print(int **queue, int n)$/;"	f
+resize_hashtable	data_structure_operations.c	/^t_node			*resize_hashtable(t_info info)$/;"	f
+resize_hashtable	tmp.c	/^t_node			*resize_hashtable(t_info info)$/;"	f
+resize_nodelist	data_structure_operations.c	/^t_node			*resize_nodelist(t_info info)$/;"	f
+resize_nodelist	tmp.c	/^t_node			*resize_nodelist(t_info info)$/;"	f
 save_paths_from_mat_if_better	get_paths.c	/^void			save_paths_from_mat_if_better(t_info *info,$/;"	f
-set_get_end_name	store_node.c	/^const char	*set_get_end_name(const char *name)$/;"	f
-set_get_start_name	store_node.c	/^const char	*set_get_start_name(const char *name)$/;"	f
+save_paths_from_mat_if_better	tmp.c	/^void			save_paths_from_mat_if_better(t_info *info,$/;"	f
 store_node_handler	store_node.c	/^t_info	store_node_handler(t_info info, t_node new_node)$/;"	f
-swap_end_begin_room	swap_end_begin_rooms.c	/^t_info	swap_end_begin_room(t_info info, int start_or_end)$/;"	f
+store_node_handler	tmp.c	/^t_info	store_node_handler(t_info info, t_node new_node)$/;"	f
+swap_end_begin_room	swap_end_begin_rooms.c	/^t_info			swap_end_begin_room(t_info info, int start_or_end)$/;"	f
+swap_end_begin_room	tmp.c	/^t_info			swap_end_begin_room(t_info info, int start_or_end)$/;"	f
 swap_nodelist_endroom	swap_end_begin_rooms.c	/^static t_info	swap_nodelist_endroom(t_info info, int start_or_end)$/;"	f	file:
+swap_nodelist_endroom	tmp.c	/^static t_info	swap_nodelist_endroom(t_info info, int start_or_end)$/;"	f	file:
 tube_assign	store_node.c	/^t_info	tube_assign(char *buf, t_info info)$/;"	f
+tube_assign	tmp.c	/^t_info	tube_assign(char *buf, t_info info)$/;"	f
 update_best_paths	get_paths.c	/^void			update_best_paths(t_best_paths *best_paths, t_plst *new_plst, \/*int ant_nb*\/ float new_time)$/;"	f
+update_best_paths	tmp.c	/^void			update_best_paths(t_best_paths *best_paths, t_plst *new_plst, \/*int ant_nb*\/ float new_time)$/;"	f
 w_get_next	lemin_mat.c	/^static	int		w_get_next(int **tmp_mat, int **working_mat, int size, int	current_index)$/;"	f	file:
+w_get_next	tmp.c	/^static	int		w_get_next(int **tmp_mat, int **working_mat, int size, int	current_index)$/;"	f	file:
 working_mat_add_new_paths	lemin_mat.c	/^void	working_mat_add_new_paths(int **working_mat, int **tmp_mat, int n)$/;"	f
+working_mat_add_new_paths	tmp.c	/^void	working_mat_add_new_paths(int **working_mat, int **tmp_mat, int n)$/;"	f

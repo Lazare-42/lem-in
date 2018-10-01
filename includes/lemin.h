@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/30 00:05:47 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/10/01 02:06:57 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	ilst_print(t_ilst **ilst);
 t_ilst	*ilstnew(int const n);
 t_plst	*plstnew(t_ilst *path);
 void	mat_print(int **mat, int size);
-t_best_paths	get_best_paths(t_info *info, int it_nb);
+void	get_best_paths(t_info *info, t_best_paths *best_paths, int it_nb);
 int		dijkstra(int **mat, int size);
 void	plstadd(t_plst **plst, t_plst *new_plst);
 void	ilstadd(t_ilst **ilst, t_ilst *new_ilst);

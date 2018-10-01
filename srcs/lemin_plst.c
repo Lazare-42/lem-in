@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 22:44:40 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/18 15:28:04 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/10/01 00:03:40 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,12 @@ void	plstdel(t_plst **plst)
 {
 	t_plst	*tmp;
 
-	if (!(plst))
-		return;
-	tmp = *plst;
 	while (*plst)
 	{
-		*plst = tmp->next;
-		ilstdel(&((*plst)->path));
-		free(tmp);
+		ilstdel(&(*plst)->path);
 		tmp = *plst;
+		*plst = (*plst)->next;
+		ft_memdel((void**)&tmp);
 	}
 }
 

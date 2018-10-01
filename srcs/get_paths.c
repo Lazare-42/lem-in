@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 22:00:14 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/30 22:01:34 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/10/01 02:11:11 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void			update_best_paths(t_best_paths *best_paths, t_plst *new_plst, /*int ant_n
 {
 	if (new_time < best_paths->time)
 	{
-		if (best_paths->time != INT_MAX)
+		//if (best_paths->time != INT_MAX)
 			plstdel(&(best_paths->plst));
 		best_paths->plst = new_plst;
 		best_paths->time = new_time;
@@ -84,7 +84,8 @@ int				add_path_if_usefull(float ant_nb, t_paths_info *p_info, t_lst_g *lst_g)
 		plstadd(&(lst_g->new_plst), lst_g->tmp_plst);
 		better_path_found = 1;
 	}
-	//plstdel(&(lst_g->tmp_plst));
+	else
+		ilstdel(&(lst_g->new_ilst));
 	return (better_path_found);
 }
 
@@ -108,10 +109,7 @@ void			mat_del_node(int **tmp_mat, int **working_mat, int n, int node)
 	int	y;
 
 	if (node + 2 == n)
-	{
-		printf("plop\n"); fflush(stdout);
 		return;
-	}
 	y = 1;
 	while (y < n)
 	{
@@ -124,6 +122,7 @@ void			mat_del_node(int **tmp_mat, int **working_mat, int n, int node)
 	}
 }
 
+#include <unistd.h>
 void			save_paths_from_mat_if_better(t_info *info,
 	t_best_paths *best_paths)
 {
@@ -135,7 +134,6 @@ void			save_paths_from_mat_if_better(t_info *info,
 	p_info_init(&p_info);
 	while (dijkstra(info->tmp_mat, info->n + 1))
 	{
-		debug();
 		n_mem.prev_node_i = info->n - 1;
 		lst_g.new_ilst = ilstnew(info->n - 1);
 		lst_g.tmp_plst = plstnew(lst_g.new_ilst);
@@ -152,11 +150,8 @@ void			save_paths_from_mat_if_better(t_info *info,
 			n_mem.prev_node_i = n_mem.next_node_i;
 			lst_g.tmp_ilst = ilstnew(n_mem.next_node_i);
 			ilstadd(&(lst_g.new_ilst), lst_g.tmp_ilst);
-			//ilstdel(&(lst_g.tmp_ilst));
 		}
-		//printf("plstdel\n"); fflush(stdout);
-		//plstdel(&(lst_g.tmp_plst));
-		if (!(add_path_if_usefull(info->ant_nb, &p_info, &lst_g)))
+		if (0 == (add_path_if_usefull(info->ant_nb, &p_info, &lst_g)))
 			break;
 	}
 	update_best_paths(best_paths, lst_g.new_plst, p_info.time);
@@ -180,7 +175,7 @@ void	mat_del_last_conflict(int **tmp_mat, int **working_mat, int n)
 		{
 			y = 1;
 			is_conflict = 1;
-			while (y < n - 1)
+			while (y < (n - 1))
 			{
 				if (working_mat[y][x] > conflict.distance_from_a && working_mat[y][x] != BIG)
 				{
@@ -219,15 +214,14 @@ void			mat_put_reversed_path(int **tmp_mat, int**working_mat, int n)
 	}
 }
 
-t_best_paths	get_best_paths(t_info *info, int it_nb)
+void	get_best_paths(t_info *info, t_best_paths *best_paths, int it_nb)
 {
 	int				i;
-	t_best_paths	best_paths;
 
 	info->tmp_mat = mat_init(info->n + 1);
 	info->working_mat = mat_init(info->n + 1);
-	best_paths.time = INT_MAX;
-	best_paths.plst = plstnew(0);
+	best_paths->time = INT_MAX;
+	best_paths->plst = NULL;
 	i = 0;
 	mat_cpy(info->tmp_mat, info->o_mat, info->n + 1);
 	while (i < it_nb)
@@ -236,11 +230,12 @@ t_best_paths	get_best_paths(t_info *info, int it_nb)
 		if (!(mat_del_joint_path(info->tmp_mat, info->working_mat, info->n)))
 			mat_del_last_conflict(info->tmp_mat, info->working_mat, info->n);
 		mat_reset(info->working_mat, info->n);
-		save_paths_from_mat_if_better(info, &best_paths);
+
+		save_paths_from_mat_if_better(info, best_paths);
+
 		mat_put_reversed_path(info->tmp_mat, info->working_mat, info->n + 1);
 		mat_reverse_used_paths(info->tmp_mat, info->working_mat, info->n + 1);
 		working_mat_add_new_paths(info->working_mat, info->tmp_mat, info->n);
 		i++;
 	}
-	return (best_paths);
 }
