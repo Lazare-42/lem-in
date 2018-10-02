@@ -6,34 +6,27 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/10/01 02:12:34 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/02 02:31:53 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 #include "../libft/includes/libft.h"
-#include <math.h>
-//unistd is for sleep / chechking leaks ; take it away when done
 
 t_info	comment_mannagement(char *buf, t_info info)
 {
 	if (ft_memcmp(buf, "##end", 5) && ft_memcmp(buf, "##start", 7))
-	{
 		(void)buf;
-	// Attention : you need to strdup buf if you want to use the commentary
-	}
 	if (ft_strequ(buf, "##end"))
 		info.end_begin_room = END;
 	else if (ft_strequ(buf, "##start"))
 		info.end_begin_room = START;
 	return (info);
 }
-#include <unistd.h>
-
 
 int		main(int ac, char **av)
 {
-	t_info	info;
+	t_info			info;
 	t_best_paths	best_paths;
 
 	(void)av;
@@ -47,7 +40,7 @@ int		main(int ac, char **av)
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);
 	info = parse_map(info);
-	get_best_paths(&info, &best_paths,  10);
+	get_best_paths(&info, &best_paths, 10);
 	output_print(&best_paths, &info, ac == 1 ? PRINT_INPUT : 0);
 	return (0);
 }

@@ -6,17 +6,15 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 22:48:16 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/10/02 01:21:37 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/02 02:58:44 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
 
-#include <limits.h>
-
 # define DATA_MULTIPLIER 37
-#define NO_PATH 1231501
+# define NO_PATH 1231501
 # define PRINT_INPUT 1
 # define WEIGHT_COL 1
 # define END -1
@@ -28,7 +26,13 @@
 # define GROWTH_FACTOR 2
 # define BIG INT_MAX
 
-typedef	struct		s_node t_node;
+# include <limits.h>
+
+typedef	struct		s_point
+{
+	int				x;
+	int				y;
+}					t_point;
 
 typedef	struct		s_node
 {
@@ -36,7 +40,7 @@ typedef	struct		s_node
 	int				number;
 	int				x;
 	int				y;
-	t_node			*next;
+	struct s_node	*next;
 }					t_node;
 
 typedef struct		s_path
@@ -70,14 +74,14 @@ typedef struct		s_info
 	const char		*begin_name;
 }					t_info;
 
-typedef struct	s_ilst
+typedef struct		s_ilst
 {
 	int				n;
 	int				ant_index;
 	struct s_ilst	*next;
-}				t_ilst;
+}					t_ilst;
 
-typedef struct	s_plst
+typedef struct		s_plst
 {
 	int				path_len;
 	int				nbf;
@@ -85,83 +89,101 @@ typedef struct	s_plst
 	struct s_ilst	*path;
 	struct s_ilst	*first_node;
 	struct s_plst	*next;
-}				t_plst;
+}					t_plst;
 
-typedef struct	s_best_paths
+typedef struct		s_best_paths
 {
 	struct s_plst	*plst;
 	float			time;
-}				t_best_paths;
+}					t_best_paths;
 
-typedef struct	s_node_mem
+typedef struct		s_node_mem
 {
-	int			prev_node_i;
-	int			next_node_i;
-}				t_node_mem;
+	int				prev_node_i;
+	int				next_node_i;
+}					t_node_mem;
 
-typedef struct	s_lst_g
+typedef struct		s_lst_g
 {
-	t_plst		*new_plst;
-	t_plst		*tmp_plst;
-	t_ilst		*new_ilst;
-	t_ilst		*tmp_ilst;
-}				t_lst_g;
+	t_plst			*new_plst;
+	t_plst			*tmp_plst;
+	t_ilst			*new_ilst;
+	t_ilst			*tmp_ilst;
+}					t_lst_g;
 
-typedef struct	s_paths_info
+typedef struct		s_paths_info
 {
-	int			paths_total_len;
-	int			paths_nb;
-	float		time;
-}				t_paths_info;
+	int				paths_total_len;
+	int				paths_nb;
+	float			time;
+}					t_paths_info;
 
-typedef struct	s_conflict
+typedef struct		s_conflict
 {
-	int			node_1;
-	int			node_2;
-	int			distance_from_a;
-}				t_conflict;
+	int				node_1;
+	int				node_2;
+	int				distance_from_a;
+}					t_conflict;
 
-int		**queue_create(int n);
-void	queue_add_elem(int **queue, int *node);
-int		*queue_pick_last(int **queue);
-void	queue_print(int **queue, int n);
-void    graph_loop_remove(int **mat, int n);
-int     graph_link_counter(int **mat, int n);
-void    graph_dead_end_remove(int **mat, int n);
-void    graph_useless_node_remove(int **mat, int n);
-void    mat_init_for_dijkstra(int **mat, int n);
-void    graph_orientation(int **mat, int n);
-void	ilst_print(t_ilst **ilst);
-t_ilst	*ilstnew(int const n);
-t_plst	*plstnew(t_ilst *path);
-void	mat_print(int **mat, int size);
-void	get_best_paths(t_info *info, t_best_paths *best_paths, int it_nb);
-int		dijkstra(int **mat, int size);
-void	plstadd(t_plst **plst, t_plst *new_plst);
-void	ilstadd(t_ilst **ilst, t_ilst *new_ilst);
-void	plst_print(t_plst **plst);
-int		plst_get_len(t_plst **plst);
-int		**mat_init(int size);
-void	mat_cpy(int **dst_mat, int **src_mat, int size);
-void	mat_reset(int **mat, int size);
-int		mat_del_joint_path(int **tmp_mat, int **working_mat, int size);
-void	mat_del_link(int **tmp_mat, int prev_node_index, int next_node_index);
-void	working_mat_add_new_paths(int **working_mat, int **tmp_mat, int n);
-void	mat_reverse_used_paths(int **tmp_mat, int **working_mat, int size);
-void	ilstdel(t_ilst **ilst);
-void	plstdel(t_plst **plst);
-void	l_heap_print(int **heap);
-int		**l_heap_create(int n);
-void	l_heap_add(int **heap, int *node);
-int		*l_heap_pick_first(int **heap);
-void	l_heap_del(int ***heap);
-void	mat_del_node(int **tmp_mat, int **working_mat, int n, int node);
-t_ilst	*ilstrev(t_ilst **ilst);
-void	output_print(t_best_paths *best_paths, t_info *info, int print_input);
-void	mat_free(int	***mat, int size);
-//void	mat_print(int **mat, int size);
-void mat_print (int **mat, int size); /*to del*/
-
+int					**queue_create(int n);
+void				queue_add_elem(int **queue, int *node);
+int					*queue_pick_last(int **queue);
+void				queue_print(int **queue, int n);
+void				graph_loop_remove(int **mat, int n);
+int					graph_link_counter(int **mat, int n);
+void				graph_dead_end_remove(int **mat, int n);
+void				graph_useless_node_remove(int **mat, int n);
+void				mat_init_for_dijkstra(int **mat, int n);
+void				graph_orientation(int **mat, int n);
+void				ilst_print(t_ilst **ilst);
+t_ilst				*ilstnew(int const n);
+t_plst				*plstnew(t_ilst *path);
+void				mat_print(int **mat, int size);
+void				get_best_paths(t_info *info, t_best_paths *best_paths,
+		int it_nb);
+int					dijkstra(int **mat, int size);
+void				plstadd(t_plst **plst, t_plst *new_plst);
+void				ilstadd(t_ilst **ilst, t_ilst *new_ilst);
+void				plst_print(t_plst **plst);
+int					plst_get_len(t_plst **plst);
+int					**mat_init(int size);
+void				mat_cpy(int **dst_mat, int **src_mat, int size);
+void				mat_reset(int **mat, int size);
+int					mat_del_joint_path(int **tmp_mat,
+		int **working_mat, int size);
+void				mat_del_link(int **tmp_mat, int prev_node_index,
+		int next_node_index);
+void				working_mat_add_new_paths(int **working_mat,
+		int **tmp_mat, int n);
+void				mat_reverse_used_paths(int **tmp_mat, int **working_mat,
+		int size);
+void				ilstdel(t_ilst **ilst);
+void				plstdel(t_plst **plst);
+void				l_heap_print(int **heap);
+int					**l_heap_create(int n);
+void				l_heap_add(int **heap, int *node);
+int					*l_heap_pick_first(int **heap);
+void				l_heap_del(int ***heap);
+void				mat_del_node(int **tmp_mat, int **working_mat, int n,
+		int node);
+t_ilst				*ilstrev(t_ilst **ilst);
+void				output_print(t_best_paths *best_paths, t_info *info,
+		int print_input);
+void				mat_free(int ***mat, int size);
+int					get_paths_total_len(t_plst **plst);
+int					get_next(int **mat, int size, int current_index);
+void				update_best_paths(t_best_paths *best_paths,
+		t_plst *new_plst, float new_time);
+int					add_path_if_usefull(float ant_nb,
+		t_paths_info *p_info, t_lst_g *lst_g);
+void				p_info_init(t_paths_info *p_info);
+void				mat_del_links(int **tmp_mat, int **working_mat,
+				int	node_from, int node_to);
+void				mat_del_node(int **tmp_mat, int **working_mat,
+		int n, int node);
+int					l_heap_chrnul(int **heap, int *node);
+void				l_heap_add(int **heap, int *node);
+void				l_heap_del(int ***heap);
 void				lemin_error(char *error);
 t_node				*hash_insert(t_info info, t_node new_node);
 t_node				hash_retrieve(t_info info, const char *to_find);

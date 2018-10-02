@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/04 22:44:40 by jboursal          #+#    #+#             */
-/*   Updated: 2018/10/01 00:03:40 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/02 02:30:33 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,4 @@ int		plst_get_len(t_plst **plst)
 		len++;
 	}
 	return (len);
-}
-
-void	plst_print(t_plst **plst)
-{
-	t_plst	*tmp;
-	int		i;
-
-	tmp = *plst;
-	i = 0;
-	while (tmp)
-	{
-		ft_printf("\nCHEMIN %d - LEN %d - NBFTOT %d\n\n", i, tmp->path_len, tmp->nbftot);
-		ilst_print(&(tmp->path));
-		tmp = tmp->next;
-		i++;
-	}
 }

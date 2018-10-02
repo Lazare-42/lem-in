@@ -7,14 +7,16 @@ SOURCES =	main.c \
 			store_node.c \
 			parsing.c \
 			swap_end_begin_rooms.c \
-			queue.c \
 			lemin_plst.c \
 			lemin_ilst.c \
 			get_paths.c \
+			path_operations.c \
+			path_operations_2.c \
 			ft_mat.c \
 			dijkstra.c \
 			lemin_mat.c \
 			lemin_heap.c \
+			heap_add_del.c \
 			output_print.c \
 
 LIBDIR = libft

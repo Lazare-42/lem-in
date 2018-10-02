@@ -6,7 +6,7 @@
 /*   By: jboursal <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 03:58:24 by jboursal          #+#    #+#             */
-/*   Updated: 2018/09/29 20:26:44 by jboursal         ###   ########.fr       */
+/*   Updated: 2018/10/02 02:34:02 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,12 @@ static void	ilst_move(t_ilst *ilst, t_info info)
 	{
 		if (ilst->next)
 		{
-		if (ilst->next->ant_index)
+			if (ilst->next->ant_index)
 			{
 				ilst->ant_index = ilst->next->ant_index;
 				ilst->next->ant_index = 0;
-				ft_printf("L%d-%s ", ilst->ant_index, info.nodelist[ilst->n].name);
+				ft_printf("L%d-%s ", ilst->ant_index,
+				info.nodelist[ilst->n].name);
 			}
 		}
 		ilst = ilst->next;
@@ -99,23 +100,21 @@ static void	move_print(t_best_paths *best_paths, t_info info)
 	}
 }
 
-static void	print_map(t_info *info)
+void		output_print(t_best_paths *best_paths, t_info *info,
+		int print_input)
 {
 	int i;
 
 	i = 0;
-	while (i < info->map.line_nbr)
-	{
-		ft_printf("%s\n", info->map.lines[i]);
-		i++;
-	}
-	ft_printf("\n");
-}
-
-void	output_print(t_best_paths *best_paths, t_info *info, int print_input)
-{
 	if (print_input == PRINT_INPUT)
-		print_map(info);
+	{
+		while (i < info->map.line_nbr)
+		{
+			ft_printf("%s\n", info->map.lines[i]);
+			i++;
+		}
+		ft_printf("\n");
+	}
 	nbfpp_add(best_paths, info->ant_nb);
 	path_reverse(best_paths);
 	move_print(best_paths, *info);

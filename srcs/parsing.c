@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/20 15:05:33 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/09/28 15:28:34 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/02 02:37:16 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,6 @@ static t_info	get_rooms(t_info info, char *buf)
 	return (info);
 }
 
-
 t_info			parse_map(t_info info)
 {
 	char	*buf;
@@ -115,8 +114,7 @@ t_info			parse_map(t_info info)
 			info = get_rooms(info, buf);
 			return (info);
 		}
-		if (buf)
-			save_lines(&info, buf, SAVE_ADRESS);
+		(buf) ? save_lines(&info, buf, SAVE_ADRESS) : 0;
 	}
 	return (info);
 }
