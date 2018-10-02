@@ -6,7 +6,7 @@
 /*   By: lazrossi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 23:24:20 by lazrossi          #+#    #+#             */
-/*   Updated: 2018/10/02 02:31:53 by lazrossi         ###   ########.fr       */
+/*   Updated: 2018/10/02 03:36:56 by lazrossi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ int		main(int ac, char **av)
 	info.hash_table = create_table(info);
 	info.nodelist = create_table(info);
 	info = parse_map(info);
+	if (!(dijkstra(info.o_mat, info.n)))
+		lemin_error("There is no path from start to end");
 	get_best_paths(&info, &best_paths, 10);
 	output_print(&best_paths, &info, ac == 1 ? PRINT_INPUT : 0);
 	return (0);
